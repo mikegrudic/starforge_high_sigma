@@ -1,0 +1,216 @@
+%
+%%
+%%   This file is part of the files in the distribution of AIP substyles for REVTeX4.
+%%   Version 4.2 of December 2014.
+%%
+%
+% This is a template for producing documents for use with 
+% the REVTEX 4.2 document class and the AIP substyles.
+% 
+% Copy this file to another name and then work on that file.
+% That way, you always have this original template file to use.
+
+\documentclass[apjl,twocolumn]{openjournal}
+\usepackage{amsmath}
+%\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{upgreek}
+%\usepackage{caption}
+
+%\captionsetup[table]{
+%    font={small},
+%    labelfont={bf},
+%    justification=justified, % or 'raggedright' for left alignment
+%    singlelinecheck=false,
+%}
+
+
+\usepackage[dvipsnames]{xcolor} %added later for color
+
+\usepackage[breaklinks,colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{orcidlink}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+\newcommand{\SO}[1]{\textcolor{magenta}{SO: #1}}
+\newcommand{\pfh}[1]{\textcolor{red}{PFH: #1}}
+\newcommand{\BG}[1]{\textcolor{cyan}{BG: #1}}
+
+\renewcommand{\arraystretch}{1.2}  
+\setlength\tabcolsep{0.15cm}
+
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{golden}{rgb}{0.86,0.65,0.01}
+\lstset{frame=tb,
+	language=SQL,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+
+
+%\documentclass[sor,reprint]{revtex4-2}
+
+
+\begin{document}
+
+
+\title{Extreme clouds make extreme stars}
+
+\author{Michael Y. Grudi\'{c}$^{1}$\orcidlink{0000-0002-1655-5604}}
+% \author{Stella S. R. Offner$^{2}$\orcidlink{0000-0003-1252-9916}}
+% \author{D\'avid Guszejnov$^{3,\dagger}$\orcidlink{0000-0001-5541-3150}}
+% \author{Claude-Andr{\'e} Faucher-Gigu{\`e}re$^{4}$\orcidlink{0000-0002-4900-6628}}
+% \author{Philip F. Hopkins$^{5}$\orcidlink{0000-0003-3729-1684}}
+
+\affiliation{$^1$Flatiron Institute, Center for Computational Astrophysics, Flatiron Institute, 162 5th Ave, New York, NY 10010, USA}
+% \affiliation{$^{2}$Department of Astronomy, The University of Texas at Austin, TX 78712, USA}
+% \affiliation{$^3$Center for Astrophysics $|$ Harvard \& Smithsonian, 60 Garden Street, Cambridge, MA 02138, USA}
+% \affiliation{$^{4}$CIERA and Department of Physics and Astronomy, Northwestern University, 1800 Sherman Ave, Evanston, IL 60201, USA}
+% \affiliation{$^{5}$TAPIR, Mailcode 350-17, California Institute of Technology, Pasadena, CA 91125, USA}
+
+\email{Corresponding author: mgrudic@flatironinstitute.org}
+
+\begin{abstract}
+We report the results of the first numerical simulations of star cluster formation in dense ($\gtrsim 1 \rm g\,cm^{-2}$) molecular clumps that account for all stellar feedback mechanisms in concert from individual stars, using the  {\small STARFORGE} framework. We survey a range of clump masses ($2\times 10^4$-$2\times 10^5 M_\odot$) and metallicities ($0.01-1 Z_\odot$), and assume an interstellar radiation field $10,000$ times more intense than the Solar neighborhood to model starburst and/or high-$z$ conditions. Star formation efficiency is relatively high ($\gtrsim 20\%$), but not as high as previous models assuming a constant IMF, because the rate of feedback per stellar mass is greater.  We disentangle the regulators of massive star formation, finding that both infrared radiation pressure on dust grains and stellar winds help regulate the maximum stellar mass to $\sim 150 M_\odot$ at Solar metallicity. But at low ($0.01-0.1Z_\odot$) metallicity, both winds and radiation pressure are weaker, and more-massive stars can form: one of our $0.01 Z_\odot$ models forms a supermassive star (SMS) with a maximum mass of $1700 M_\odot$ through accretion, and several other SMS exceeding $10^3 M_\odot$. Our results suggest that stellar populations formed in intense, metal-poor starbursts have a high ratio of rest-frame UV light to star formation, a significant mass fraction of high stellar- and intermediate-mass black holes, and a high mass budget for stellar wind enrichment. In general, the high-mass tail of the IMF must vary with cloud-scale density and metallicity due to the varying effectiveness of feedback in regulating accretion.
+
+% 1. globular cluster polution
+% 2. early AGN seeds
+% 3. UVLF
+% 4. hard radiation/VMS observations
+% 5. you can have "top-heavy" for feedback purposes without breaking the observed GC IMF
+
+\keywords{stars: mass function -- galaxies: star clusters: general -- stars: formation }
+\end{abstract}
+
+\maketitle  
+
+
+\section{Introduction}
+
+Most of what is known about star formation (SF) comes from studying nearby systems. The initial conditions of star formation in our Galaxy are well-characterized by high-resolution maps traced by dust \citep{gutermuth:2009.dust.extinction, Andre_2010_filaments,lombardi:2010.sigma.gmc,heyer:2016.clumps} and molecular transitions \citep{heyer:2009.gmcs,kauffmann:2017.hcn,miville:2017.gmcs} in nearby molecular clouds.  One can also infer key properties of young stellar populations, such as the rate and efficiency of star formation \citep{heyer:2016.clumps,pokhrel:2021.gmc.sfe}, the stellar initial mass function (IMF; \citealt{Hopkins_A_2018_IMF_obs_review}) and multiplicity \citep{offner:2023.multiples.review}, all the way down to the smallest stellar masses \citep[e.g.][]{kirkpatrick:2023.browndwarf.imf}. Many questions about the details of SF remain, but these data constrain the space of viable models for SF in our Galaxy \citep{mckee:2007.review,krumholz:2014.review}
+
+Not all stars form in such readily-observed conditions. Dense, massive globular clusters linger as the relics of an ancient mode of star formation that must have taken place at high density and low metallicity. The Galactic center hosts gas densities and pressures orders of magntiude higher than the Solar neighborhood, and the Milky Way's most massive young stars and star clusters are found there \citep{2016A&A...595A..27G,2019ApJ...870...44H}. Just beyond, in the LMC, high-pressure, low-metallicity gas conditions have produced the Local Group's most massive young star cluster R136, which also hosts the massive known stars \citep{Crowther_most_massive_stars_R136_2016}. And further still are the luminous infrared galaxies (LIRG), where stars form rapidly at even higher intensities \citep{kennicutt:1998.review}.
+
+In a cosmic sense, such ``extreme" star formation is not exceptional: most of the stars that will ever form have already formed around ``cosmic noon" at $z\sim 2$ \citep{2014ARA&A..52..415M}, when galaxies typically were more gas-rich and hosted high gas surface densities and pressures \citep{Swinbank_2011_dense_galaxy_ISM, 2019NatAs...3.1115D,tacconi:2020.cosmic.ism,2020ARA&A..58..661F}. At the even earlier epoch of ``cosmic dawn", the James Webb Space Telescope has detected extremely rest-UV-bright, compact sources suggesting that star formation proceeded very rapidly and at high densities \citep{robertson:2023.hiz.galaxies,labbe:2023.hiz.candidates,2024ApJ...964..150D}. Galaxy luminosities and/or SFRs at cosmic dawn were not generally anticipated by models, and possible sources of discrepancy may include unaccounted-for star formation or feedback dynamics \citep{2023ApJ...955L..35S,dekel:2023.ffb}, errors in the cosmological model \citep{boylankolchin:2023.does.webb.break.lcdm}, or an unusual IMF with greater abundance or mass limit of massive stars \citep{cameron:2023.jwst.topheavy.imf,vink:2023.jwst.nitrogen.vms}.
+
+Recently it has become possible to model the emergence of stellar populations from physical processes in different environments. The {\small STARFORGE}\footnote{\url{https://starforge.space}} model simulates star formation from initial gas collapse to cloud disruption, combining a wide range star formation physics into a single numerical model, notably accounting for all forms of stellar feedback: protostellar outflows, radiation, winds, and supernovae \citep{starforge.methods}. This has proven essential to obtaining realistic results, because the various feedback processes must act in concert to simultaneously regulate both low-mass \citep{wang_2010_jets,Cunningham_2011_outflow_sim,hansen12a,mathew:2021.imf.jets,starforge_jets_imf,lebreuilly:2024.jets.sf} and high-mass star formation \citep{larson:1971.masslimit,wolfire:1987.massive.sf,kuiper_2010_massive_sf,krumholz:2009.massive.sf,rosen:2016.massive.sf,rosen_2020_jets_radiation,rosen_2021_winds,guszejnov:2022.starforge.imf}, while also regulating the {\it overall} star formation rate to the low cloud-scale efficiencies seen in the Milky Way (\citealt{geen:2017, grudic:2018.gmc.sfe, kim:2020.gmc.raytrace,evans:2021.virial.sfe,starforge.fullphysics}, see \citealt{chevance:2020.gmc.review} for review).
+
+In this work we apply the {\small STARFORGE} model to the higher-density conditions than previous work, targeting a mean cloud-scale surface density of $\Sigma = M/\uppi R^2 \approx 1 \rm g\,cm^{-2}$ across a range of cloud masses and metallicities. We focus on global cloud and star cluster evolution and the final stellar population properties, in particular highlighting how these can differ from the more Milky Way-like conditions we modeled in previous works. %We show that these denser clouds tend to produce more-massive stars, because massive star formation is feedback-regulated and the effectiveness of feedback depends upon cloud properties. We 
+
+%Sars in the most extreme observable systems cannot be resolved, so constraining them from integrated light will require some understanding of the stellar demographics that are expected to emerge in such conditions - in particular, the demographics of {\it massive} stars, which dominate the light. 
+
+\section{Theory}
+
+\subsection{Dust opacity effects}
+\subsection{Effect of the interstellar radiation field}
+\subsection{Stellar winds}
+
+\section{Methods and Simulations}
+
+\subsection{Initial conditions} 
+
+
+
+\section{Results}
+\subsection{General SFH and IMF results}
+{\bf SFE vs sigmagas for all simulations coded by metallicity}
+
+\BG{Maximum mass versus cluster mass/cluster number. Can overplot the trend lines for this for IMF functions and PMF funcitons?}
+
+\subsection{Feedback experiments}
+
+\BG{At the same tff, do phase plots of n vs T weighted by either $|v|$ or $|v_{\rm out}|$. This would indicate if the fast-feedback is heating the gas, for instance.}
+
+\subsection{SMS formation}
+
+\BG{Plot e.g. relative distance from center of mass for the most massive 2 or 3 stars (y-axis) for each simulation (x-axis). E.g. are the SMS's forming in the center of the mass potential. Similarly plot Mmax/Mcluster vs time? (i.e. do the SMS stars form first and dominate the cluster mass or form later)}
+
+% plot accretion histories, including radial/luminosity/Teff evolution, marking where the main sequence is reached (emphasis: most of the accretion takes place on MS)
+
+% "Stellar dynamics have been proposed as apossible pathway (Portegies Zwart et al. 1999a; Portegies Zwart & McMillan 2002; Reinoso et al. 2018a, 2020; Alister Seguel et al. 2020; Vergara et al. 2021, 2023, 2024, 2025) - vergara 2025"
+
+\subsection{Integrated population properties}
+L/M, UV/SFR, metal yields, black hole population
+\section{Discussion}
+
+\subsection{vms formation}
+compared to gadget simulations forming VMS: we are showing that it can occur despite 1. being in much denser conditions where the jeans mass is much smaller, and 2. despite feedback, including notably jets
+
+gieles picture: https://academic.oup.com/mnras/article/544/1/483/8230792?login=true#538539593
+
+\subsection{massive SF scaling in up dense environments for feedback}
+does this make sense vis. observations? implications for feedback, chemical enrichment, remnants, etc
+
+\subsection{Feedback modeling caveats}
+
+Many properties of very massive stars are uncertain
+
+https://arxiv.org/abs/2510.12465 - optically thick wind model 
+
+Lyman alpha if important will be important at low Z:
+https://arxiv.org/abs/2510.25950
+
+
+
+
+\section{Conclusion}
+
+
+\section*{Acknowledgements}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Data Availability}
+
+The complete dataset of simulation snapshots with time-dependendent stellar (sink particle) properties is available at \href{https://data.obs.carnegiescience.edu/starforge/M2e3_R3.tar.gz}{this link}. A public version of the {\small GIZMO} code is available at \url{http://www.tapir.caltech.edu/~phopkins/Site/GIZMO.html}.
+
+
+%\newpage
+% The text '-' below is added so that we can see
+% the proper placement of the figures.
+% ***********************************
+% ***********************************
+% ***********************************
+% ------------------------------------------------
+% ------------------------------------------------
+% APPENDIX %
+% ------------------------------------------------
+% ------------------------------------------------
+\appendix
+
+\section{Numerical Tests}
+
+
+
+
+%\newpage
+% Create the reference section using BibTeX:
+
+\bibliographystyle{mnras}
+\bibliography{master}
+
+\end{document}

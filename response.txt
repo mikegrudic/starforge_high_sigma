@@ -1,0 +1,80 @@
+Thank you to the referee for a careful and helpful report, and apologies as well for the slow response. We have been able to incorporate all feedback except for point 1. where clarification is requested. Note that we have also added some additional derivations and formulae to 4.1.1 in response to some other helpful community feedback. Responding to the points raised in turn:
+
+> 1. It would be useful for the authors to point out that the 28Msun/126Msun combination (most massive star/mass in the cluster) is quite consistent with the most-massive-star–very-young-cluster relation (the “mmax–Mecl” relation as some authors call it) as published in Yan et al. (2023A&A…670A.151Y). Yan et al. make the explicit point that the scatter in the mmax–Mecl relation in the observational data are consistent with the observational uncertainties with there being therewith no evidence for a significant intrinsic scatter of this relation suggesting that random processes appear to be not very important.
+
+The point (126,28) Msun (or (2.1, 1.4) in log space) appears to lie in a region discernably above sample presented in Yan et al, so it was not clear to us that these data are consistent. If there is something we are missing then please clarify.
+
+> 2. The authors need to also discuss the observational results by Stephens, Gouliermis, D., et al. (2017, ApJ, 834, 94) who confirm the mmax–Mecl relation using HST observations. Similarly, Hsu, Hartmann et al. (2012ApJ…752…59H) find low-mass embedded clusters to lack massive stars in the Orion star forming cloud.
+
+We have added these references to 4.1 paragraph 1.
+
+> 3. The simulations reported in the present manuscript imply a star-formation efficiency (SFE), and the authors should compare this with the reported SFEs in the embedded clusters in the Orion star-forming cloud (see fig.25 in Megeath et al. (2016AJ….151….5M). This would allow an additional assessment of the realism achieved with these high-end simulations.
+
+The average SFE found in the simulations is 6% which is reasonably consistent with Megeath et al. and similar works. It's worth noting that the quantity SFE = final stellar mass / (initial gas mass) is not observable, so to do such a comparison rigorously requires some conversion to observable stellar and gas mass tracers. We did a rudimentary version of this comparison in 2022MNRAS.512..216G Fig. 7 and found fair agreement with our previous simulation.
+
+> 4. The authors mention “optimal sampling” and they should provide the correct reference where this was introduced for the first time (Kroupa et al. 2013 - this is already cited, but not as the origin of “optimal sampling”). This sampling method, which is an extreme opposite to random sampling, is useful because it appears to better account for the data under point (1) above, and provides an alternative sampling technique relevant for stellar populations.
+
+We have now cited Kroupa 2013 directly in the sentence mentioning optimal sampling.
+
+> 5. A general point the authors might discuss is the following: the above observational evidence does suggest that the star formation process may be highly self regulated, much more so than the simulations the authors are discussing. What properties of the model clouds would one need for the resulting population of stellar particles to comply with the data?
+
+We have added some discussion of this in S4.3 paragraph 2.
+
+> 6. Related to point (5) above: Stars more massive than some 10Msun are understood to shut-off any further accretion due to their luminosity. This has been seen as a major problem in forming stars more massive than about 10Msun (e.g. 2007ARA&A..45..481Z). The empirical data used by Yan et al. (2023, see above) indeed suggest there to be a feature in the mmax–Mecl relation around this mass which might be related to this. Why can massive stars continue to accrete in the present models? The authors should discuss this and, if possible, provide an explanation. Might it be that the numerical treatment of the feedback from a single stellar particle is not yet realistic (even though the reported simulations are about the best that can be done at present)?
+
+The historically-reported barrier to forming stars above a certain mass due to radiation pressure on dust grains is only found in spherically-symmetric configurations (e.g. Larson & Starrfield 1971, Wolfire & Cassinelli 1987), and can be circumvented in various ways once this assumption is relaxed. E.g. if mass is fed through a disk and radiation escapes along the poles (e.g. Kuiper 2010) or is fed by 3D Rayleigh-Taylor unstable streams (e.g. Krumholz 2009). The radiation pressure barrier is also greatly mitigated by the optically-thin cavities opened by magnetocentrifugal winds (e.g. Rosen 2020). All of these effects can be captured by our simulations, in principle.
+
+Because the formation of >10Msun stars in simulations is not unusual for these reasons, our preference would be to not discuss this specific point in the text, for the sake of concision.
+
+> 7. Related to point (6) above: the authors should briefly mention the resolution achieved in their simulations and also whether their code is an SPH code or a grid code. This would help the reader. Is there any build-in stochasticity when a sink particle arises and when it accretes?
+
+The simulations were run with GIZMO using the Meshless Finite Mass MHD solver, which is neither a grid method nor an SPH method. We have added a small amount of clarifying text to Section 2 paragraphs 1 and 2, where this is mentioned.
+
+> 8. The final sentence of Sec.3.3 should read “But the simulations indicate that this is not the outcome realised by the physics of star formation in these simulations.”
+(and not “in practice”). The reason for this is that the observed very young clusters do show a significant correlation between the most massive stars and their stellar mass, with the scatter being consistent with the observational uncertainties and highly inconsistent with random sampling (as claimed by Yan et al. 2023, see above). The high-end simulations reported by the authors do not yet achieve this correlation, but are already on a good way towards understanding this relationship theoretically.
+
+We have added this clarification.
+
+> 9. On p.4, Sec.4.1, 1st paragraph where it states
+“… > 4Myr old systems will also be truncated from the death….”. Here the authors need to understand that the data used by Yan et al. (2023, see above) are on embedded clusters with ages <4Myr. And, even if the most massive stars were to be kicked out (cf Oh & Kroupa (2018, MNRAS) then the next-most-massive star takes over the relation.
+
+We have added explicit mention of studies that have restricted to <4Myr clusters in this paragraph.
+
+> 10. Just before Eq.(2), why must R be much larger than the Stroemgren radius? A brief explanation would be helpful.
+
+This is the condition for the asymptotic self-similar t^4/7 region for an expanding HII region to apply, which we clarify. It is not strictly required, but simplifies the solution.
+
+> 11. Below Eq. (4), in the text it states “cluster mass was ~18Msun” : do the authors mean “star mass was ~28Msun”? 18Msun had not appeared in the manuscript until this point. Otherwise the authors might want to explain why 18Msun appears.
+
+We have corrected "cluster mass" to "stellar mass" and "typical" -> "median" for clarity.
+
+> 12. The statement at the top of the left column on p.6 “significantly lower maximum stellar masses” at lower Z is surprising because the canon appears to have been the opposite: lower-metallicity is thought to imply more massive stars, because low-metallicity gas cannot cool as efficiently and thus cannot fragment into smaller masses. Maybe an explanation would be useful here.
+
+We actually find a larger *turnover* mass and mean stellar mass at low metallicity in Guszejnov et al 2022, consistent with this intuition. However our finding is that M_max is determined by feedback physics, and in this particular region of parameter space the microphysics of HII regions makes feedback stronger, and M_max smaller in turn. We clarify this briefly in footnote 3. 
+
+> 13. Is “such as” missing in the sentence “… feedback mechanisms …. single-scattered radiation pressure (…” on p.6, left column, 2nd paragraph.
+
+Fixed.
+
+>14. At the beginning of Sec. 4.1.2 where the authors argue (correctly) that a varying upper truncation of the IMF would have important implications for the galaxy-wide stellar populations. Here it would serve well to mention “Clustered star formation as a natural explanation for the Hα cut-off in disk galaxies” (2008Natur.455..641P) as this solves a major puzzle exactly due to this effect.
+
+We have added this citation to the discussion in this paragraph.
+
+> 15. On p.6, right column, in Sec.4.1 the authors mention Andrews et al. (2013). They should then also point out the counter paper by 2014MNRAS.441.3348W who showed that the Andrews et al. analysis was flawed.
+
+We have added this citation.
+
+> 16. On p.6, right column, still in Sec.4.1, the authors mention that “alpha can also vary from the exact Salpeter (1955) value”. In this context, the very small dispersion of IMF power-law indices in real very young clusters is surprising (see Fig.4-27 in the Kroupa et al. 2013 reference), since it indicates significant self-regulation such that the same IMF power-law index seems to come out of the star formation process. This is consistent with the small scatter in the mmax–Mecl relation noted above. This suggests that the simulations, while being very impressive and top-end technologically, might still be lacking some essential physics. Perhaps it is just resolution?
+
+We do not rule out that there is some piece yet missing that might recover a more-realistic IMF - in particular the consistent tendency toward alpha ~ -2, shallower than most real clusters, remains to be explained.
+
+> 17. On p.6, right column, in Sec.4.2, the authors correctly mention that the rate of core collapse supernovae may be affected. This has indeed been studied and the authors should provide the related references in this context:
+> 2005ApJ…625..754W
+> 2021A&A…655A..19Y
+
+> 18. On p.7, left column, top: the mass–metallicity relation of galaxies is affected and these references should be provided where this has been studied:
+> 2007MNRAS.375..673K
+> 2021A&A…655A..19Y
+
+
+We have added the above references.

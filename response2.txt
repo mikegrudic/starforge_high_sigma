@@ -1,0 +1,26 @@
+> To 1 in the report) The 28Msun of the most massive star is in the upper part of the Yan et al. data correlation, and the authors should comment on this as I asked in the last report. It appears that the simulations may allow the massive star to grow too much compared to the real systems. This is perfectly alright, since the presented simulations are state of the art, but it is important that this is explicitly mentioned to direct future work.
+
+We have added a footnote to mention this point.
+
+> a) It would be useful if the units could be stated in the equation for Teff in the text on p.2, lower left.
+
+We added the explicit Solar units.
+
+> b) Fig.1: While the authors concetnrate on the more massive stars, the figure plots the mass function down into the low-mass brown dwarf regime. This is interesting and the authors should include a comment such as the following one since the Kroupa 2001 IMF accounts for brown dwarfs correctly (while the Chabrier one undercounts them):
+“Note that the lack of sub-stellar objects (brown dwarfs) in the simulations implies that an additional source of brown dwarfs must exist in real star forming regions as discussed by Thies et al. (2015, ApJ 800, 72).”
+Or alternatively do not show the mass functions below 0.1Msun.
+
+Based upon our numerical experiments in 2021MNRAS.506.2199G, we actually believe that the sample here is incomplete in the brown dwarf mass range. The rule of thumb for our numerical setup is that our sink particle mass spectrum is reasonably complete down to ~100x the mass resolution. Here the mass resolutio is 1e-3 for a completeness limit of 1e-1. For this reason it wouldn't be totally appropriate to comment on the brown dwarf population here. To de-emphasize this less-relaiable part of the dataset we changed the lower limit of the plot to 0.1.
+
+> c) Concernign eq.1 and 2: the authors might want to critically check the variable M for consistency (for stars, for cloud mass?), M_* and M^*. E.g. the authors could use M_cl for cloud mass.
+
+Done.
+
+d) The sentence “…, so a dependence on cloud properties is feedback inevitably operates with variable effectiveness …” (on p.3, lower right) needs fixing.
+
+Done.
+
+e) Just above Sec.3.3. there is an
+“is is”.
+
+Thanks, fixed.
