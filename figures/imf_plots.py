@@ -26,14 +26,14 @@ import salpyter
 
 
 imfs_to_plot = (
-    glob(
-        "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
-        "STARFORGE_v1.2/M2e4_R1/*/output*"
-    )
-    + [
+    [
         "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
         "STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_all"
-    ]
+    ] + 
+    sorted(glob(
+        "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
+        "STARFORGE_v1.2/M2e4_R1/*/output*"
+    ))
 )
 
 model = "chabrier_smooth_bounds"
@@ -43,8 +43,11 @@ model = "chabrier_smooth_bounds"
 for NORMALIZED in True, False:
     imf_func = salpyter.get_imf_function(model)
 
-    NUM_HIST_BINS = 31
-    mbins = np.logspace(-3, 4, 1 + NUM_HIST_BINS)
+    # 4 bins per decade, aligned so every decade boundary is a bin edge.
+    BINS_PER_DECADE = 4
+    LOG_M_LO, LOG_M_HI = -3, 4
+    NUM_HIST_BINS = (LOG_M_HI - LOG_M_LO) * BINS_PER_DECADE
+    mbins = np.logspace(LOG_M_LO, LOG_M_HI, 1 + NUM_HIST_BINS)
     logm = np.linspace(-1, 4, 501)
     mgrid = 10**logm
     logm_jax = jnp.asarray(logm)
@@ -113,6 +116,7 @@ for NORMALIZED in True, False:
         return c
 
     labeled_chabrier = False
+    labeled_kroupa = False
     for run in imfs_to_plot:
         imf_data_path = run + "/IMF.dat"
         samples_path = run + f"/imf_samples_jax/samples_{model}.npy"
@@ -167,8 +171,12 @@ for NORMALIZED in True, False:
             first, last = nonzero[0], nonzero[-1]
             counts[:first] = np.nan
             counts[last + 1:] = np.nan
-        bin_centers = 0.5 * (mbins[:-1] + mbins[1:])
-        ax.step(bin_centers, counts, where="mid", color=color, linewidth=1.2, alpha=0.75)
+        # Use ax.stairs which takes the bin edges directly, so step boundaries
+        # land *exactly* on mbins (including the decade boundaries). step()
+        # with linear-midpoint alignment would shift the visible boundaries
+        # away from the bin edges on a log x-axis.
+        ax.stairs(counts, mbins, color=color, linewidth=1.2, alpha=0.75,
+                  baseline=None)
 
         lo_c = np.where(lo > 0, lo * imf_to_bins, np.nan)
         hi_c = np.where(hi > 0, hi * imf_to_bins, np.nan)
@@ -192,21 +200,43 @@ for NORMALIZED in True, False:
         ax.plot(mgrid, ref_c, color="black", ls="dotted", lw=0.9)
         labeled_chabrier = True
 
+        # Kroupa (2001) reference: salpyter's piecewise model with canonical
+        # slopes and breaks. Same per-dataset scaling as Chabrier; legend
+        # entry added via proxy handle after the loop.
+        kroupa_params = np.array([
+            0.7, -0.3, -1.3,
+            float(np.log10(0.08)), float(np.log10(0.5)),
+        ])
+        kroupa_imf = np.asarray(
+            salpyter.kroupa(
+                logm, kroupa_params,
+                float(np.log10(MMIN)), float(np.log10(MMAX)),
+            )
+        )
+        kroupa_c = np.where(kroupa_imf > 0, kroupa_imf * imf_to_bins, np.nan)
+        ax.plot(mgrid, kroupa_c, color="red", ls="dotted", lw=0.9)
+        labeled_kroupa = True
+
     ax.set(
         xscale="log",
         yscale="log",
-        xlim=[5e-3, 1e4],
-        ylim=[1e-4, 1] if NORMALIZED else [0.5, 1e4],
-        xlabel=r"$M\ (M_\odot)$",
+        xlim=[0.03, 3e3],
+        ylim=[1e-3, 1] if NORMALIZED else [0.5, 1e4],
+        xlabel=r"Stellar Mass $(M_\odot)$",
         ylabel="fraction per bin" if NORMALIZED else "count per bin",
     #    title=f"{model}  ·  16-84% posterior envelope per dataset",
     )
     handles, labels = ax.get_legend_handles_labels()
+    from matplotlib.lines import Line2D
     if labeled_chabrier:
-        from matplotlib.lines import Line2D
         handles.append(Line2D([], [], color="black", ls="dotted", lw=0.9))
         labels.append("Chabrier 2005")
-    ax.legend(handles, labels, loc="lower left", fontsize=8, frameon=True)
+    if labeled_kroupa:
+        handles.append(Line2D([], [], color="red", ls="dotted", lw=0.9))
+        labels.append("Kroupa 2001")
+    leg = ax.legend(handles, labels, loc="upper right", fontsize=8,
+                    borderaxespad=0, edgecolor="black")
+    leg.get_frame().set_linewidth(0.8)
     fig.tight_layout()
     out_path = os.path.join(OUTDIR, f"comparison_{model}{"_normalized" if NORMALIZED else ""}.pdf")
     fig.savefig(out_path, bbox_inches="tight")
