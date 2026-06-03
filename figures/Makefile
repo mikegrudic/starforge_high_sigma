@@ -1,0 +1,38 @@
+PLOTDIR := imf_plots
+MODEL := chabrier_smooth_bounds
+
+# Four PDFs:
+#   - count-mode histogram + posterior IMF comparison
+#   - normalized (PDF) histogram + posterior IMF comparison
+#   - alpha plot of Gamma_IMF vs M
+#   - multi-panel timelapse surface-density map
+COMPARE_PDF        := $(PLOTDIR)/comparison_$(MODEL).pdf
+COMPARE_NORM_PDF   := $(PLOTDIR)/comparison_$(MODEL)_normalized.pdf
+ALPHA_PDF          := $(PLOTDIR)/alphaplot_$(MODEL).pdf
+ALPHA_OBS_PDF      := $(PLOTDIR)/alphaplot_obs_$(MODEL).pdf
+MULTIPANEL_PDF     := multipanel.pdf
+
+ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(MULTIPANEL_PDF)
+
+
+.PHONY: all clean compare alpha alpha-obs multipanel
+all: $(ALL_PLOTS)
+
+compare: $(COMPARE_PDF) $(COMPARE_NORM_PDF)
+alpha: $(ALPHA_PDF)
+alpha-obs: $(ALPHA_OBS_PDF)
+multipanel: $(MULTIPANEL_PDF)
+
+# imf_plots.py writes both the count and normalized comparison PDFs in one run;
+# we list both targets to a common recipe so either being missing triggers it.
+$(COMPARE_PDF) $(COMPARE_NORM_PDF): imf_plots.py
+	python imf_plots.py
+
+$(ALPHA_PDF) $(ALPHA_OBS_PDF): imf_alphaplot.py
+	python imf_alphaplot.py
+
+$(MULTIPANEL_PDF): multipanel_maps.py
+	python multipanel_maps.py
+
+clean:
+	rm -rf $(PLOTDIR) $(MULTIPANEL_PDF)
