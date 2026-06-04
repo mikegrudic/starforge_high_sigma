@@ -48,7 +48,12 @@ for NORMALIZED in True, False:
     LOG_M_LO, LOG_M_HI = -3, 4
     NUM_HIST_BINS = (LOG_M_HI - LOG_M_LO) * BINS_PER_DECADE
     mbins = np.logspace(LOG_M_LO, LOG_M_HI, 1 + NUM_HIST_BINS)
-    logm = np.linspace(-1, 4, 501)
+    # Curve grid extends down to log10(M)=-2 (0.01 Msun) so the Chabrier and
+    # Kroupa reference lines remain visible into the brown-dwarf regime. Their
+    # normalization range stays [log10(MMIN), log10(MMAX)] (set per-dataset in
+    # the ref_imf calls below), so values >0.1 Msun match the data and posterior
+    # curves; values below 0.1 Msun are extrapolated references, not predictions.
+    logm = np.linspace(-2, 4, 601)
     mgrid = 10**logm
     logm_jax = jnp.asarray(logm)
     log_bin_width = np.log10(mbins.max() / mbins.min()) / NUM_HIST_BINS
@@ -166,62 +171,69 @@ for NORMALIZED in True, False:
         # draw drop lines at the data extremes. Zeros *between* populated bins
         # are left in place — on the log axis they show as vertical bars,
         # which is the intended visualization of empty bins in the data body.
-        nonzero = np.flatnonzero(counts > 0)
-        if len(nonzero) > 0:
-            first, last = nonzero[0], nonzero[-1]
-            counts[:first] = np.nan
-            counts[last + 1:] = np.nan
+        # nonzero = np.flatnonzero(counts > 0)
+        # if len(nonzero) > 0:
+        #     first, last = nonzero[0], nonzero[-1]
+        #     counts[:first] = np.nan
+        #     counts[last + 1:] = np.nan
         # Use ax.stairs which takes the bin edges directly, so step boundaries
         # land *exactly* on mbins (including the decade boundaries). step()
         # with linear-midpoint alignment would shift the visible boundaries
         # away from the bin edges on a log x-axis.
+        # Layering: references at zorder=1 (background), histogram at 2,
+        # posterior fill_between + median line at 3 (foreground). Models on
+        # top, histogram beneath, references in back.
         ax.stairs(counts, mbins, color=color, linewidth=1.2, alpha=0.75,
-                  baseline=None)
+                  baseline=None, zorder=2)
 
         lo_c = np.where(lo > 0, lo * imf_to_bins, np.nan)
         hi_c = np.where(hi > 0, hi * imf_to_bins, np.nan)
         mid_c = np.where(mid > 0, mid * imf_to_bins, np.nan)
-        ax.fill_between(mgrid, lo_c, hi_c, color=color, alpha=0.25)
-        ax.plot(mgrid, mid_c, color=color, lw=1.4, label=label)
+        ax.fill_between(mgrid, lo_c, hi_c, color=color, alpha=0.25, zorder=3)
+        ax.plot(mgrid, mid_c, color=color, lw=1.4, label=label, zorder=3)
 
-        # Chabrier (2005) reference, scaled to this dataset's bins. Same form
-        # as IMF_analysis_jax.py: chabrier_smooth at the published defaults.
-        ref_imf = np.asarray(
-            salpyter.get_imf_function("chabrier_smooth")(
-                logm,
-                np.asarray(salpyter.CHABRIER_SMOOTH_DEFAULT_PARAMS),
-                logmmin=float(np.log10(MMIN)),
-                logmmax=float(np.log10(MMAX)),
+        # Reference IMFs (Chabrier 2005, Kroupa 2001) are only meaningful when
+        # the y-axis is normalized — count-mode plots have a per-dataset N
+        # scaling that doesn't line up with a "literature reference" overlay.
+        if NORMALIZED:
+            # Chabrier (2005) reference, scaled to this dataset's bins. Same form
+            # as IMF_analysis_jax.py: chabrier_smooth at the published defaults.
+            ref_imf = np.asarray(
+                salpyter.get_imf_function("chabrier_smooth")(
+                    logm,
+                    np.asarray(salpyter.CHABRIER_SMOOTH_DEFAULT_PARAMS),
+                    logmmin=float(np.log10(MMIN)),
+                    logmmax=float(np.log10(MMAX)),
+                )
             )
-        )
-        ref_c = np.where(ref_imf > 0, ref_imf * imf_to_bins, np.nan)
-        # Don't label here — we want "Chabrier 2005" at the end of the legend,
-        # which we handle with a proxy handle after the loop.
-        ax.plot(mgrid, ref_c, color="black", ls="dotted", lw=0.9)
-        labeled_chabrier = True
+            ref_c = np.where(ref_imf > 0, ref_imf * imf_to_bins, np.nan)
+            # Don't label here — we want "Chabrier 2005" at the end of the legend,
+            # which we handle with a proxy handle after the loop.
+            ax.plot(mgrid, ref_c, color="black", ls="dotted", lw=0.9, zorder=1)
+            labeled_chabrier = True
 
-        # Kroupa (2001) reference: salpyter's piecewise model with canonical
-        # slopes and breaks. Same per-dataset scaling as Chabrier; legend
-        # entry added via proxy handle after the loop.
-        kroupa_params = np.array([
-            0.7, -0.3, -1.3,
-            float(np.log10(0.08)), float(np.log10(0.5)),
-        ])
-        kroupa_imf = np.asarray(
-            salpyter.kroupa(
-                logm, kroupa_params,
-                float(np.log10(MMIN)), float(np.log10(MMAX)),
+            # Kroupa (2001) reference: salpyter's piecewise model with canonical
+            # slopes and breaks. Same per-dataset scaling as Chabrier; legend
+            # entry added via proxy handle after the loop.
+            kroupa_params = np.array([
+                0.7, -0.3, -1.3,
+                float(np.log10(0.08)), float(np.log10(0.5)),
+            ])
+            kroupa_imf = np.asarray(
+                salpyter.kroupa(
+                    logm, kroupa_params,
+                    float(np.log10(MMIN)), float(np.log10(MMAX)),
+                )
             )
-        )
-        kroupa_c = np.where(kroupa_imf > 0, kroupa_imf * imf_to_bins, np.nan)
-        ax.plot(mgrid, kroupa_c, color="red", ls="dotted", lw=0.9)
-        labeled_kroupa = True
+            kroupa_c = np.where(kroupa_imf > 0, kroupa_imf * imf_to_bins, np.nan)
+            ax.plot(mgrid, kroupa_c, color="red", ls="dotted", lw=0.9, zorder=1)
+            labeled_kroupa = True
 
     ax.set(
         xscale="log",
         yscale="log",
-        xlim=[0.03, 3e3],
-        ylim=[1e-3, 1] if NORMALIZED else [0.5, 1e4],
+        xlim=[0.01, 4e3],
+        ylim=[3e-4, 1] if NORMALIZED else [0.5, 1e4],
         xlabel=r"Stellar Mass $(M_\odot)$",
         ylabel="fraction per bin" if NORMALIZED else "count per bin",
     #    title=f"{model}  ·  16-84% posterior envelope per dataset",

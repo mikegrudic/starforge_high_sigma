@@ -38,7 +38,7 @@ def run_imf_analysis(run):
     mbins = np.logspace(-3, 4, 1 + NUM_HIST_BINS)
     logm = np.log10(mgrid)
 
-    for imf_model in "chabrier", "chabrier_smooth", "chabrier_smooth_bounds", "chabrier_bounds", "chabrier_exp_bounds":  # salpyter.IMF_LIST:
+    for imf_model in "chabrier", "chabrier_smooth", "chabrier_smooth_bounds", "chabrier_smooth_lognormal", "chabrier_smooth_bounds_lognormal", "chabrier_bounds", "chabrier_exp_bounds":  # salpyter.IMF_LIST:
         print(run, imf_model)
         imf_func = salpyter.get_imf_function(imf_model)  # getattr(salpyter, imf_model + "_imf")
         _, ax = plt.subplots(1, 1, figsize=(4, 4))

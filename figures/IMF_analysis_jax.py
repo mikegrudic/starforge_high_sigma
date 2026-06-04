@@ -29,7 +29,7 @@ if os.path.isdir(_JAX_SALPYTER_SRC):
 
 # Force CPU before any JAX import. Multiple joblib workers each grabbing the
 # Metal/GPU device would oversubscribe; CPU is plenty for these 3-param fits.
-# os.environ.setdefault("JAX_PLATFORMS", "cpu")
+os.environ.setdefault("JAX_PLATFORMS", "cpu")
 
 from glob import glob
 from os import mkdir
@@ -47,7 +47,7 @@ from matplotlib import pyplot as plt
 
 NUM_WARMUP = 500
 NUM_SAMPLES = 2000
-OVERWRITE = True
+OVERWRITE = False
 PLOT_SAMPLES = True
 
 
@@ -69,7 +69,7 @@ def run_imf_analysis(run):
     mbins = np.logspace(-3, 4, 1 + NUM_HIST_BINS)
     logm = np.log10(mgrid)
 
-    for imf_model in "chabrier", "chabrier_smooth", "chabrier_smooth_bounds", "chabrier":
+    for imf_model in "chabrier", "chabrier_smooth", "chabrier_smooth_bounds", "chabrier_bounds", "chabrier_smooth_bounds_lognormal", "chabrier_smooth_lognormal":
         print(run, imf_model)
         imf_func = salpyter.get_imf_function(imf_model)
         _, ax = plt.subplots(1, 1, figsize=(4, 4))
@@ -137,6 +137,6 @@ def run_imf_analysis(run):
 
 
 dirs = [l.split("/IMF.dat")[0] for l in glob("imf_data/STARFORGE_RT/STARFORGE_v1.2/*/*/*/IMF.dat")]
-for run in dirs:
-    run_imf_analysis(run)
-# Parallel(n_jobs=-1)(delayed(run_imf_analysis)(run) for run in dirs)
+##for run in dirs:
+#    run_imf_analysis(run)
+Parallel(n_jobs=-1)(delayed(run_imf_analysis)(run) for run in dirs)
