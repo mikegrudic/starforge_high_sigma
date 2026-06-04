@@ -18,12 +18,13 @@ def logz_to_color(logz):
 
 
 runs_physics = {
-    r"$Z_\odot$": "STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    r"$Z_\odot$ (No Winds)": "STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_nowind",
-    r"$Z_\odot$ ($3\times$ Stronger Winds)": "STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_vink",
-    r"$Z_\odot$ (No IR Rad. Pressure)": "STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_noIR",
-    r"$10\% Z_\odot$": "STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    r"$1\% Z_\odot$": "STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
+    r"$Z_\odot$": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
+    r"$Z_\odot$ (No Winds)": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_nowind",
+#    r"$Z_\odot$ (No Winds, no IR RP)": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_nowind_noIR",
+    r"$Z_\odot$ ($3\times$ Stronger Winds)": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_vink",
+    r"$Z_\odot$ (No IR Rad. Pressure)": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_noIR",
+    r"$10\% Z_\odot$": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
+    r"$1\% Z_\odot$": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
 }
 
 
@@ -71,8 +72,8 @@ for maxnum in range(0, 6):
 
     ax.legend(labelspacing=0, loc=2, frameon=False, fontsize=10)
     ax.set(
-        ylabel=r"Maximum Stellar Mass ($M_\odot$)",  # $M_{\rm \star,max}\,\left(M_\odot\right)$",
-        xlabel=r"Total Cluster Mass ($M_\odot$)",
+        ylabel=r"$M_{\rm max}$ ($M_\odot$)",  # $M_{\rm \star,max}\,\left(M_\odot\right)$",
+        xlabel=r"$M_{\rm cluster}$ ($M_\odot$)",
         xlim=[1e2, 1e4],
         ylim=[1e1, 2000],
         xscale="log",
