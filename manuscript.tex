@@ -136,31 +136,55 @@ In this work we apply the {\small STARFORGE} model to the higher-density conditi
 
 
 \section{Results}
-\subsection{General SFH and IMF results}
+
+\begin{figure*}
+	\includegraphics[width=\textwidth]{figures/multipanel.pdf}
+\end{figure*}
+
+\subsection{Star Formation History and Efficiency}
 {\bf SFE vs sigmagas for all simulations coded by metallicity}
 
 \BG{Maximum mass versus cluster mass/cluster number. Can overplot the trend lines for this for IMF functions and PMF funcitons?}
 
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/imf_plots/comparison_chabrier_smooth_bounds_normalized.pdf}
+\end{figure}
+
+
+\begin{figure}
+%	\includegraphics[width=0.5\textwidth]{figures/imf_plots/alphaplot_obs_chabrier_smooth_bounds.pdf}
+\input{figures/imf_plots/alphaplot_obs_chabrier_smooth_bounds}
+
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/imf_plots/lognormal.pdf}
+	\label{fig:lognormal}
+\end{figure}
+
+The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-component model: there is a mass gap between $116 M_\odot$ and $981M_\odot$. Assuming the maximum-likelihood Chabrier fit given in Table \ref{table:imf_params}, we would expect $\int_{116M_\odot}^{981M_\odot}\phi\left(m\right)\,\mathrm{d}m = 0.7\%$ of stars to lie in this gap, or 7.6 on average for this sample size, and the likelihood of drawing 0 is $5\times 10^{-4}$. Consistently, in Figure \ref{fig:lognormal} we compare the single-component Chabrier fit with a two-component mixture with a Gaussian to model the high-mass excess, finding that the 2-component model has $\Delta \ln \mathcal{L} \sim 10$. Per the Wilks likelihood-ratio test, this disfavors the single-component model with $p \sim 3 \times 10^{-4}$. The four $\sim 10^{3} M_\odot$ stars formed in this simulation may be considered a separate population.
+
+
 \subsection{Feedback experiments}
 
-\BG{At the same tff, do phase plots of n vs T weighted by either $|v|$ or $|v_{\rm out}|$. This would indicate if the fast-feedback is heating the gas, for instance.}
+%\BG{At the same tff, do phase plots of n vs T weighted by either $|v|$ or $|v_{\rm out}|$. This would indicate if the fast-feedback is heating the gas, for instance.}
 
 \subsection{SMS formation}
 
-\BG{Plot e.g. relative distance from center of mass for the most massive 2 or 3 stars (y-axis) for each simulation (x-axis). E.g. are the SMS's forming in the center of the mass potential. Similarly plot Mmax/Mcluster vs time? (i.e. do the SMS stars form first and dominate the cluster mass or form later)}
+%\BG{Plot e.g. relative distance from center of mass for the most massive 2 or 3 stars (y-axis) for each simulation (x-axis). E.g. are the SMS's forming in the center of the mass potential. Similarly plot Mmax/Mcluster vs time? (i.e. do the SMS stars form first and dominate the cluster mass or form later)}
 
 % plot accretion histories, including radial/luminosity/Teff evolution, marking where the main sequence is reached (emphasis: most of the accretion takes place on MS)
 
 % "Stellar dynamics have been proposed as apossible pathway (Portegies Zwart et al. 1999a; Portegies Zwart & McMillan 2002; Reinoso et al. 2018a, 2020; Alister Seguel et al. 2020; Vergara et al. 2021, 2023, 2024, 2025) - vergara 2025"
 
 \subsection{Integrated population properties}
-L/M, UV/SFR, metal yields, black hole population
+%L/M, UV/SFR, metal yields, black hole population
 \section{Discussion}
 
 \subsection{vms formation}
 compared to gadget simulations forming VMS: we are showing that it can occur despite 1. being in much denser conditions where the jeans mass is much smaller, and 2. despite feedback, including notably jets
 
-gieles picture: https://academic.oup.com/mnras/article/544/1/483/8230792?login=true#538539593
+gieles picture: \url{https://academic.oup.com/mnras/article/544/1/483/8230792?login=true#538539593}
 
 \subsection{massive SF scaling in up dense environments for feedback}
 does this make sense vis. observations? implications for feedback, chemical enrichment, remnants, etc
@@ -178,7 +202,7 @@ https://arxiv.org/abs/2510.25950
 
 
 \section{Conclusion}
-
+We have confirmed that the star formation efficiency on the scale of an individual GMC saturates to a value approaching unity at high surface density, {\it whilst accounting for all stellar feedback processes acting in concert from individual stars}.
 
 \section*{Acknowledgements}
 

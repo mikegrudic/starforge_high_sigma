@@ -218,7 +218,7 @@ for WITH_OBS in (False, True):
     # Reset the Dark2 color index so the per-dataset colors match across PDFs.
     _color_for.__defaults__ = (([0],))  # type: ignore[attr-defined]
 
-    fig, ax = plt.subplots(1, 1, figsize=(5.5, 5.5) if WITH_OBS else (4.5, 4.5))
+    fig, ax = plt.subplots(1, 1, figsize=(4, 4) if WITH_OBS else (4.5, 4.5))
 
     # ---- dataset envelopes ----
     for run in imfs_to_plot:
@@ -252,8 +252,8 @@ for WITH_OBS in (False, True):
         label = _short_label(run)
         # On the obs overlay, disambiguate the simulation series from the
         # literature points in the legend.
-        if WITH_OBS:
-            label = "STARFORGE: " + label
+#        if WITH_OBS:
+#            label = "STARFORGE: " + label
         ax.fill_between(mgrid_alpha, lo_g, hi_g, color=color, alpha=0.25)
         ax.plot(mgrid_alpha, mid_g, color=color, lw=1.4, label=label)
 
@@ -303,7 +303,7 @@ for WITH_OBS in (False, True):
         leg = ax.legend(
             [handles[i] for i in ordered], [labels[i] for i in ordered],
             loc="upper right", fontsize=6, frameon=False,
-            borderaxespad=0, labelspacing=0.2, ncol=2, edgecolor="black",
+            borderaxespad=0, labelspacing=0.2, ncol=1, edgecolor="black",
         )
     else:
         leg = ax.legend(
@@ -314,6 +314,65 @@ for WITH_OBS in (False, True):
     out_path = os.path.join(
         OUTDIR, f"alphaplot{'_obs' if WITH_OBS else ''}_{model}.pdf"
     )
+
+    # For the obs variant, compute each clickable point's normalized
+    # coordinate in the saved-PDF frame BEFORE savefig (renderer must still
+    # be available). pad_inches=0.1 is matplotlib's default for
+    # bbox_inches="tight".
+    overlays: list[tuple[float, float, str]] = []
+    if WITH_OBS:
+        fig.canvas.draw()
+        renderer = fig.canvas.get_renderer()
+        tb = fig.get_tightbbox(renderer)  # inches
+        pad = 0.1
+        sx0, sy0 = tb.x0 - pad, tb.y0 - pad
+        sx1, sy1 = tb.x1 + pad, tb.y1 + pad
+        dpi = fig.dpi
+        for x, y, url in zip(_obs_mmed, _obs_slope, _obs_urls):
+            if not np.isfinite(x) or not np.isfinite(y):
+                continue
+            px, py = ax.transData.transform((x, y))
+            ix, iy = px / dpi, py / dpi
+            nx = (ix - sx0) / (sx1 - sx0)
+            ny = (iy - sy0) / (sy1 - sy0)
+            if 0.0 <= nx <= 1.0 and 0.0 <= ny <= 1.0:
+                overlays.append((nx, ny, url))
+
     fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {out_path}")
+
+    # Companion .tex overlay: \includegraphics{...} + TikZ \href hotspots so
+    # the in-figure ADS links survive being embedded in manuscript.tex (PDF
+    # link annotations are dropped by \includegraphics, but native LaTeX
+    # hyperlinks are not). \input this instead of the bare \includegraphics.
+    if WITH_OBS and overlays:
+        tex_path = out_path[:-4] + ".tex"
+        # The overlay is \input'd from manuscript.tex sitting one level up
+        # (../manuscript.tex). pdflatex resolves \includegraphics relative to
+        # its CWD (the manuscript directory), so the included PDF must be
+        # addressed via the same "figures/imf_plots/<name>.pdf" prefix the
+        # user already types for \input. If your manuscript lives elsewhere,
+        # edit the path here or set \graphicspath in the preamble.
+        manuscript_relative_pdf = os.path.join("figures", out_path)
+        input_relative = os.path.join("figures", out_path[:-4])
+        with open(tex_path, "w") as f:
+            f.write(f"% Auto-generated overlay for {os.path.basename(out_path)}.\n")
+            f.write("% Requires: hyperref, tikz, graphicx in the preamble.\n")
+            f.write(f"% Use as: \\input{{{input_relative}}}\n")
+            f.write("\\begin{tikzpicture}\n")
+            f.write("  \\node[anchor=south west,inner sep=0pt] (img) at (0,0) {%\n")
+            f.write(f"    \\includegraphics[width=\\linewidth]{{{manuscript_relative_pdf}}}%\n")
+            f.write("  };\n")
+            f.write("  \\begin{scope}[x={(img.south east)},y={(img.north west)}]\n")
+            for nx, ny, url in overlays:
+                # & is the only common LaTeX-fatal char in ADS bibcodes;
+                # percent-encode it so the URL still resolves in browsers.
+                safe_url = url.replace("&", "%26").replace("#", "%23")
+                f.write(
+                    f"    \\node[inner sep=2pt] at ({nx:.4f},{ny:.4f}) "
+                    f"{{\\href{{{safe_url}}}{{\\phantom{{x}}}}}};\n"
+                )
+            f.write("  \\end{scope}\n")
+            f.write("\\end{tikzpicture}\n")
+        print(f"wrote {tex_path}")
