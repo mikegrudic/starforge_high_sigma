@@ -33,12 +33,12 @@ from palettable.colorbrewer.qualitative import Dark2_3
 ALPHAPLOT_CSV = os.path.expanduser("./alphaplot.csv")
 imfs_to_plot = (
     [
-        "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
+        "./imf_data/STARFORGE_RT/"
         "STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_all"
     ]
     + sorted(
         glob(
-            "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
+            "./imf_data/STARFORGE_RT/"
             "STARFORGE_v1.2/M2e4_R1/*/output*"
         )
     )

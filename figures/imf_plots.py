@@ -27,11 +27,11 @@ import salpyter
 
 imfs_to_plot = (
     [
-        "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
+        "imf_data/STARFORGE_RT/"
         "STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_all"
     ] + 
     sorted(glob(
-        "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
+        "./imf_data/STARFORGE_RT/"
         "STARFORGE_v1.2/M2e4_R1/*/output*"
     ))
 )
@@ -250,7 +250,7 @@ for NORMALIZED in True, False:
                     borderaxespad=0, edgecolor="black")
     leg.get_frame().set_linewidth(0.8)
     fig.tight_layout()
-    out_path = os.path.join(OUTDIR, f"comparison_{model}{"_normalized" if NORMALIZED else ""}.pdf")
+    out_path = os.path.join(OUTDIR, f"comparison_{model}{'_normalized' if NORMALIZED else ''}.pdf")
     fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {out_path}")
