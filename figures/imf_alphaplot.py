@@ -30,7 +30,7 @@ from palettable.colorbrewer.qualitative import Dark2_3
 
 # ---------------- inputs ---------------- #
 
-ALPHAPLOT_CSV = os.path.expanduser("~/code/alphaplot/alphaplot.csv")
+ALPHAPLOT_CSV = os.path.expanduser("./alphaplot.csv")
 imfs_to_plot = (
     [
         "/Users/mgrudic/code/starforge_high_sigma/figures/imf_data/STARFORGE_RT/"
