@@ -20,7 +20,7 @@ RUN_PATH = (
     "M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1"
 )
 GRADIENT_STRIDE = 1
-DEFAULT_N_STARS = 10
+DEFAULT_N_STARS = 4
 
 n_stars = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_N_STARS
 
@@ -65,7 +65,7 @@ for color, lw, (_, (snaps, mass)) in zip(colors, lws, top):
 ax.set(
     xscale="log",
     yscale="log",
-    xlabel=r"Stellar Masses ($M_\odot$)",
+    xlabel=r"Stellar Mass ($M_\odot$)",
     ylabel=r"$\dot{M} /M^{2/3}\,\rm\left(M_\odot^{1/3}\,\rm yr^{-1}\right)$",
     ylim=[1e-5,3e-3]
 )
