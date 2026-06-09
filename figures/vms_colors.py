@@ -17,7 +17,7 @@ LW_BLACK = 0.4
 
 def colors_and_lws(n_stars):
     n_color = min(N_COM_STARS, n_stars)
-    colors = np.zeros((n_stars, 4))
+    colors = 0.5*np.ones((n_stars, 4))
     colors[:, 3] = 1.0
     colors[:n_color] = plt.cm.viridis(np.linspace(VIRIDIS_LO, VIRIDIS_HI, n_color))
     lws = np.where(np.arange(n_stars) < n_color, LW_COLOR, LW_BLACK)
