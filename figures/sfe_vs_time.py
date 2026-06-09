@@ -74,10 +74,11 @@ for path, M_cloud, R_cloud, logz, label in runs:
     sfe = mstar / M_cloud
 
     color = "black" if "M2e4_R10" in path else LOGZ_COLORS[logz]
-    ls = "dashdot" if "M2e4_R10" in path else "solid"
-    alpha = 0.6 if "M2e4_R10" in path else 1.0
+    ls = "solid" if "M2e4_R10" in path else "solid"
+    alpha = 1 if "M2e4_R10" in path else 1.0
+    lw = 1 if "M2e4_R10" in path else 2
 
-    ax.plot(x, sfe, color=color, ls=ls, lw=1.2, alpha=alpha, label=label)
+    ax.plot(x, sfe, color=color, ls=ls, alpha=alpha, label=label, lw=lw)
 
 ax.set(
     xlabel=r"$t / t_{\rm ff}$",
