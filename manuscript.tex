@@ -144,6 +144,10 @@ In this work we apply the {\small STARFORGE} model to the higher-density conditi
 \subsection{Star Formation History and Efficiency}
 {\bf SFE vs sigmagas for all simulations coded by metallicity}
 
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/sfe_vs_time.pdf}
+\end{figure}
+
 \BG{Maximum mass versus cluster mass/cluster number. Can overplot the trend lines for this for IMF functions and PMF funcitons?}
 
 \begin{figure}
@@ -162,10 +166,10 @@ In this work we apply the {\small STARFORGE} model to the higher-density conditi
 	\label{fig:lognormal}
 \end{figure}
 
-The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-component model: there is a mass gap between $116 M_\odot$ and $981M_\odot$. Assuming the maximum-likelihood Chabrier fit given in Table \ref{table:imf_params}, we would expect $\int_{116M_\odot}^{981M_\odot}\phi\left(m\right)\,\mathrm{d}m = 0.7\%$ of stars to lie in this gap, or 7.6 on average for this sample size, and the likelihood of drawing 0 is $5\times 10^{-4}$. Consistently, in Figure \ref{fig:lognormal} we compare the single-component Chabrier fit with a two-component mixture with a Gaussian to model the high-mass excess, finding that the 2-component model has $\Delta \ln \mathcal{L} \sim 10$. Per the Wilks likelihood-ratio test, this disfavors the single-component model with $p \sim 3 \times 10^{-4}$. The four $\sim 10^{3} M_\odot$ stars formed in this simulation may be considered a separate population.
+The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-component model: there is a mass gap between $116 M_\odot$ and $981M_\odot$. Assuming the maximum-likelihood Chabrier fit given in Table \ref{table:imf_params}, we would expect $\int_{116M_\odot}^{981M_\odot}\phi\left(m\right)\,\mathrm{d}m = 0.7\%$ of stars to lie in this gap, or 7.6 on average for this sample size, and the likelihood of drawing 0 is $5\times 10^{-4}$. Consistently, in Figure \ref{fig:lognormal} we compare the single-component Chabrier fit with a two-component mixture with a Gaussian to model the high-mass excess, finding that the 2-component model has $\Delta \ln \mathcal{L} \sim 10$. Per the Wilks likelihood-ratio test, this disfavors the single-component model with $p \sim 3 \times 10^{-4}$. The four $\sim 10^{3} M_\odot$ stars formed in this simulation may be considered a separate population. 
 
 
-\subsection{Feedback experiments}
+\subsection{Maximum stellar mass and feedback}
 
 \begin{figure}
 	\input{figures/Mcluster_vs_Mmax}
@@ -174,6 +178,14 @@ The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-com
 %\BG{At the same tff, do phase plots of n vs T weighted by either $|v|$ or $|v_{\rm out}|$. This would indicate if the fast-feedback is heating the gas, for instance.}
 
 \subsection{SMS formation}
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/VMS_Accretion_History.pdf}
+\end{figure}
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/VMS_M_vs_Mdot_M23.pdf}
+\end{figure}
+
 
 %\BG{Plot e.g. relative distance from center of mass for the most massive 2 or 3 stars (y-axis) for each simulation (x-axis). E.g. are the SMS's forming in the center of the mass potential. Similarly plot Mmax/Mcluster vs time? (i.e. do the SMS stars form first and dominate the cluster mass or form later)}
 
