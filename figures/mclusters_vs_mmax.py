@@ -355,27 +355,21 @@ for x, y, u in _clickables:
     if 0.0 <= nx <= 1.0 and 0.0 <= ny <= 1.0:
         overlays.append((nx, ny, u))
 
-out_pdf = "Mcluster_vs_Mmax.pdf"
-plt.savefig(out_pdf, bbox_inches="tight")
-
-# Companion .tex overlay so the in-figure ADS link survives \includegraphics in
-# the manuscript (PDF link annotations are stripped by graphicx; native LaTeX
-# \href hotspots are not). \input{figures/Mcluster_vs_Mmax} from manuscript.tex.
-if overlays:
+def _write_tex_overlay(out_pdf, overlays):
+    """Write the TikZ \\href hotspot overlay companion file for the saved PDF."""
+    if not overlays: return
     tex_path = out_pdf.replace(".pdf", ".tex")
     manuscript_relative_pdf = f"figures/{out_pdf}"
     with open(tex_path, "w") as _f:
         _f.write(f"% Auto-generated overlay for {out_pdf}.\n")
         _f.write("% Requires hyperref, tikz, graphicx in the preamble.\n")
-        _f.write("% Use as: \\input{figures/Mcluster_vs_Mmax}\n")
+        _f.write(f"% Use as: \\input{{figures/{out_pdf[:-4]}}}\n")
         _f.write("\\begin{tikzpicture}\n")
         _f.write("  \\node[anchor=south west,inner sep=0pt] (img) at (0,0) {%\n")
         _f.write(f"    \\includegraphics[width=\\linewidth]{{{manuscript_relative_pdf}}}%\n")
         _f.write("  };\n")
         _f.write("  \\begin{scope}[x={(img.south east)},y={(img.north west)}]\n")
         for nx, ny, u in overlays:
-            # Percent-encode any '#' so the URL survives LaTeX's macro-param
-            # interpretation (the rest is already ASCII-safe).
             safe_url = u.replace("#", "%23")
             _f.write(
                 f"    \\node[inner sep=2pt] at ({nx:.4f},{ny:.4f}) "
@@ -384,3 +378,93 @@ if overlays:
         _f.write("  \\end{scope}\n")
         _f.write("\\end{tikzpicture}\n")
     print(f"wrote {tex_path}")
+
+
+def _normalize_overlays(clickables, ax, fig, sx0, sy0, sx1, sy1, dpi):
+    """Convert (x, y, url) data tuples to normalized figure-coord overlays for the .tex hotspots."""
+    out = []
+    for x, y, u in clickables:
+        px, py = ax.transData.transform((x, y))
+        nx = (px / dpi - sx0) / (sx1 - sx0)
+        ny = (py / dpi - sy0) / (sy1 - sy0)
+        if 0.0 <= nx <= 1.0 and 0.0 <= ny <= 1.0:
+            out.append((nx, ny, u))
+    return out
+
+
+# ---- (1) Save the baseline (Yan compilation + R136) PDF first.
+out_pdf = "Mcluster_vs_Mmax.pdf"
+plt.savefig(out_pdf, bbox_inches="tight")
+_write_tex_overlay(out_pdf, overlays)
+
+# ---- (2) Now overlay the modern-compilation alternative cluster-mass measurements
+# (Hosek+2019, Wright+2015, Bonatto+2006, etc. from yan23_alt_measurements.fits),
+# re-save as Mcluster_vs_Mmax_alt.pdf with its own .tex companion. Each modern
+# measurement is plotted as a dark-blue open square at its Mecl value; mmax uses
+# the paper's quoted value when available, else falls back to the Yan-row mmax
+# for that cluster (so the marker sits on the same y as the gray X).
+ALT_FITS = "yan23_alt_measurements.fits"
+alt_obs = Table.read(ALT_FITS)
+# Yan-row mmax per cluster, for rows where the modern paper doesn't quote mmax.
+YAN_MMAX = {  # Msun, linear
+    "R136": 125.31, "Arches": 110.92, "Cyg OB2": 92.04, "NGC 6611": 61.66,
+    "Trumpler 14": 99.77, "NGC 6357": 65.77, "IC 1805": 57.02,
+}
+alt_clickables = []
+for row in alt_obs:
+    cname = str(row["cluster_name"])
+    if cname == "R136":
+        continue  # already plotted as red stars above; don't double-mark
+    # Only plot well-determined "value" measurements. Upper/lower bound rows
+    # (Figer+2002's velocity-dispersion upper limit on Arches; Lima+2014's
+    # saturation-affected direct counts in NGC 6357) live in the FITS for the
+    # record but are excluded from the visual overlay to avoid misleading the
+    # eye — they're not apples-to-apples with the IMF-extrapolated values.
+    if str(row["Mecl_type"]) != "value":
+        continue
+    Mecl = float(row["Mecl"])
+    if not np.isfinite(Mecl):
+        continue
+    # asymmetric x error bars in linear Msun from the stored log-dex offsets
+    up_dex = float(row["Mecl_up_dex"]) if np.isfinite(row["Mecl_up_dex"]) else 0.0
+    lo_dex = float(row["Mecl_lo_dex"]) if np.isfinite(row["Mecl_lo_dex"]) else 0.0
+    xerr_up = Mecl * (10.0 ** up_dex - 1.0) if up_dex > 0 else 0.0
+    xerr_lo = Mecl * (1.0 - 10.0 ** (-lo_dex)) if lo_dex > 0 else 0.0
+    mmax = float(row["mmax"]) if np.isfinite(row["mmax"]) else YAN_MMAX.get(cname, np.nan)
+    if not np.isfinite(mmax):
+        continue
+    ax.errorbar(
+        [Mecl], [mmax],
+        xerr=[[xerr_lo], [xerr_up]],
+        fmt="s", mfc="none", mec="navy", color="navy",
+        markersize=5, mew=0.8, elinewidth=0.5, capsize=0, zorder=6,
+    )
+    u = _ads_url(str(row["bibcode"]))
+    ax.text(
+        Mecl, mmax, "o", url=u, color="none", fontsize=4,
+        bbox=dict(boxstyle="circle", url=u, facecolor="none", edgecolor="none"),
+        ha="center", va="center", zorder=10000, clip_on=True,
+    )
+    alt_clickables.append((Mecl, mmax, u))
+# legend proxy for the modern-compilation overlay
+ax.scatter([], [], marker="s", facecolor="none", edgecolor="navy", s=25,
+           lw=0.8, label="Modern reanalyses")
+# Rebuild the legend so the new "Modern reanalyses" proxy appears.
+_old_legend = ax.get_legend()
+if _old_legend is not None:
+    _old_legend.remove()
+ax.legend(loc="lower right", labelspacing=0.2, frameon=True, fontsize=7,
+          edgecolor="black")
+# Recompute screen positions (legend changed = tight bbox shifted) and append
+# the alt clickables to the overlay list.
+fig.canvas.draw()
+_tb2 = fig.get_tightbbox(fig.canvas.get_renderer())
+_sx0a, _sy0a = _tb2.x0 - _pad, _tb2.y0 - _pad
+_sx1a, _sy1a = _tb2.x1 + _pad, _tb2.y1 + _pad
+overlays_alt = _normalize_overlays(
+    _clickables + alt_clickables, ax, fig,
+    _sx0a, _sy0a, _sx1a, _sy1a, fig.dpi,
+)
+out_pdf_alt = "Mcluster_vs_Mmax_alt.pdf"
+plt.savefig(out_pdf_alt, bbox_inches="tight")
+_write_tex_overlay(out_pdf_alt, overlays_alt)
