@@ -12,4 +12,8 @@ while IFS= read -r src_dir || [[ -n "$src_dir" ]]; do
     mkdir -p "${dest_dir}"
     cp "${src_dir}/IMF.dat" "${dest_dir}/IMF.dat"
     cp "${src_dir}/global_statistics.fits" "${dest_dir}/global_statistics.fits"
+    if [[ ! -f "${dest_dir}/star_masses.npz" ]]; then
+        python "${SCRIPT_DIR}/extract_star_masses.py" \
+            "${src_dir}" "${dest_dir}/star_masses.npz"
+    fi
 done < "${SCRIPT_DIR}/simulation_paths"
