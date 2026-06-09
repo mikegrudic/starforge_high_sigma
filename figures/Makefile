@@ -12,11 +12,12 @@ ALPHA_PDF          := $(PLOTDIR)/alphaplot_$(MODEL).pdf
 ALPHA_OBS_PDF      := $(PLOTDIR)/alphaplot_obs_$(MODEL).pdf
 LOGNORMAL_PDF      := $(PLOTDIR)/lognormal.pdf
 MULTIPANEL_PDF     := multipanel.pdf
+MCLUSTER_PDF       := Mcluster_vs_Mmax.pdf
 
-ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(LOGNORMAL_PDF) $(MULTIPANEL_PDF)
+ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(LOGNORMAL_PDF) $(MULTIPANEL_PDF) $(MCLUSTER_PDF)
 
 
-.PHONY: all clean compare_imfs alpha alpha-obs lognormal multipanel
+.PHONY: all clean compare_imfs alpha alpha-obs lognormal multipanel mcluster
 all: $(ALL_PLOTS)
 
 compare_imfs: $(COMPARE_PDF) $(COMPARE_NORM_PDF)
@@ -24,6 +25,7 @@ alpha: $(ALPHA_PDF)
 alpha-obs: $(ALPHA_OBS_PDF)
 lognormal: $(LOGNORMAL_PDF)
 multipanel: $(MULTIPANEL_PDF)
+mcluster: $(MCLUSTER_PDF)
 
 # imf_plots.py writes both the count and normalized comparison PDFs in one run;
 # we list both targets to a common recipe so either being missing triggers it.
@@ -39,5 +41,8 @@ $(LOGNORMAL_PDF): lognormal.py
 $(MULTIPANEL_PDF): multipanel_maps.py
 	python multipanel_maps.py
 
+$(MCLUSTER_PDF): mclusters_vs_mmax.py
+	python mclusters_vs_mmax.py
+
 clean:
-	rm -rf $(PLOTDIR) $(MULTIPANEL_PDF)
+	rm -rf $(PLOTDIR) $(MULTIPANEL_PDF) $(MCLUSTER_PDF)
