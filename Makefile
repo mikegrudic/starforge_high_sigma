@@ -35,9 +35,23 @@ bib:
 figures:
 	$(MAKE) -C figures all
 
-# Remove everything latexmk knows about, including manuscript.pdf.
+# Per-figure delegation so a single missing or stale figure (e.g. after a
+# clean) can be rebuilt without re-running every script. The figures
+# Makefile's PDFs live at the figures/ root or under figures/imf_plots/;
+# either path strips to the basename and is built via recursive make.
+figures/%.pdf:
+	$(MAKE) -C figures $(notdir $@)
+
+figures/imf_plots/%.pdf:
+	$(MAKE) -C figures imf_plots/$(notdir $@)
+
+# Remove everything latexmk knows about (PDF + .aux/.log/.fls/.fdb_latexmk/
+# .out/.toc/etc.), plus the BibTeX-side outputs latexmk preserves by default
+# in case they were hand-edited (.bbl is the resolved bibliography; .blg is
+# its log; .bcf is the biblatex control file if anyone ever switches).
 clean:
 	latexmk -C $(TEX)
+	rm -f $(TEX).bbl $(TEX).blg $(TEX).bcf $(TEX).run.xml
 
 # macOS convenience: open the built PDF in Preview.
 view: $(TEX).pdf

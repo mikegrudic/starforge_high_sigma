@@ -141,6 +141,9 @@
 \bibitem[\protect\citeauthoryear{{Miville-Deschenes}, {Murray}  \& {Lee}}{{Miville-Deschenes} et~al.}{2017}]{miville:2017.gmcs}
 {Miville-Deschenes} M.-A.,  {Murray} N.,   {Lee} E.~J.,  2017, \mn@doi [\apj] {10.3847/1538-4357/834/1/57}, \href {http://adsabs.harvard.edu/abs/2017ApJ...834...57M} {834, 57}
 
+\bibitem[\protect\citeauthoryear{{Murray} \& {Lin}}{{Murray} \& {Lin}}{1996}]{murray:1996.imf.coalescence}
+{Murray} S.~D.,  {Lin} D. N.~C.,  1996, \mn@doi [\apj] {10.1086/177648}, \href {https://ui.adsabs.harvard.edu/abs/1996ApJ...467..728M} {467, 728}
+
 \bibitem[\protect\citeauthoryear{{Offner}, {Moe}, {Kratter}, {Sadavoy}, {Jensen}  \& {Tobin}}{{Offner} et~al.}{2023}]{offner:2023.multiples.review}
 {Offner} S.~S.~R.,  {Moe} M.,  {Kratter} K.~M.,  {Sadavoy} S.~I.,  {Jensen} E.~L.~N.,   {Tobin} J.~J.,  2023, in {Inutsuka} S.,  {Aikawa} Y.,  {Muto} T.,  {Tomida} K.,   {Tamura} M.,  eds,  Astronomical Society of the Pacific Conference Series Vol. 534, Protostars and Planets VII. p.~275 (\mn@eprint {arXiv} {2203.10066}), \mn@doi{10.48550/arXiv.2203.10066}
 
@@ -182,6 +185,9 @@
 
 \bibitem[\protect\citeauthoryear{{Wolfire} \& {Cassinelli}}{{Wolfire} \& {Cassinelli}}{1987}]{wolfire:1987.massive.sf}
 {Wolfire} M.~G.,  {Cassinelli} J.~P.,  1987, \mn@doi [\apj] {10.1086/165503}, \href {https://ui.adsabs.harvard.edu/abs/1987ApJ...319..850W} {319, 850}
+
+\bibitem[\protect\citeauthoryear{{Yan}, {Jerabkova}  \& {Kroupa}}{{Yan} et~al.}{2023}]{yan:2023.mmax.mecl.relation}
+{Yan} Z.,  {Jerabkova} T.,   {Kroupa} P.,  2023, \mn@doi [\aap] {10.1051/0004-6361/202244919}, \href {https://ui.adsabs.harvard.edu/abs/2023A&A...670A.151Y} {670, A151}
 
 \makeatother
 \end{thebibliography}
