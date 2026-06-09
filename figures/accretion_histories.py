@@ -89,7 +89,7 @@ for color, lw, (_, (snaps, mass, coord)) in zip(colors, lws, top):
 
 ax[0].xaxis.set_ticklabels([])
 ax[1].xaxis.set_ticklabels([])
-ax[0].set(yscale="log", ylim=[0.1, 3e3], ylabel=r"Stellar Masses ($M_\odot$)", xlim=[0, 175])
+ax[0].set(yscale="log", ylim=[0.1, 3e3], ylabel=r"Stellar Mass ($M_\odot$)", xlim=[0, 175])
 ax[1].set(
     yscale="log",
     ylim=[3e-6, 0.1],
@@ -128,7 +128,7 @@ for color, lw, (_, (snaps, mass, _coord)) in zip(colors, lws, top):
 ax.set(
     xscale="log",
     yscale="log",
-    xlabel=r"Stellar Masses ($M_\odot$)",
+    xlabel=r"Stellar Mass ($M_\odot$)",
     ylabel=r"$\dot{M} /M^{2}\,\rm\left(M_\odot^{-1}\,\rm yr^{-1}\right)$",
 )
 fig.subplots_adjust(hspace=0, wspace=0)
