@@ -11,11 +11,12 @@ SFE_PDF            := sfe_vs_time.pdf
 VMS_ACCRETION_PDF  := VMS_Accretion_History.pdf
 VMS_MDOT_PDF       := VMS_M_vs_Mdot.pdf
 VMS_MDOT_M23_PDF   := VMS_M_vs_Mdot_M23.pdf
+VMS_DIST_PDF       := VMS_Distance_from_COM.pdf
 
 # Per-star data extracted by extract_star_masses.py; backs the VMS plots.
 VMS_STAR_DATA := imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1/star_masses.npz
 
-ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(LOGNORMAL_PDF) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_MDOT_M23_PDF) $(SFE_PDF)
+ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(LOGNORMAL_PDF) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF) $(VMS_MDOT_M23_PDF) $(SFE_PDF)
 
 
 .PHONY: all clean compare_imfs alpha alpha-obs lognormal mcluster vms_accretion vms_mdot_m23 sfe
@@ -50,13 +51,14 @@ $(SFE_PDF): sfe_vs_time.py
 clean:
 	rm -rf $(PLOTDIR) $(MCLUSTER_PDF) $(SFE_PDF)
 
-# accretion_histories.py writes both VMS_Accretion_History.pdf and
-# VMS_M_vs_Mdot.pdf in one run; list both targets to share the recipe.
-$(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF): accretion_histories.py vms_colors.py $(VMS_STAR_DATA)
+# accretion_histories.py writes VMS_Accretion_History.pdf,
+# VMS_Distance_from_COM.pdf, and VMS_M_vs_Mdot.pdf in one run; list all three
+# targets so the recipe re-runs if any is missing.
+$(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF): accretion_histories.py vms_colors.py $(VMS_STAR_DATA)
 	python accretion_histories.py
 
 $(VMS_MDOT_M23_PDF): mdot_vs_m_23.py vms_colors.py $(VMS_STAR_DATA)
 	python mdot_vs_m_23.py
 
 clean:
-	rm -rf $(PLOTDIR) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_MDOT_M23_PDF)
+	rm -rf $(PLOTDIR) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF) $(VMS_MDOT_M23_PDF)
