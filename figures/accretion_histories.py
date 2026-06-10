@@ -69,30 +69,59 @@ with np.errstate(invalid="ignore", divide="ignore"):
 com_pos[total_m == 0] = np.nan
 
 
-def plot_trajectory(ax_mass, ax_mdot, ax_dist, t_kyr, mass, coord, color, lw):
+def plot_trajectory(ax_mass, ax_mdot, ax_dist, t_kyr, mass, coord, color, lw, label=None):
     ax_mass.plot(t_kyr - tmin, mass, lw=lw, color=color)
     ts = t_kyr[::GRADIENT_STRIDE]
     ms = mass[::GRADIENT_STRIDE]
     if len(ts) < 2:
         return
     mdot = np.diff(ms) / np.diff(ts) / 1e3
-    ax_mdot.plot(ts[1:] - tmin, mdot, lw=lw, color=color)
+    ax_mdot.plot(ts[1:] - tmin, mdot, lw=lw, color=color, label=label)
     ax_mdot.plot(ts[1:] - tmin, -mdot, lw=lw, color=color, ls="dashed")
 
 
 fig, ax = plt.subplots(3, 1, figsize=(4, 6))
-for color, lw, (_, (snaps, mass, coord)) in zip(colors, lws, top):
-    plot_trajectory(ax[0], ax[1], ax[2], times_kyr[snaps], mass, coord, color, lw)
+for i, (color, lw, (_, (snaps, mass, coord))) in enumerate(zip(colors, lws, top)):
+    label = rf"Star {i+1} (${mass[-1]:.0f}\,M_\odot$)" if i < 4 else None
+    plot_trajectory(ax[0], ax[1], ax[2], times_kyr[snaps], mass, coord, color, lw, label=label)
     dist = np.linalg.norm(coord - com_pos[snaps], axis=1)
     finite = np.isfinite(dist)
     ax[2].plot((times_kyr[snaps] - tmin)[finite], dist[finite], lw=lw, color=color)
+
+# Total stellar accretion rate: dM_tot/dt where M_tot is the per-snapshot sum
+# of every star's mass. Matches the per-star convention (solid positive,
+# dashed negative).
+mass_total = np.bincount(snap_idx, weights=masses, minlength=n_snaps)
+mdot_total = np.diff(mass_total) / np.diff(times_kyr) / 1e3
+ax[1].plot(times_kyr[1:] - tmin, mdot_total, color="black", lw=0.8, label="Total")
+ax[1].plot(times_kyr[1:] - tmin, -mdot_total, color="black", lw=1.2, ls="dashed")
+
+# Same sum, restricted to the four most-massive stars (ranked by max mass).
+mass_top4 = np.zeros(n_snaps, dtype=np.float64)
+for _, (snaps, mass, _coord) in ranked[:4]:
+    mass_top4[snaps] += mass
+mdot_top4 = np.diff(mass_top4) / np.diff(times_kyr) / 1e3
+ax[1].plot(times_kyr[1:] - tmin, mdot_top4, color="orangered", lw=0.8, label="Top 4 Sum")
+
+# Legend lists Total + Top 4 Sum first, then the four labeled per-star lines
+# (added inside the loop via plot_trajectory's label kwarg).
+handles, labels = ax[1].get_legend_handles_labels()
+# Reorder so Total and Top 4 Sum come first.
+priority = ["Total", "Top 4 Sum"]
+ordered = [(h, lab) for p in priority for h, lab in zip(handles, labels) if lab == p]
+ordered += [(h, lab) for h, lab in zip(handles, labels) if lab not in priority]
+ax[1].legend(
+    [h for h, _ in ordered], [lab for _, lab in ordered],
+    loc="lower right", fontsize=6, ncol=2,
+    edgecolor="black", borderaxespad=0.4, frameon=True, labelspacing=0
+).get_frame().set_linewidth(0.6)
 
 ax[0].xaxis.set_ticklabels([])
 ax[1].xaxis.set_ticklabels([])
 ax[0].set(yscale="log", ylim=[0.1, 3e3], ylabel=r"Stellar Mass ($M_\odot$)", xlim=[0, 175])
 ax[1].set(
     yscale="log",
-    ylim=[3e-6, 0.1],
+    ylim=[3e-6, 0.3],
     ylabel=r"$\dot{M}\,\rm\left(M_\odot\,\rm yr^{-1}\right)$",
     xlim=[0, 175],
 )
@@ -103,6 +132,7 @@ ax[2].set(
     xlim=[0, 175],
     ylim=[1e-4,1]
 )
+ax[2].ticklabel_format(axis="x", style="plain", useOffset=False)
 fig.subplots_adjust(hspace=0, wspace=0)
 plt.savefig("VMS_Accretion_History.pdf", bbox_inches="tight")
 plt.close()
