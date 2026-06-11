@@ -66,7 +66,7 @@ ax.set(
     xscale="log",
     yscale="log",
     xlabel=r"Stellar Mass ($M_\odot$)",
-    ylabel=r"$\dot{M} /M^{2/3}\,\rm\left(M_\odot^{1/3}\,\rm yr^{-1}\right)$",
+    ylabel=r"$\dot{M} / M^{2/3}\,\left(M_\odot^{1/3}\,\mathrm{yr}^{-1}\right)$",
     ylim=[1e-5,3e-3]
 )
 fig.subplots_adjust(hspace=0, wspace=0)

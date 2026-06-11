@@ -31,7 +31,6 @@ if os.path.isdir(_JAX_SALPYTER_SRC):
 # Metal/GPU device would oversubscribe; CPU is plenty for these 3-param fits.
 os.environ.setdefault("JAX_PLATFORMS", "cpu")
 
-from glob import glob
 from os import mkdir
 from os.path import isdir, isfile
 
@@ -43,6 +42,8 @@ import numpy as np
 import salpyter
 from joblib import Parallel, delayed
 from matplotlib import pyplot as plt
+
+from sim_paths import ANALYSIS_RUNS
 
 
 NUM_WARMUP = 500
@@ -136,7 +137,7 @@ def run_imf_analysis(run):
         plt.close()
 
 
-dirs = [l.split("/IMF.dat")[0] for l in glob("imf_data/STARFORGE_RT/STARFORGE_v1.2/*/*/*/IMF.dat")]
+dirs = [r.path for r in ANALYSIS_RUNS]
 ##for run in dirs:
 #    run_imf_analysis(run)
 Parallel(n_jobs=-1)(delayed(run_imf_analysis)(run) for run in dirs)

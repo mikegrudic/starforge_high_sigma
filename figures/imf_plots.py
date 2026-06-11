@@ -11,8 +11,6 @@ Output goes to ``imf_plots/comparison_<model>.pdf``.
 """
 
 import os
-import re
-from glob import glob
 
 import matplotlib
 
@@ -24,17 +22,7 @@ import jax.numpy as jnp
 import numpy as np
 import salpyter
 
-
-imfs_to_plot = (
-    [
-        "imf_data/STARFORGE_RT/"
-        "STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_all"
-    ] + 
-    sorted(glob(
-        "./imf_data/STARFORGE_RT/"
-        "STARFORGE_v1.2/M2e4_R1/*/output*"
-    ))
-)
+from sim_paths import IMF_RUNS
 
 model = "chabrier_smooth_bounds"
 # If True, plot the histograms as fractions of total counts and the IMF curves
@@ -68,63 +56,19 @@ for NORMALIZED in True, False:
         return jax.vmap(lambda s: imf_func(logm_jax, s, lmin, lmax))(samples_jax)
 
 
-    def _short_label(run):
-        """Extract a short, human-friendly legend label from the sim-dir path.
-
-        The simulation directory encodes the cloud mass (``M<x>e<y>``), radius
-        (``R<value>`` in pc), and metallicity (``Z<value>`` in solar units). The
-        mean surface density is ``Sigma = M / (pi * R^2)`` in Msun/pc^2.
-        """
-        parts = os.path.normpath(run).split(os.sep)
-        sim_dir = parts[-2] if len(parts) >= 2 else parts[-1]
-        out_dir = parts[-1]
-        m_m = re.search(r"M([\d.]+(?:e[+-]?\d+)?)_", sim_dir)
-        m_r = re.search(r"_R([\d.]+)_", sim_dir)
-        m_z = re.search(r"_Z([\d.]+?)_", sim_dir)
-        if m_m and m_r:
-            sigma = float(m_m.group(1)) / (np.pi * float(m_r.group(1)) ** 2)
-            # Round to 2 significant figures.
-            import math
-            exp = math.floor(math.log10(abs(sigma)))
-            sigma_2sf = round(sigma, -int(exp) + 1)
-            sigma_str = f"{sigma_2sf:.0f}"
-        else:
-            sigma_str = "?"
-        z_val = m_z.group(1) if m_z else "?"
-
-        # Per-output-subdir suffix: drop "turbsphere_driving1", relabel "all".
-        if out_dir == "output_all":
-            suffix = "  (10 realizations)"
-        elif out_dir == "output_turbsphere_driving1":
-            suffix = ""
-        else:
-            suffix = f"  ({out_dir.replace('output_', '')})"
-
-        return (
-            rf"${sigma_str}\,M_\odot\,\mathrm{{pc}}^{{-2}}$, "
-            rf"${z_val}\,Z_\odot${suffix}"
-        )
-
-
     fig, ax = plt.subplots(1, 1, figsize=(4.5, 4.5))
-    # ColorBrewer Dark2_3 (qualitative, 3-class) for the M2e4_R1 datasets;
-    # black for the M2e4_R10 (low-Sigma) dataset.
-    from palettable.colorbrewer.qualitative import Dark2_3
-    DARK2_3 = Dark2_3.mpl_colors
+    # Dark2_3 colors via sim_paths.logz_to_color — metallicity sets the color
+    # uniformly, R_cloud doesn't.
+    from sim_paths import logz_to_color
 
-    def _color_for(run, dark2_idx_holder=[0]):
-        sim_dir = os.path.normpath(run).split(os.sep)[-2]
-        if "M2e4_R10" in sim_dir:
-            return "black"
-        c = DARK2_3[dark2_idx_holder[0] % len(DARK2_3)]
-        dark2_idx_holder[0] += 1
-        return c
+    def _color_for(run):
+        return logz_to_color(run.logZ)
 
     labeled_chabrier = False
     labeled_kroupa = False
-    for run in imfs_to_plot:
-        imf_data_path = run + "/IMF.dat"
-        samples_path = run + f"/imf_samples_jax/samples_{model}.npy"
+    for run in IMF_RUNS:
+        imf_data_path = run.path + "/IMF.dat"
+        samples_path = run.path + f"/imf_samples_jax/samples_{model}.npy"
         if not (os.path.isfile(imf_data_path) and os.path.isfile(samples_path)):
             print(f"skip (missing inputs): {run}")
             continue
@@ -154,7 +98,7 @@ for NORMALIZED in True, False:
         imf_to_bins = log_bin_width * (1.0 if NORMALIZED else len(fit_masses))
 
         color = _color_for(run)
-        label = _short_label(run)
+        label = run.short_label
 
         # Histogram the full mass array (including stars below the fit cutoff
         # so the cut-off tail is visible). In NORMALIZED mode we divide by
@@ -183,14 +127,17 @@ for NORMALIZED in True, False:
         # Layering: references at zorder=1 (background), histogram at 2,
         # posterior fill_between + median line at 3 (foreground). Models on
         # top, histogram beneath, references in back.
+        # Convention: M2e4_R10 entries get dotted lines so they're visually
+        # distinguishable from the M2e4_R1 series of the same logZ color.
+        ls = "dotted" if run.R_cloud == 10.0 else "solid"
         ax.stairs(counts, mbins, color=color, linewidth=1.2, alpha=0.75,
-                  baseline=None, zorder=2)
+                  baseline=None, linestyle=ls, zorder=2)
 
         lo_c = np.where(lo > 0, lo * imf_to_bins, np.nan)
         hi_c = np.where(hi > 0, hi * imf_to_bins, np.nan)
         mid_c = np.where(mid > 0, mid * imf_to_bins, np.nan)
         ax.fill_between(mgrid, lo_c, hi_c, color=color, alpha=0.25, zorder=3)
-        ax.plot(mgrid, mid_c, color=color, lw=1.4, label=label, zorder=3)
+        ax.plot(mgrid, mid_c, color=color, lw=1.4, ls=ls, label=label, zorder=3)
 
         # Reference IMFs (Chabrier 2005, Kroupa 2001) are only meaningful when
         # the y-axis is normalized — count-mode plots have a per-dataset N
@@ -209,7 +156,7 @@ for NORMALIZED in True, False:
             ref_c = np.where(ref_imf > 0, ref_imf * imf_to_bins, np.nan)
             # Don't label here — we want "Chabrier 2005" at the end of the legend,
             # which we handle with a proxy handle after the loop.
-            ax.plot(mgrid, ref_c, color="black", ls="dotted", lw=0.9, zorder=1)
+            ax.plot(mgrid, ref_c, color="black", ls="dashed", lw=0.9, zorder=1)
             labeled_chabrier = True
 
             # Kroupa (2001) reference: salpyter's piecewise model with canonical
@@ -226,7 +173,7 @@ for NORMALIZED in True, False:
                 )
             )
             kroupa_c = np.where(kroupa_imf > 0, kroupa_imf * imf_to_bins, np.nan)
-            ax.plot(mgrid, kroupa_c, color="red", ls="dotted", lw=0.9, zorder=1)
+            ax.plot(mgrid, kroupa_c, color="red", ls="dashed", lw=0.9, zorder=1)
             labeled_kroupa = True
 
     ax.set(
@@ -240,14 +187,18 @@ for NORMALIZED in True, False:
     )
     handles, labels = ax.get_legend_handles_labels()
     from matplotlib.lines import Line2D
+    # Prepend Chabrier and Kroupa so the reference IMFs lead the legend.
+    ref_handles, ref_labels = [], []
     if labeled_chabrier:
-        handles.append(Line2D([], [], color="black", ls="dotted", lw=0.9))
-        labels.append("Chabrier 2005")
+        ref_handles.append(Line2D([], [], color="black", ls="dotted", lw=0.9))
+        ref_labels.append("Chabrier 2005")
     if labeled_kroupa:
-        handles.append(Line2D([], [], color="red", ls="dotted", lw=0.9))
-        labels.append("Kroupa 2001")
-    leg = ax.legend(handles, labels, loc="upper right", fontsize=8,
-                    borderaxespad=0, edgecolor="black")
+        ref_handles.append(Line2D([], [], color="red", ls="dotted", lw=0.9))
+        ref_labels.append("Kroupa 2001")
+    handles = ref_handles + handles
+    labels = ref_labels + labels
+    leg = ax.legend(handles, labels, loc="lower left", fontsize=8,
+                    borderaxespad=0, edgecolor="black",labelspacing=0,frameon=True)
     leg.get_frame().set_linewidth(0.8)
     fig.tight_layout()
     out_path = os.path.join(OUTDIR, f"comparison_{model}{'_normalized' if NORMALIZED else ''}.pdf")

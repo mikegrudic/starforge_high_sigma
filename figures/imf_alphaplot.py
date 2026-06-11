@@ -10,10 +10,7 @@ shared infrastructure (dataset envelopes, Chabrier/Kroupa references,
 axes/legend styling) lives in one place so changes affect both outputs.
 """
 
-import math
 import os
-import re
-from glob import glob
 
 import matplotlib
 
@@ -25,24 +22,13 @@ import jax.numpy as jnp
 import numpy as np
 import pandas as pd
 import salpyter
-from palettable.colorbrewer.qualitative import Dark2_3
+
+from sim_paths import IMF_RUNS, LOGZ_COLORMAP, logz_to_color
 
 
 # ---------------- inputs ---------------- #
 
 ALPHAPLOT_CSV = os.path.expanduser("./alphaplot.csv")
-imfs_to_plot = (
-    [
-        "./imf_data/STARFORGE_RT/"
-        "STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_all"
-    ]
-    + sorted(
-        glob(
-            "./imf_data/STARFORGE_RT/"
-            "STARFORGE_v1.2/M2e4_R1/*/output*"
-        )
-    )
-)
 
 model = "chabrier_smooth_bounds"
 
@@ -56,43 +42,8 @@ os.makedirs(OUTDIR, exist_ok=True)
 
 # ---------------- helpers ---------------- #
 
-DARK2_3 = Dark2_3.mpl_colors
-
-
-def _color_for(run, dark2_idx_holder=[0]):
-    sim_dir = os.path.normpath(run).split(os.sep)[-2]
-    if "M2e4_R10" in sim_dir:
-        return "black"
-    c = DARK2_3[dark2_idx_holder[0] % len(DARK2_3)]
-    dark2_idx_holder[0] += 1
-    return c
-
-
-def _short_label(run):
-    parts = os.path.normpath(run).split(os.sep)
-    sim_dir = parts[-2] if len(parts) >= 2 else parts[-1]
-    out_dir = parts[-1]
-    m_m = re.search(r"M([\d.]+(?:e[+-]?\d+)?)_", sim_dir)
-    m_r = re.search(r"_R([\d.]+)_", sim_dir)
-    m_z = re.search(r"_Z([\d.]+?)_", sim_dir)
-    if m_m and m_r:
-        sigma = float(m_m.group(1)) / (np.pi * float(m_r.group(1)) ** 2)
-        exp = math.floor(math.log10(abs(sigma)))
-        sigma_2sf = round(sigma, -int(exp) + 1)
-        sigma_str = f"{sigma_2sf:.0f}"
-    else:
-        sigma_str = "?"
-    z_val = m_z.group(1) if m_z else "?"
-    if out_dir == "output_all":
-        suffix = "  (10 realizations)"
-    elif out_dir == "output_turbsphere_driving1":
-        suffix = ""
-    else:
-        suffix = f"  ({out_dir.replace('output_', '')})"
-    return (
-        rf"${sigma_str}\,M_\odot\,\mathrm{{pc}}^{{-2}}$, "
-        rf"${z_val}\,Z_\odot${suffix}"
-    )
+def _color_for(run):
+    return logz_to_color(run.logZ)
 
 
 @jax.jit
@@ -114,6 +65,8 @@ _obs_slope_err = np.asarray(_obs_data["Slope uncertainty"])
 _obs_slope_upper = -np.asarray(_obs_data["Upper limit (1 sigma)"]) + 1
 _obs_slope_lower = -np.asarray(_obs_data["Lower limit (1 sigma)"]) + 1
 _obs_types = np.asarray(_obs_data["Class"])
+# Metallicity [Z/H] is logZ in dex; rows without a measurement are NaN.
+_obs_logz = np.asarray(_obs_data["Metallicity [Z/H]"], dtype=float)
 _obs_references = _obs_data["Reference"].astype(str).values
 _obs_urls = [
     f"https://ui.adsabs.harvard.edu/abs/{r.split(';')[0].strip()}"
@@ -131,10 +84,35 @@ _obs_markerdict = {
 _obs_markers = np.array([_obs_markerdict.get(t, "o") for t in _obs_types])
 
 
-def _draw_observations(ax):
+def _draw_observations(ax, color_by_z=False):
     """Overlay the alphaplot literature compilation (markers + error bars +
-    clickable ADS hyperlinks)."""
+    clickable ADS hyperlinks).
+
+    When ``color_by_z`` is True, each marker is colored by its ``[Z/H]``
+    metallicity using the simulation's ``logz_to_color`` (a ListedColormap of
+    three Dark2 bins anchored at logZ ∈ {-2, -1, 0}; values outside [-2, 0]
+    are clamped). Rows with no metallicity measurement render in grey.
+    """
     ebar_lw = 0.3
+
+    if color_by_z:
+        _missing = ~np.isfinite(_obs_logz)
+        _pt_colors = np.array([
+            (0.6, 0.6, 0.6, 1.0) if missing else logz_to_color(z)
+            for z, missing in zip(_obs_logz, _missing)
+        ])
+    else:
+        _pt_colors = None
+
+    def _scatter(sel, mk, zorder):
+        if not sel.any():
+            return
+        kwargs = dict(s=10, marker=mk, lw=0, zorder=zorder)
+        if color_by_z:
+            ax.scatter(_obs_mmed[sel], _obs_slope[sel],
+                       c=_pt_colors[sel], **kwargs)
+        else:
+            ax.scatter(_obs_mmed[sel], _obs_slope[sel], c="black", **kwargs)
 
     # 1) asymmetric errors where both lower/upper bounds are given
     m_asym = np.isfinite(_obs_slope_lower) & np.isfinite(_obs_slope_upper)
@@ -152,10 +130,7 @@ def _draw_observations(ax):
             ls="", capsize=0, lw=ebar_lw, marker=None, ecolor="grey",
         )
         for mk in np.unique(_obs_markers):
-            sel = m_asym & (_obs_markers == mk)
-            if sel.any():
-                ax.scatter(_obs_mmed[sel], _obs_slope[sel],
-                           c="black", s=10, marker=mk, lw=0, zorder=20)
+            _scatter(m_asym & (_obs_markers == mk), mk, zorder=20)
 
     # 2) symmetric errors otherwise
     m_sym = np.isfinite(_obs_slope_err) & ~m_asym
@@ -170,10 +145,7 @@ def _draw_observations(ax):
             marker=None, ecolor="grey",
         )
         for mk in np.unique(_obs_markers):
-            sel = m_sym & (_obs_markers == mk)
-            if sel.any():
-                ax.scatter(_obs_mmed[sel], _obs_slope[sel],
-                           c="black", s=10, marker=mk, lw=0, zorder=10)
+            _scatter(m_sym & (_obs_markers == mk), mk, zorder=10)
 
     # 3) no error info — just point with x-extent
     m_none = ~m_asym & ~m_sym
@@ -187,14 +159,12 @@ def _draw_observations(ax):
             ls="", capsize=0, lw=ebar_lw, ecolor="grey",
         )
         for mk in np.unique(_obs_markers):
-            sel = m_none & (_obs_markers == mk)
-            if sel.any():
-                ax.scatter(_obs_mmed[sel], _obs_slope[sel],
-                           c="black", s=10, marker=mk, lw=0, zorder=2)
+            _scatter(m_none & (_obs_markers == mk), mk, zorder=2)
 
     # Empty-data proxy markers so the system-class entries appear in the
     # legend without adding off-axis artists that would inflate the figure's
-    # tight-bbox calculation.
+    # tight-bbox calculation. Proxy color stays black so the markers stay
+    # readable on the legend regardless of color_by_z.
     for cls, mk in _obs_markerdict.items():
         ax.scatter([], [], marker=mk, lw=0, color="black", s=10, label=cls)
 
@@ -214,18 +184,21 @@ def _draw_observations(ax):
 
 # ---------------- main loop ---------------- #
 
-for WITH_OBS in (False, True):
-    # Reset the Dark2 color index so the per-dataset colors match across PDFs.
-    _color_for.__defaults__ = (([0],))  # type: ignore[attr-defined]
+_VARIANTS = (
+    ("none",      False, False),
+    ("obs",       True,  False),
+    ("obs_zcolor", True, True),
+)
 
+for _variant_name, WITH_OBS, COLOR_OBS_BY_Z in _VARIANTS:
     fig, ax = plt.subplots(1, 1, figsize=(4, 4) if WITH_OBS else (4.5, 4.5))
 
     # ---- dataset envelopes ----
-    for run in imfs_to_plot:
-        imf_data_path = run + "/IMF.dat"
-        samples_path = run + f"/imf_samples_jax/samples_{model}.npy"
+    for run in IMF_RUNS:
+        imf_data_path = run.path + "/IMF.dat"
+        samples_path = run.path + f"/imf_samples_jax/samples_{model}.npy"
         if not (os.path.isfile(imf_data_path) and os.path.isfile(samples_path)):
-            print(f"skip (missing inputs): {run}")
+            print(f"skip (missing inputs): {run.path}")
             continue
 
         masses = np.loadtxt(imf_data_path)[:, 1]
@@ -249,13 +222,16 @@ for WITH_OBS in (False, True):
         lo_g, mid_g, hi_g = np.nanpercentile(gamma, [16, 50, 84], axis=0)
 
         color = _color_for(run)
-        label = _short_label(run)
+        label = run.short_label
+        # Convention: M2e4_R10 entries get dotted lines so they're visually
+        # distinguishable from the M2e4_R1 series of the same logZ color.
+        ls = "dotted" if run.R_cloud == 10.0 else "solid"
         # On the obs overlay, disambiguate the simulation series from the
         # literature points in the legend.
 #        if WITH_OBS:
 #            label = "STARFORGE: " + label
         ax.fill_between(mgrid_alpha, lo_g, hi_g, color=color, alpha=0.25)
-        ax.plot(mgrid_alpha, mid_g, color=color, lw=1.4, label=label)
+        ax.plot(mgrid_alpha, mid_g, color=color, lw=1.4, ls=ls, label=label)
 
     # ---- analytic references ----
     ax.axhline(-1.35, color="black", ls="-.", lw=0.5, zorder=-100)
@@ -273,14 +249,14 @@ for WITH_OBS in (False, True):
         salpyter.imf_log_slope(logm_alpha_jax, kroupa_params, "kroupa", -3.0, 4.0)
     )
     mlimit = mgrid_alpha < 150
-    ax.plot(mgrid_alpha[mlimit], chabrier_gamma[mlimit], color="darkblue",
-            ls="dotted", lw=1.0, label="Chabrier 2005")
+    ax.plot(mgrid_alpha[mlimit], chabrier_gamma[mlimit], color="black",
+            ls="dashed", lw=1.0, label="Chabrier 2005")
     ax.plot(mgrid_alpha[mlimit], kroupa_gamma[mlimit], color="red",
-            ls="dotted", lw=1.0, label="Kroupa 2001")
+            ls="dashed", lw=1.0, label="Kroupa 2001")
 
-    # ---- observational overlay (only on the _obs variant) ----
+    # ---- observational overlay (only on the _obs variants) ----
     if WITH_OBS:
-        _draw_observations(ax)
+        _draw_observations(ax, color_by_z=COLOR_OBS_BY_Z)
 
     # ---- finalize ----
     ax.set(
@@ -310,10 +286,30 @@ for WITH_OBS in (False, True):
             loc="upper right", fontsize=8, frameon=False,
             borderaxespad=0, edgecolor="black",
         )
+    # Inset logZ colorbar so the reader can decode the obs-point colors.
+    # Placed in the bottom-right of the axes (sparse region of the plot) with
+    # ticks + label on top so the label doesn't run into the x-axis label.
+    if COLOR_OBS_BY_Z:
+        _cb_proxy = np.array([[-2.5, 0.5], [-2, 0.5]])
+        _img = ax.pcolormesh(_cb_proxy, cmap=LOGZ_COLORMAP)
+        _img.set_visible(False)
+        _cax = ax.inset_axes([0.05, 0.07, 0.35, 0.03])
+        _cb = plt.colorbar(
+            _img, cax=_cax,
+            label=r"$\log Z/Z_\odot$",
+            orientation="horizontal", ticks=[-2, -1, 0],
+        )
+        _cb.ax.xaxis.set_ticks_position("top")
+        _cb.ax.xaxis.set_label_position("top")
+        _cb.ax.tick_params(labelsize=6, pad=1)
+        _cb.ax.xaxis.label.set_size(6)
+        _cb.minorticks_off()
+
     fig.tight_layout()
-    out_path = os.path.join(
-        OUTDIR, f"alphaplot{'_obs' if WITH_OBS else ''}_{model}.pdf"
-    )
+    _suffix = ""
+    if WITH_OBS:
+        _suffix = "_obs" + ("_zcolor" if COLOR_OBS_BY_Z else "")
+    out_path = os.path.join(OUTDIR, f"alphaplot{_suffix}_{model}.pdf")
 
     # For the obs variant, compute each clickable point's normalized
     # coordinate in the saved-PDF frame BEFORE savefig (renderer must still

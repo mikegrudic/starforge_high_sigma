@@ -119,7 +119,7 @@ ax[1].axhline(_mdot_ff, color="gray", lw=0.8, ls="dashed",
 # (added inside the loop via plot_trajectory's label kwarg).
 handles, labels = ax[1].get_legend_handles_labels()
 # Reorder so Total and Top 4 Sum come first.
-priority = ["Total", "Top 4 Sum", r"$M_{\rm cloud}/t_{\rm ff}$"]
+priority = ["Total", "Top 4 Total", r"$M_{\rm cloud}/t_{\rm ff}$"]
 ordered = [(h, lab) for p in priority for h, lab in zip(handles, labels) if lab == p]
 ordered += [(h, lab) for h, lab in zip(handles, labels) if lab not in priority]
 ax[1].legend(
@@ -129,11 +129,11 @@ ax[1].legend(
 ).get_frame().set_linewidth(0.6)
 
 ax[0].xaxis.set_ticklabels([])
-ax[0].set(yscale="log", ylim=[0.1, 3e3], ylabel=r"Stellar Mass ($M_\odot$)", xlim=[0, 175])
+ax[0].set(yscale="log", ylim=[0.1, 3e3], ylabel=r"$M (M_\odot)$", xlim=[0, 175])
 ax[1].set(
     yscale="log",
     ylim=[3e-6, 0.3],
-    ylabel=r"$\dot{M}\,\rm\left(M_\odot\,\rm yr^{-1}\right)$",
+    ylabel=r"$\dot{M}\,\left(M_\odot\,\mathrm{yr}^{-1}\right)$",
     xlim=[0, 175],
     xlabel="Time (kyr)",
 )
@@ -172,7 +172,7 @@ plt.close()
 
 
 fig, ax = plt.subplots(1, 1, figsize=(4, 4))
-for color, lw, (_, (snaps, mass, _coord)) in zip(colors, lws, top):
+for i, (color, lw, (_, (snaps, mass, _coord))) in enumerate(zip(colors, lws, top)):
     t_kyr = times_kyr[snaps]
     ts = t_kyr[::GRADIENT_STRIDE]
     ms = mass[::GRADIENT_STRIDE]
@@ -180,19 +180,39 @@ for color, lw, (_, (snaps, mass, _coord)) in zip(colors, lws, top):
         continue
     mdot = np.diff(ms) / np.diff(ts) / 1e3
     m_for_mdot = ms[1:]
-    positive = m_for_mdot > 0
+    keep = (m_for_mdot > 0) & (mdot >= 1e-7)
+    if i < 4:
+        label = rf"Star {i+1} (${mass[-1]:.0f}\,M_\odot$)"
+    elif i == 4:
+        label = "Stars 5-10"
+    else:
+        label = None
     ax.plot(
-        m_for_mdot[positive],
-        (mdot[positive] / m_for_mdot[positive] ** 2.0),
+        m_for_mdot[keep],
+        mdot[keep],
         lw=lw,
         color=color,
+        label=label,
     )
+
+# Reference scaling Mdot = 4e-5 (M/0.1 Msun)^(2/3).
+_mref = np.logspace(-2, 4, 200)
+_mdotref = 4e-5 * (_mref / 0.1) ** (2.0 / 3.0)
+ax.plot(_mref, _mdotref, color="black", ls="dashed", lw=0.8)
+ax.text(5e3, 0.02, r"$\propto M^{2/3}$", fontsize=8,
+        ha="center", va="center")
+
+ax.legend(
+    loc="lower right", fontsize=6, ncol=2,
+    edgecolor="black", borderaxespad=0.4, frameon=True, labelspacing=0,
+).get_frame().set_linewidth(0.6)
 
 ax.set(
     xscale="log",
     yscale="log",
-    xlabel=r"Stellar Mass ($M_\odot$)",
-    ylabel=r"$\dot{M} /M^{2}\,\rm\left(M_\odot^{-1}\,\rm yr^{-1}\right)$",
+    xlabel=r"$M\,(M_\odot)$",
+    ylabel=r"$\dot{M}\,\left(M_\odot\,\mathrm{yr}^{-1}\right)$",
+    ylim=[1e-6, 0.3],
 )
 fig.subplots_adjust(hspace=0, wspace=0)
 plt.savefig("VMS_M_vs_Mdot.pdf", bbox_inches="tight")

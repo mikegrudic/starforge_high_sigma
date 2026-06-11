@@ -7,150 +7,43 @@ import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
 import palettable
-from palettable.colorbrewer.qualitative import Dark2_3
 import numpy as np
 from astropy.table import Table
-from matplotlib.colors import ListedColormap
+
+from sim_paths import (
+    FIDUCIAL_RUNS, PHYSICS_EXPERIMENTS, LOGZ_COLORMAP, logz_to_color,
+)
 
 OVERWRITE = True
-LOGZ_COLORMAP = ListedColormap(Dark2_3.mpl_colors)
-
-
-def logz_to_color(logz):
-    cmap = LOGZ_COLORMAP  # plt.get_cmap("rainbow")
-
-    return cmap((logz - (-2)) / (np.log10(1) - (-2)))
-
-
-runs_paramspace = {
-    #   r"$Z_\odot$ (MW GMC)": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e5_R3/M2e5_R30_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output",
-    # r"$Z_\odot$ Fiducial": "M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output",
-    r"M2e4_R1_Z1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    r"M2e4_R1_Z0.1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    r"M2e4_R1_Z0.01": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    # r"M2e5_R3_Z1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e5_R3/M2e5_R3_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    # r"M2e5_R3_Z0.1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e5_R3/M2e5_R3_Z0.1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    # r"M2e5_R3_Z0.01": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e5_R3/M2e5_R3_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-#    r"M2e4_R10_Z1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output",
-    r"M2e4_R10_Z1_1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-    r"M2e4_R10_Z1_2": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving2",
-    r"M2e4_R10_Z1_3": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving3",
-    r"M2e4_R10_Z1_4": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving4",
-    r"M2e4_R10_Z1_5": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving5",
-    r"M2e4_R10_Z1_6": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving6",
-    r"M2e4_R10_Z1_7": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving7",
-    r"M2e4_R10_Z1_8": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving8",
-#    r"M2e4_R10_Z0.01_1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z0.01_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving1",
-#    r"M2e4_R10_Z0.01_2": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z0.01_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving2",
-#    r"M2e4_R10_Z0.01_3": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z0.01_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving3",
-#    r"M2e4_R10_Z0.01": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z0.01_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output",
-    # r"M2e4_R10_Z0.1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z0.1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output",
-#    r"M2e4_R3_Z1": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R3/M2e4_R3_Z1_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output",
-    # r"M2e4_R10_Z0.01_2": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z0.01_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving2",
-    # r"M2e4_R10_Z0.01_3": "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R10/M2e4_R10_Z0.01_S0_A2_B0.1_I1_Res271_n2_sol0.5_42/output_turbsphere_driving3",
-    # r"$Z_\odot$ M2e5_R3": "M2e5_R3_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output",
-    # r"$1\% Z_\odot$ M2e5_R3": "M2e5_R3_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output",
-    # r"$Z_\odot$ No Winds": "M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_nowind",
-    # r"$Z_\odot$ No IR Rad. Pressure": "M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_noIR",
-    # r"$Z_\odot$ Stronger Winds": "M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_vink"
-    #    r"$1\% Z_\odot$": "M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output",
-    #    r"$Z_\odot$ (Milky Way GMC, $2e5M_\odot$, No Rad. Pressure)": "/home/mgrudic/code/hiz/STARFORGE_v1.1/M2e5_R3/M2e5_R30/M2e5_R3/M2e5_R30_S0_T1_B0.01_Res271_n2_sol0.5_42/output/",
-}
-
-# Physics experiments: same M2e4_R1 Z=1 cloud rerun with feedback channels
-# toggled. Single source of truth for legend label, simulation path, and
-# scatter marker — the plotting loop and the legend proxies both read this.
-_PHYS = "imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z1_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42"
-runs_physics = {
-    # label                           : (path,                  marker)
-    r"No Winds":                        (f"{_PHYS}/output_nowind", "s"),
-    r"No IR Rad. Pressure":             (f"{_PHYS}/output_noIR",   "D"),
-    r"$3\times$ Stronger Winds":        (f"{_PHYS}/output_vink",   "^"),
-}
 
 
 fig, ax = plt.subplots(figsize=(4, 4))
 ax.set_prop_cycle("color", palettable.colorbrewer.qualitative.Dark2_8.mpl_colors)
-for run, path in runs_paramspace.items():
-    logz = 0
-    if "Z0.1" in path:
-        logz = -1
-    elif "Z0.01" in path:
-        logz = -2
 
-    # print(run, path)
-    # continue
+# Fiducial paramspace runs. M2e4_R1 entries also get the dotted history line.
+for run in FIDUCIAL_RUNS:
+    stats = Table.read(run.path + "/global_statistics.fits")
+    stats = stats[stats["time"].argsort()]
+    color = logz_to_color(run.logZ)
 
-    # stats_to_compute = ("stellar_mass_sum", "stellar_mass_max")
-    # stats = get_globalstats_of_simulation(path + "/stars", overwrite=OVERWRITE, stats_to_compute=stats_to_compute)
-    label = run
-    if "M2e4_R10" in run:
-        if run == "M2e4_R10_Z1_1":
-            label = "M2e4_R10_Z1"
-        elif run == "M2e4_R10_Z0.01_1":
-            label = "M2e4_R10_Z0.01"
-        else:
-            label = ""
-
-    ls = "solid"
-    if "M2e4_R10" in run:
-        ls = "dashdot"
-    elif "M2e5" in run:
-        ls = "dashed"
-
-    stats = Table.read(path + "/global_statistics.fits")
-    t = stats["time"]
-    stats = stats[t.argsort()]
-    # np.savetxt(f"{run}_mcluster_vs_mmax.dat", np.c_[stats["stellar_mass_sum"], stats["stellar_mass_max"]])
-    # np.savetxt("m.dat", np.c_[stats["stellar_mass_sum"], stats["stellar_mass_max"]])
-    color = logz_to_color(logz)
-
-    s = 20
-    # if "M2e4_R10" in run:
-    #     # alpha = 0.5
-    #     s *= 1
-    # elif "M2e4_R3" in run:
-    #     # alpha = 0.75
-    #     s *= 2
-    # else:
-    #     s *= 4
-    # alpha = 1.0
-
-    print(run)
-    # Circles always mark the fiducial physics model. Physics-experiment
-    # variants get distinct markers in the loop below.
-    marker = "o"
-
-    if "M2e4_R1_" in run:
+    if run.R_cloud == 1.0:
         ax.loglog(
-            stats["stellar_mass_sum"],
-            stats["stellar_mass_max"],
-            #   label=label,
-            ls="dotted",
-            color=color,
-            lw=1,
+            stats["stellar_mass_sum"], stats["stellar_mass_max"],
+            ls="dotted", color=color, lw=1,
         )
     ax.scatter(
         [stats["stellar_mass_sum"].max()],
         [stats["stellar_mass_max"].max()],
-        color=color,
-        # label=(label if "M2e4_R10" in run else None),
-        s=s,
-        marker=marker,  # ("s" if "M2e4_R10" in run else None),
-        edgecolor="black",
-        lw=0.3,
-        zorder=1000,
-        # alpha=alpha,
+        color=color, s=20, marker=run.marker,
+        edgecolor="black", lw=0.3, zorder=1000,
     )
-    # print(run, stats["stellar_mass_sum"][stats["stellar_mass_max"].argmax()], stats["stellar_mass_max"].max())
 
-# Physics-experiment overlay: all variants share the Z=1 color from the
-# colormap; the marker (carried in runs_physics) disambiguates which feedback
-# channel was toggled.
-for run, (path, marker) in runs_physics.items():
-    stats = Table.read(path + "/global_statistics.fits")
+# Physics experiments overlay: all share the Z=1 color; markers disambiguate
+# which feedback channel was toggled.
+for run in PHYSICS_EXPERIMENTS:
+    stats = Table.read(run.path + "/global_statistics.fits")
     stats = stats[stats["time"].argsort()]
-    color = logz_to_color(0)
+    color = logz_to_color(run.logZ)
     ax.loglog(
         stats["stellar_mass_sum"], stats["stellar_mass_max"],
         ls="dashed", color=color, lw=1, alpha=0.6,
@@ -158,7 +51,7 @@ for run, (path, marker) in runs_physics.items():
     ax.scatter(
         [stats["stellar_mass_sum"].max()],
         [stats["stellar_mass_max"].max()],
-        color=color, s=30, marker=marker,
+        color=color, s=30, marker=run.marker,
         edgecolor="black", lw=0.3, zorder=1000,
     )
 
@@ -299,9 +192,9 @@ for _i, (label, mmax, dup, dlo, bib) in enumerate(R136_POINTS):
 # on the colorbar, not in the legend.
 ax.scatter([], [], marker="o", color="black", s=30, edgecolor="black",
            lw=0.3, label="Fiducial Model")
-for _label, (_, _mk) in runs_physics.items():
-    ax.scatter([], [], marker=_mk, color="black", s=30, edgecolor="black",
-               lw=0.3, label=_label)
+for run in PHYSICS_EXPERIMENTS:
+    ax.scatter([], [], marker=run.marker, color="black", s=30,
+               edgecolor="black", lw=0.3, label=run.label)
 
 ax.legend(loc="lower right", labelspacing=0.2, frameon=True, fontsize=7,
           edgecolor="black")

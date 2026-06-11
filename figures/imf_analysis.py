@@ -1,4 +1,3 @@
-from sys import argv
 from os.path import isfile, isdir
 from os import mkdir
 import matplotlib
@@ -8,6 +7,8 @@ import numpy as np
 import salpyter
 from matplotlib import pyplot as plt
 from joblib import delayed, Parallel
+
+from sim_paths import ANALYSIS_RUNS
 
 # imfs = {}
 # for run in argv[1:]:
@@ -100,8 +101,5 @@ def run_imf_analysis(run):
         plt.close()
 
 
-# [run_imf_analysis(run) for run in argv[1:]]
-from glob import glob
-
-dirs = [l.split("/IMF.dat")[0] for l in glob("imf_data/STARFORGE_RT/STARFORGE_v1.2/*/*/*/IMF.dat")]
+dirs = [r.path for r in ANALYSIS_RUNS]
 Parallel(n_jobs=min(32, len(dirs)))(delayed(run_imf_analysis)(run) for run in dirs)
