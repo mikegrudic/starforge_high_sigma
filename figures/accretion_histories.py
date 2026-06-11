@@ -129,7 +129,7 @@ ax[1].legend(
 ).get_frame().set_linewidth(0.6)
 
 ax[0].xaxis.set_ticklabels([])
-ax[0].set(yscale="log", ylim=[0.1, 3e3], ylabel=r"$M (M_\odot)$", xlim=[0, 175])
+ax[0].set(yscale="log", ylim=[0.3, 3e3], ylabel=r"$M (M_\odot)$", xlim=[0, 175])
 ax[1].set(
     yscale="log",
     ylim=[3e-6, 0.3],
@@ -212,7 +212,7 @@ ax.set(
     yscale="log",
     xlabel=r"$M\,(M_\odot)$",
     ylabel=r"$\dot{M}\,\left(M_\odot\,\mathrm{yr}^{-1}\right)$",
-    ylim=[1e-6, 0.3],
+    ylim=[1e-6, 0.5],
 )
 fig.subplots_adjust(hspace=0, wspace=0)
 plt.savefig("VMS_M_vs_Mdot.pdf", bbox_inches="tight")
