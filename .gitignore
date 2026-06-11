@@ -1,0 +1,16 @@
+# Per-run posterior-sample PDFs produced by imf_analysis.py / IMF_analysis_jax.py.
+# Easy to regenerate; not worth versioning.
+figures/imf_data/**/imf_samples/IMF_*.pdf
+figures/imf_data/**/imf_samples_jax/IMF_*.pdf
+
+# Python bytecode and macOS cruft.
+__pycache__/
+*.pyc
+.DS_Store
+
+# LaTeX build artifacts.
+manuscript.aux
+manuscript.blg
+manuscript.fdb_latexmk
+manuscript.synctex.gz
+*.bak
