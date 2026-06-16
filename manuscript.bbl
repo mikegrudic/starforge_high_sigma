@@ -107,6 +107,13 @@
   {10.3847/1538-4357/ac1425}, \href
   {https://ui.adsabs.harvard.edu/abs/2021ApJ...920..126E} {920, 126}
 
+\bibitem[\protect\citeauthoryear{{Federrath} et~al.,}{{Federrath}
+  et~al.}{2017}]{Federrath_2017_turb_driving}
+{Federrath} C.,  et~al., 2017, in {Crocker} R.~M.,  {Longmore} S.~N.,
+  {Bicknell} G.~V.,  eds,  IAU Symposium Vol. 322, The Multi-Messenger
+  Astrophysics of the Galactic Centre. pp 123--128 (\mn@eprint {arXiv}
+  {1609.08726}), \mn@doi{10.1017/S1743921316012357}
+
 \bibitem[\protect\citeauthoryear{{F{\"o}rster Schreiber} \&
   {Wuyts}}{{F{\"o}rster Schreiber} \& {Wuyts}}{2020}]{2020ARA&A..58..661F}
 {F{\"o}rster Schreiber} N.~M.,  {Wuyts} S.,  2020, \mn@doi [\araa]
@@ -325,6 +332,14 @@
 {Lamers} H. J.~G.~L.~M.,  {Snow} T.~P.,   {Lindholm} D.~M.,  1995, \mn@doi
   [\apj] {10.1086/176575}, \href
   {https://ui.adsabs.harvard.edu/abs/1995ApJ...455..269L} {455, 269}
+
+\bibitem[\protect\citeauthoryear{{Lane}, {Grudi{\'c}}, {Guszejnov}, {Offner},
+  {Faucher-Gigu{\`e}re}  \& {Rosen}}{{Lane}
+  et~al.}{2022}]{lane:2021.turbsphere}
+{Lane} H.~B.,  {Grudi{\'c}} M.~Y.,  {Guszejnov} D.,  {Offner} S. S.~R.,
+  {Faucher-Gigu{\`e}re} C.-A.,   {Rosen} A.~L.,  2022, \mn@doi [\mnras]
+  {10.1093/mnras/stab3739}, \href
+  {https://ui.adsabs.harvard.edu/abs/2022MNRAS.510.4767L} {510, 4767}
 
 \bibitem[\protect\citeauthoryear{{Larson} \& {Starrfield}}{{Larson} \&
   {Starrfield}}{1971}]{larson:1971.masslimit}
