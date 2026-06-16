@@ -103,6 +103,13 @@
   {10.1093/mnras/stx1765}, \href
   {http://adsabs.harvard.edu/abs/2017MNRAS.471.4844G} {471, 4844}
 
+\bibitem[\protect\citeauthoryear{{Gieles}, {Padoan}, {Charbonnel}, {Vink}  \&
+  {Ram{\'\i}rez-Galeano}}{{Gieles}
+  et~al.}{2025}]{gieles:2025.inertial.inflow.vms}
+{Gieles} M.,  {Padoan} P.,  {Charbonnel} C.,  {Vink} J.~S.,
+  {Ram{\'\i}rez-Galeano} L.,  2025, \mn@doi [\mnras] {10.1093/mnras/staf1314},
+  \href {https://ui.adsabs.harvard.edu/abs/2025MNRAS.544..483G} {544, 483}
+
 \bibitem[\protect\citeauthoryear{{Ginsburg} et~al.,}{{Ginsburg}
   et~al.}{2016}]{2016A&A...595A..27G}
 {Ginsburg} A.,  et~al., 2016, \mn@doi [\aap] {10.1051/0004-6361/201628318},
@@ -333,6 +340,12 @@
    {Tomida} K.,   {Tamura} M.,  eds,  Astronomical Society of the Pacific
   Conference Series Vol. 534, Protostars and Planets VII. p.~275 (\mn@eprint
   {arXiv} {2203.10066}), \mn@doi{10.48550/arXiv.2203.10066}
+
+\bibitem[\protect\citeauthoryear{{Padoan}, {Pan}, {Juvela}, {Haugb{\o}lle}  \&
+  {Nordlund}}{{Padoan} et~al.}{2020}]{padoan_2019_massive_sf}
+{Padoan} P.,  {Pan} L.,  {Juvela} M.,  {Haugb{\o}lle} T.,   {Nordlund}
+  {\r{A}}.,  2020, \mn@doi [\apj] {10.3847/1538-4357/abaa47}, \href
+  {https://ui.adsabs.harvard.edu/abs/2020ApJ...900...82P} {900, 82}
 
 \bibitem[\protect\citeauthoryear{{Pokhrel} et~al.,}{{Pokhrel}
   et~al.}{2021}]{pokhrel:2021.gmc.sfe}
