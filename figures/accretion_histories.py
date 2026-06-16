@@ -132,7 +132,7 @@ ax[0].xaxis.set_ticklabels([])
 ax[0].set(yscale="log", ylim=[0.3, 3e3], ylabel=r"$M (M_\odot)$", xlim=[0, 175])
 ax[1].set(
     yscale="log",
-    ylim=[3e-6, 0.3],
+    ylim=[3e-6, 0.5],
     ylabel=r"$\dot{M}\,\left(M_\odot\,\mathrm{yr}^{-1}\right)$",
     xlim=[0, 175],
     xlabel="Time (kyr)",
