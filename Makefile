@@ -11,7 +11,7 @@ BIBS := master.bib manuscriptNotes.bib
 # exists now; if you add a new figure PDF, re-run make once to pick it up.
 FIGURE_PDFS := $(wildcard figures/imf_plots/*.pdf) figures/multipanel.pdf figures/Mcluster_vs_Mmax.pdf
 
-.PHONY: all bib clean view figures
+.PHONY: all bib clean rebuild view figures
 
 all: $(TEX).pdf
 
@@ -52,6 +52,9 @@ figures/imf_plots/%.pdf:
 clean:
 	latexmk -C $(TEX)
 	rm -f $(TEX).bbl $(TEX).blg $(TEX).bcf $(TEX).run.xml
+
+# Nuke aux files and rebuild from scratch — use when citations/refs go stale.
+rebuild: clean all
 
 # macOS convenience: open the built PDF in Preview.
 view: $(TEX).pdf

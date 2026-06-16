@@ -1,0 +1,47 @@
+% Analytic form of the chabrier_smooth_bounds IMF used in the Bayesian fits.
+% Parameters: [\log m_c, s, \Gamma, \log m_{\min}, \log m_{\max}]
+% where \sigma = e^s (in dex).
+% \input this file into any equation environment or align block.
+%
+% Requires: amsmath
+
+For our IMF model we adopt the \citet{chabrier_review_2003} form, which conjoins a log-normal with peak $\log m_c$ and variance in dex $\sigma$ with a power-law high-mass tail with slope $\Gamma$, switching over at a break mass $m_{\rm brk}$. In \citet{chabrier_review_2003}, $m_{\rm brk}$ was taken to be $M_\odot$, but across our broad parameter space there is no {\it a priori} expectation that $m_{\rm brk}$ should be constant. Instead, we choose it so that the function is smooth at the break ($C^1$ continuous), which requires:
+%
+\begin{equation}
+  \log m_{\rm brk} = \log m_c - \Gamma\,\sigma^{2}\ln 10 .
+  \label{eq:mbrk}
+\end{equation}
+%
+This choice is parsimonious for the purposes of describing the present data, as we see  no evidence of a break mass that is independent of $m_c$. The normalized IMF is then
+%
+\begin{equation}
+  \phi(\log m) =
+  \frac{1}{\mathcal{N}}
+  \begin{cases}
+    0 & \log m < \log m_{\min},\\[4pt]
+    \dfrac{1}{\sqrt{2\pi}\,\sigma}
+      \exp\!\left[-\dfrac{(\log m - \log m_c)^{2}}{2\sigma^{2}}\right]
+      & \log m_{\min} \le \log m \le \log m_{\rm brk},\\[8pt]
+    \tilde{\phi}_{\rm brk}\!\left(\dfrac{m}{m_{\rm brk}}\right)^{\!\Gamma}
+      & \log m_{\rm brk} < \log m \le \log m_{\max},\\[4pt]
+    0 & \log m > \log m_{\max},
+  \end{cases}
+  \label{eq:imf_chabrier_smooth_bounds}
+\end{equation}
+%
+where $\tilde{\phi}_{\rm brk} \equiv ({\sqrt{2\pi}\,\sigma})^{-1}
+\exp\!\left[-\frac{1}{2}\Gamma^{2}\sigma^{2}(\ln 10)^{2}\right]$
+is the function value at $m_{\rm brk}$, and the normalization constant is
+%
+\begin{align}
+  \mathcal{N} &=
+  \frac{1}{2}\left[
+    \operatorname{erf}\!\left(\frac{\min(\log m_{\max},\,\log m_{\rm brk}) - \log m_c}{\sqrt{2}\,\sigma}\right)
+    -
+    \operatorname{erf}\!\left(\frac{\log m_{\min} - \log m_c}{\sqrt{2}\,\sigma}\right)
+  \right] \nonumber\\
+  &\quad
+  + \frac{\tilde{\phi}_{\rm brk}\, m_{\rm brk}^{-\Gamma}}{\Gamma\ln 10}
+    \Bigl[m_{\max}^{\Gamma} - \max(m_{\min},\, m_{\rm brk})^{\Gamma}\Bigr] .
+  \label{eq:norm_chabrier_smooth_bounds}
+\end{align}

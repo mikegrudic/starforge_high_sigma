@@ -264,7 +264,7 @@ for _variant_name, WITH_OBS, COLOR_OBS_BY_Z in _VARIANTS:
         xlim=[1e-2, 3e3],
         ylim=[-3, 3.5],
         xlabel=r"Stellar Mass $\ (M_\odot)$",
-        ylabel=r"IMF slope $\Gamma_{\rm IMF}$",
+        ylabel=r"IMF slope $\Gamma$",
     )
     if WITH_OBS:
         # Reorder so that all observation-class entries land in the same
