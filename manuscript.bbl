@@ -67,6 +67,13 @@
   \mn@doi [\apj] {10.1088/0004-637X/740/2/107}, \href
   {http://adsabs.harvard.edu/abs/2011ApJ...740..107C} {740, 107}
 
+\bibitem[\protect\citeauthoryear{{Dedner}, {Kemm}, {Kr{\"o}ner}, {Munz},
+  {Schnitzer}  \& {Wesenberg}}{{Dedner} et~al.}{2002}]{dedner2002}
+{Dedner} A.,  {Kemm} F.,  {Kr{\"o}ner} D.,  {Munz} C.~D.,  {Schnitzer} T.,
+  {Wesenberg} M.,  2002, \mn@doi [Journal of Computational Physics]
+  {10.1006/jcph.2001.6961}, \href
+  {https://ui.adsabs.harvard.edu/abs/2002JCoPh.175..645D} {175, 645}
+
 \bibitem[\protect\citeauthoryear{{Dekel}, {Sarkar}, {Birnboim}, {Mandelker}  \&
   {Li}}{{Dekel} et~al.}{2023}]{dekel:2023.ffb}
 {Dekel} A.,  {Sarkar} K.~C.,  {Birnboim} Y.,  {Mandelker} N.,   {Li} Z.,  2023,
@@ -78,6 +85,10 @@
 {Dessauges-Zavadsky} M.,  et~al., 2019, \mn@doi [Nature Astronomy]
   {10.1038/s41550-019-0874-0}, \href
   {https://ui.adsabs.harvard.edu/abs/2019NatAs...3.1115D} {3, 1115}
+
+\bibitem[\protect\citeauthoryear{{Draine}}{{Draine}}{1978}]{draine_1978_isrf}
+{Draine} B.~T.,  1978, \mn@doi [\apjs] {10.1086/190513}, \href
+  {https://ui.adsabs.harvard.edu/abs/1978ApJS...36..595D} {36, 595}
 
 \bibitem[\protect\citeauthoryear{{Dressler} et~al.,}{{Dressler}
   et~al.}{2024}]{2024ApJ...964..150D}
@@ -114,6 +125,10 @@
   et~al.}{2016}]{2016A&A...595A..27G}
 {Ginsburg} A.,  et~al., 2016, \mn@doi [\aap] {10.1051/0004-6361/201628318},
   \href {https://ui.adsabs.harvard.edu/abs/2016A&A...595A..27G} {595, A27}
+
+\bibitem[\protect\citeauthoryear{{Grudi{\'c}}}{{Grudi{\'c}}}{2021}]{grudic:2021.adaptive}
+{Grudi{\'c}} M.~Y.,  2021, \mn@doi [\mnras] {10.1093/mnras/stab2208}, \href
+  {https://ui.adsabs.harvard.edu/abs/2021MNRAS.507.1064G} {507, 1064}
 
 \bibitem[\protect\citeauthoryear{{Grudi{\'c}}, {Hopkins}, {Lee}, {Murray},
   {Faucher-Gigu{\`e}re}  \& {Johnson}}{{Grudi{\'c}}
@@ -198,9 +213,35 @@
 {Hollenbach} D.,  {McKee} C.~F.,  1979, \mn@doi [\apjs] {10.1086/190631}, \href
   {https://ui.adsabs.harvard.edu/abs/1979ApJS...41..555H} {41, 555}
 
+\bibitem[\protect\citeauthoryear{{Hopkins}}{{Hopkins}}{2015}]{hopkins:gizmo}
+{Hopkins} P.~F.,  2015, \mn@doi [\mnras] {10.1093/mnras/stv195}, \href
+  {http://adsabs.harvard.edu/abs/2015MNRAS.450...53H} {450, 53}
+
+\bibitem[\protect\citeauthoryear{{Hopkins}}{{Hopkins}}{2016}]{hopkins:gizmo.mhd.cg}
+{Hopkins} P.~F.,  2016, \mn@doi [\mnras] {10.1093/mnras/stw1578}, \href
+  {https://ui.adsabs.harvard.edu/abs/2016MNRAS.462..576H} {462, 576}
+
 \bibitem[\protect\citeauthoryear{{Hopkins}}{{Hopkins}}{2018}]{Hopkins_A_2018_IMF_obs_review}
 {Hopkins} A.~M.,  2018, \mn@doi [\pasa] {10.1017/pasa.2018.29}, \href
   {https://ui.adsabs.harvard.edu/abs/2018PASA...35...39H} {35, e039}
+
+\bibitem[\protect\citeauthoryear{{Hopkins} \& {Raives}}{{Hopkins} \&
+  {Raives}}{2016}]{hopkins:gizmo.mhd}
+{Hopkins} P.~F.,  {Raives} M.~J.,  2016, \mn@doi [\mnras]
+  {10.1093/mnras/stv2180}, \href
+  {http://adsabs.harvard.edu/abs/2016MNRAS.455...51H} {455, 51}
+
+\bibitem[\protect\citeauthoryear{{Hopkins} et~al.,}{{Hopkins}
+  et~al.}{2023a}]{fire3}
+{Hopkins} P.~F.,  et~al., 2023a, \mn@doi [\mnras] {10.1093/mnras/stac3489},
+  \href {https://ui.adsabs.harvard.edu/abs/2023MNRAS.519.3154H} {519, 3154}
+
+\bibitem[\protect\citeauthoryear{{Hopkins}, {Nadler}, {Grudi{\'c}}, {Shen},
+  {Sands}  \& {Jiang}}{{Hopkins}
+  et~al.}{2023b}]{hopkins:2023.adaptive.softening}
+{Hopkins} P.~F.,  {Nadler} E.~O.,  {Grudi{\'c}} M.~Y.,  {Shen} X.,  {Sands} I.,
+    {Jiang} F.,  2023b, \mn@doi [\mnras] {10.1093/mnras/stad2548}, \href
+  {https://ui.adsabs.harvard.edu/abs/2023MNRAS.525.5951H} {525, 5951}
 
 \bibitem[\protect\citeauthoryear{{Hosek}, {Lu}, {Anderson}, {Najarro}, {Ghez},
   {Morris}, {Clarkson}  \& {Albers}}{{Hosek}
@@ -293,6 +334,10 @@
   [\aap] {10.1051/0004-6361/202347913}, \href
   {https://ui.adsabs.harvard.edu/abs/2024A&A...683A..13L} {683, A13}
 
+\bibitem[\protect\citeauthoryear{{Levermore}}{{Levermore}}{1984}]{levermore_1984_M1}
+{Levermore} C.~D.,  1984, \mn@doi [\jqsrt] {10.1016/0022-4073(84)90112-2},
+  \href {https://ui.adsabs.harvard.edu/abs/1984JQSRT..31..149L} {31, 149}
+
 \bibitem[\protect\citeauthoryear{{Lombardi}, {Alves}  \& {Lada}}{{Lombardi}
   et~al.}{2010}]{lombardi:2010.sigma.gmc}
 {Lombardi} M.,  {Alves} J.,   {Lada} C.~J.,  2010, \mn@doi [\aap]
@@ -333,6 +378,12 @@
 {Murray} S.~D.,  {Lin} D. N.~C.,  1996, \mn@doi [\apj] {10.1086/177648}, \href
   {https://ui.adsabs.harvard.edu/abs/1996ApJ...467..728M} {467, 728}
 
+\bibitem[\protect\citeauthoryear{{Offner}, {Klein}, {McKee}  \&
+  {Krumholz}}{{Offner} et~al.}{2009}]{Offner_2009_radiative_sim}
+{Offner} S. S.~R.,  {Klein} R.~I.,  {McKee} C.~F.,   {Krumholz} M.~R.,  2009,
+  \mn@doi [\apj] {10.1088/0004-637X/703/1/131}, \href
+  {https://ui.adsabs.harvard.edu/abs/2009ApJ...703..131O} {703, 131}
+
 \bibitem[\protect\citeauthoryear{{Offner}, {Moe}, {Kratter}, {Sadavoy},
   {Jensen}  \& {Tobin}}{{Offner} et~al.}{2023}]{offner:2023.multiples.review}
 {Offner} S.~S.~R.,  {Moe} M.,  {Kratter} K.~M.,  {Sadavoy} S.~I.,  {Jensen}
@@ -352,11 +403,30 @@
 {Pokhrel} R.,  et~al., 2021, \mn@doi [\apjl] {10.3847/2041-8213/abf564}, \href
   {https://ui.adsabs.harvard.edu/abs/2021ApJ...912L..19P} {912, L19}
 
+\bibitem[\protect\citeauthoryear{{Powell}, {Roe}, {Linde}, {Gombosi}  \& {De
+  Zeeuw}}{{Powell} et~al.}{1999}]{powell1999}
+{Powell} K.~G.,  {Roe} P.~L.,  {Linde} T.~J.,  {Gombosi} T.~I.,   {De Zeeuw}
+  D.~L.,  1999, \mn@doi [Journal of Computational Physics]
+  {10.1006/jcph.1999.6299}, \href
+  {https://ui.adsabs.harvard.edu/abs/1999JCoPh.154..284P} {154, 284}
+
+\bibitem[\protect\citeauthoryear{{Price} \& {Monaghan}}{{Price} \&
+  {Monaghan}}{2007}]{price_2007_adaptive_softening}
+{Price} D.~J.,  {Monaghan} J.~J.,  2007, \mn@doi [\mnras]
+  {10.1111/j.1365-2966.2006.11241.x}, \href
+  {https://ui.adsabs.harvard.edu/abs/2007MNRAS.374.1347P} {374, 1347}
+
 \bibitem[\protect\citeauthoryear{{Robertson} et~al.,}{{Robertson}
   et~al.}{2023}]{robertson:2023.hiz.galaxies}
 {Robertson} B.~E.,  et~al., 2023, \mn@doi [Nature Astronomy]
   {10.1038/s41550-023-01921-1}, \href
   {https://ui.adsabs.harvard.edu/abs/2023NatAs...7..611R} {7, 611}
+
+\bibitem[\protect\citeauthoryear{{Rosdahl}, {Blaizot}, {Aubert}, {Stranex}  \&
+  {Teyssier}}{{Rosdahl} et~al.}{2013}]{rosdahl:2013.ramses.rt}
+{Rosdahl} J.,  {Blaizot} J.,  {Aubert} D.,  {Stranex} T.,   {Teyssier} R.,
+  2013, \mn@doi [\mnras] {10.1093/mnras/stt1722}, \href
+  {https://ui.adsabs.harvard.edu/abs/2013MNRAS.436.2188R} {436, 2188}
 
 \bibitem[\protect\citeauthoryear{{Rosen} \& {Krumholz}}{{Rosen} \&
   {Krumholz}}{2020}]{rosen_2020_jets_radiation}
@@ -386,6 +456,12 @@
 {Schneider} F.~R.~N.,  {Sana} H.,  {Evans} C.~J.,   et al. 2018, \mn@doi
   [Science] {10.1126/science.aan0106}, \href
   {https://ui.adsabs.harvard.edu/abs/2018Sci...359...69S} {359, 69}
+
+\bibitem[\protect\citeauthoryear{{Skinner} \& {Ostriker}}{{Skinner} \&
+  {Ostriker}}{2013}]{skinner:2013.hyperion}
+{Skinner} M.~A.,  {Ostriker} E.~C.,  2013, \mn@doi [\apjs]
+  {10.1088/0067-0049/206/2/21}, \href
+  {http://adsabs.harvard.edu/abs/2013ApJS..206...21S} {206, 21}
 
 \bibitem[\protect\citeauthoryear{Smith}{Smith}{2014}]{smith_2014_stellarwinds}
 Smith N.,  2014, \mn@doi [Annual Review of Astronomy and Astrophysics]
