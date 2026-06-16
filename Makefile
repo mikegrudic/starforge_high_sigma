@@ -9,7 +9,7 @@ BIBS := master.bib manuscriptNotes.bib
 # Tracked figure PDFs — editing a figure script regenerates the PDF, which
 # bumps its mtime and triggers a manuscript rebuild. Wildcard captures what
 # exists now; if you add a new figure PDF, re-run make once to pick it up.
-FIGURE_PDFS := $(wildcard figures/imf_plots/*.pdf) figures/multipanel.pdf figures/Mcluster_vs_Mmax.pdf
+FIGURE_PDFS := $(wildcard figures/imf_plots/*.pdf) figures/multipanel.pdf figures/Mcluster_vs_Mmax.pdf figures/wind_mdot.pdf
 
 .PHONY: all bib clean rebuild view figures
 

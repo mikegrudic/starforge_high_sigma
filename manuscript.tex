@@ -131,11 +131,11 @@ In this work we apply the {\small STARFORGE} model to the higher-density conditi
 
 \section{Methods and Simulations}
 \subsection{General updates to the STARFORGE model}
-The \texttt{STARFORGE} simulations have been in continuous development since the original model was developed in \citet{starforge.methods} and first deployed in \citet{starforge.fullphysics}. We take this opportunity to explicitly document various bugfixes and iterative improvements that have been made since \citet{starforge.methods}.
+The \texttt{STARFORGE} simulations have been in continuous development since the original model was developed in \citet{starforge.methods} and first deployed in \citet{starforge.fullphysics}. Several incremental improvements that have been made since \citet{starforge.methods}.
 \begin{itemize}
 \item Direct force summation is used for all star-star gravity interactions at distances $<1000 \rm AU$, improving general accuracy and conservation in small-$N$ body encounters.
 \item The dust temperature is found by root-finding the stationary dust heat equation including radiative emission, absorption, and gas-dust collisions \citep{hollenbach:1979.molecule.formation.shocks}. Before, the gas-dust term was treated as a term in the gas heat equation but ignored in the dust heat equation, generally resulting in slightly underestimated temperatures overall and a lack of self-consistency in the thermal evolution of dense, shielded gas.
-\item We account for the attenuation of cosmic rays following \citet{kim:2022.athena.ism.physics} when determining the cosmic-ray ionization rate and resulting gas heating rate: $\xi_{\rm CR} = \xi_{\rm CR,0}\min\left(1, \left(N_{\rm H}/10^{21}\rm cm^{-2}\right) \exp(-N_{\rm H}/10^{24} \rm cm^{-2})\right)$, where $N_{\rm H}=n_{\rm H} \left(\Delta x + \frac{\rho}{ || \nabla \rho|| }\right)$ is the local column density of H nuclei estimated with the usual local scale-length estimator used in \small{GIZMO}.
+\item We account for the attenuation of cosmic rays following \citet{kim:2022.athena.ism.physics}: $\xi_{\rm CR} = \xi_{\rm CR,0}\min\left(1, \left(N_{\rm H}/10^{21}\rm cm^{-2}\right) \exp(-N_{\rm H}/10^{24} \rm cm^{-2})\right)$, where $N_{\rm H}=n_{\rm H} \left(\left(\Delta m/\rho\right)^{1/3} + \frac{\rho}{ || \nabla \rho|| }\right)$ is the local column density of H nuclei estimated with a local scale-length estimator used in \small{GIZMO}.
 \end{itemize}
 \subsection{Stellar winds}
 \begin{figure}
@@ -231,7 +231,9 @@ The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-com
 %L/M, UV/SFR, metal yields, black hole population
 \section{Discussion}
 \subsection{The maximum stellar mass}
-In \citet{grudic:2023.does.god.play.dice} we first demonstrated that \texttt{STARFORGE} generally predicts a maximum stellar mass that varies with the properties of the natal cloud, and that this is set by feedback. On more general grounds, we argued analytically that more-massive and denser clouds can tolerate the presence of more-massive stars before being disrupted, for a variety of feedback mechanisms. This expectation is borne out in our high-$\Sigma$ \texttt{M2e4\_R1} runs
+In \citet{grudic:2023.does.god.play.dice} we first demonstrated that \texttt{STARFORGE} generally predicts a maximum stellar mass that varies with the properties of the natal cloud, and that this is set by feedback. On more general grounds, we argued analytically that more-massive and denser clouds can tolerate the presence of more-massive stars before being disrupted, for a variety of feedback mechanisms. 
+
+This expectation is borne out in our high-$\Sigma$ \texttt{M2e4\_R1} runs, and through direct experiments we have demonstrated that $M_{\rm max}$ is sensitive to the strength of radiation pressure and stellar winds in particular. Our fiducial physics model predics $M_{\rm max}$ consistent with the most massive known stars in the Local Group at $Z_\odot$. At low $Z$, where these forces are much weaker, accretion con
 
 
 \subsection{VMS formation: key uncertainties}

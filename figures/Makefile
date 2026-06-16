@@ -14,14 +14,15 @@ VMS_ACCRETION_PDF  := VMS_Accretion_History.pdf
 VMS_MDOT_PDF       := VMS_M_vs_Mdot.pdf
 VMS_MDOT_M23_PDF   := VMS_M_vs_Mdot_M23.pdf
 VMS_DIST_PDF       := VMS_Distance_from_COM.pdf
+WIND_MDOT_PDF      := wind_mdot.pdf
 
 # Per-star data extracted by extract_star_masses.py; backs the VMS plots.
 VMS_STAR_DATA := imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1/star_masses.npz
 
-ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(ALPHA_OBS_Z_PDF) $(LOGNORMAL_PDF) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF) $(VMS_MDOT_M23_PDF) $(SFE_PDF) $(SFE_SIGMA_PDF)
+ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(ALPHA_OBS_Z_PDF) $(LOGNORMAL_PDF) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF) $(VMS_MDOT_M23_PDF) $(SFE_PDF) $(SFE_SIGMA_PDF) $(WIND_MDOT_PDF)
 
 
-.PHONY: all clean compare_imfs alpha alpha-obs lognormal mcluster vms_accretion vms_mdot_m23 sfe sfe_sigma
+.PHONY: all clean compare_imfs alpha alpha-obs lognormal mcluster vms_accretion vms_mdot_m23 sfe sfe_sigma wind_mdot
 all: $(ALL_PLOTS)
 
 compare_imfs: $(COMPARE_PDF) $(COMPARE_NORM_PDF)
@@ -33,6 +34,7 @@ sfe: $(SFE_PDF)
 sfe_sigma: $(SFE_SIGMA_PDF)
 vms_accretion: $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF)
 vms_mdot_m23: $(VMS_MDOT_M23_PDF)
+wind_mdot: $(WIND_MDOT_PDF)
 
 # imf_plots.py writes both the count and normalized comparison PDFs in one run;
 # we list both targets to a common recipe so either being missing triggers it.
@@ -65,6 +67,9 @@ $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF): accretion_histories.py vms
 
 $(VMS_MDOT_M23_PDF): mdot_vs_m_23.py vms_colors.py $(VMS_STAR_DATA)
 	python mdot_vs_m_23.py
+
+$(WIND_MDOT_PDF): wind_mdot.py sim_paths.py
+	python wind_mdot.py
 
 clean:
 	rm -rf $(PLOTDIR) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF) $(VMS_MDOT_M23_PDF)
