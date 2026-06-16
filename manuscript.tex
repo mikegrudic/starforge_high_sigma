@@ -130,6 +130,7 @@ In this work we apply the {\small STARFORGE} model to the higher-density conditi
 % \subsection{Stellar winds}
 
 \section{Methods and Simulations}
+We perform a suite of 
 \subsection{General updates to the STARFORGE model}
 The \texttt{STARFORGE} simulations have been in continuous development since the original model was developed in \citet{starforge.methods} and first deployed in \citet{starforge.fullphysics}. Several incremental improvements that have been made since \citet{starforge.methods}.
 \begin{itemize}
@@ -191,7 +192,7 @@ When simulating high-$\Sigma$ clouds, we attempt to account for the likely scena
 
 \input{tables/imf_params_table_chabrier_smooth_bounds}
 
-The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-component model: there is a mass gap between $116 M_\odot$ and $981M_\odot$. Assuming the maximum-likelihood Chabrier fit given in Table \ref{table:imf_params}, we would expect $\int_{116M_\odot}^{981M_\odot}\phi\left(m\right)\,\mathrm{d}m = 0.7\%$ of stars to lie in this gap, or 7.6 on average for this sample size, and the likelihood of drawing 0 is $5\times 10^{-4}$. Consistently, in Figure \ref{fig:lognormal} we compare the single-component Chabrier fit with a two-component mixture with a Gaussian to model the high-mass excess, finding that the 2-component model has $\Delta \ln \mathcal{L} \sim 10$. Per the Wilks likelihood-ratio test, this disfavors the single-component model with $p \sim 3 \times 10^{-4}$. The four $\sim 10^{3} M_\odot$ stars formed in this simulation may be considered a separate population. 
+The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-component model: there is a mass gap between $116 M_\odot$ and $981M_\odot$. Assuming the maximum-likelihood Chabrier fit given in Table \ref{table:imf_params}, we would expect $\int_{116M_\odot}^{981M_\odot}\phi\left(m\right)\,\mathrm{d}m = 0.7\%$ of stars to lie in this gap, or 7.6 on average for this sample size, and the likelihood of drawing none is $5\times 10^{-4}$. Consistently, in Figure \ref{fig:lognormal} we compare the single-component Chabrier fit with a two-component mixture with a Gaussian to model the high-mass excess, finding that the 2-component model has $\Delta \ln \mathcal{L} \sim 10$. Per the Wilks likelihood-ratio test, this disfavors the single-component model with $p \sim 3 \times 10^{-4}$. The four $\sim 10^{3} M_\odot$ stars formed in this simulation can be considered a separate population, and a two-component model is most appropriate for describing the distribution.
 
 
 \subsection{Maximum stellar mass and feedback}
@@ -233,8 +234,11 @@ The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-com
 \subsection{The maximum stellar mass}
 In \citet{grudic:2023.does.god.play.dice} we first demonstrated that \texttt{STARFORGE} generally predicts a maximum stellar mass that varies with the properties of the natal cloud, and that this is set by feedback. On more general grounds, we argued analytically that more-massive and denser clouds can tolerate the presence of more-massive stars before being disrupted, for a variety of feedback mechanisms. 
 
-This expectation is borne out in our high-$\Sigma$ \texttt{M2e4\_R1} runs, and through direct experiments we have demonstrated that $M_{\rm max}$ is sensitive to the strength of radiation pressure and stellar winds in particular. Our fiducial physics model predics $M_{\rm max}$ consistent with the most massive known stars in the Local Group at $Z_\odot$. At low $Z$, where these forces are much weaker, accretion con
+This expectation is borne out in our high-$\Sigma$ \texttt{M2e4\_R1} runs, and through direct experiments we have demonstrated that $M_{\rm max}$ is sensitive to the strength of radiation pressure and stellar winds in particular. Our fiducial physics model predics $M_{\rm max}$ consistent with the most massive known stars in the Local Group at $Z_\odot$. And at low $Z$, where these forces are much weaker, accretion can continue unabated up to much greater stellar masses.
 
+These pre-supernova feedback processes are neglected in the \citet{padoan_2019_massive_sf} inertial-inflow (II) model, which predicts $M_{\rm max}$ as a function of the local turbulence conditions within a galaxy and the timescale for supernova feedback. Because of this, we expect that the II $M_{\rm max}$ may represent an upper bound on the mass that can be fed to a single star by turbulent eddies. We anticipate that $M_{\rm max}$ could decrease significantly if feedback were accounted for fully and this accretion flow were eventually cut off by it. Quantitative predictions of the II model such as the very-massive star formation model in \citet{gieles:2025.inertial.inflow.vms} will need to be revised.
+
+Despite this, we fully acknowledge that unlike \citet{padoan_2019_massive_sf} our isolated GMC models do not encompass the $100 \rm pc+$ galactic turbulent injection scale, so we have effectively ignored the effects of the turbulent eddies driven from larger scales. $M_{\rm max}$ should be ultimately be revisited with a model that accounts for both the relevant scales and the key physics.
 
 \subsection{VMS formation: key uncertainties}
 \label{sec:vms_formation_details}
