@@ -18,6 +18,12 @@
 \bibitem[\protect\citeauthoryear{{Cameron}, {Katz}, {Witten}, {Saxena}, {Laporte}  \& {Bunker}}{{Cameron} et~al.}{2024}]{cameron:2023.jwst.topheavy.imf}
 {Cameron} A.~J.,  {Katz} H.,  {Witten} C.,  {Saxena} A.,  {Laporte} N.,   {Bunker} A.~J.,  2024, \mn@doi [\mnras] {10.1093/mnras/stae1547}, \href {https://ui.adsabs.harvard.edu/abs/2024MNRAS.534..523C} {534, 523}
 
+\bibitem[\protect\citeauthoryear{{Chabrier}}{{Chabrier}}{2003}]{chabrier_review_2003}
+{Chabrier} G.,  2003, \mn@doi [\pasp] {10.1086/376392}, \href {http://adsabs.harvard.edu/abs/2003PASP..115..763C} {115, 763}
+
+\bibitem[\protect\citeauthoryear{{Chabrier}}{{Chabrier}}{2005}]{chabrier_imf}
+{Chabrier} G.,  2005, in {Corbelli} E.,  {Palla} F.,   {Zinnecker} H.,  eds,  Astrophysics and Space Science Library Vol. 327, The Initial Mass Function 50 Years Later. p.~41
+
 \bibitem[\protect\citeauthoryear{{Chevance} et~al.,}{{Chevance} et~al.}{2020}]{chevance:2020.gmc.review}
 {Chevance} M.,  et~al., 2020, \mn@doi [\ssr] {10.1007/s11214-020-00674-x}, \href {https://ui.adsabs.harvard.edu/abs/2020SSRv..216...50C} {216, 50}
 
@@ -60,6 +66,9 @@
 \bibitem[\protect\citeauthoryear{{Grudi{\'c}}, {Guszejnov}, {Offner}, {Rosen}, {Raju}, {Faucher-Gigu{\`e}re}  \& {Hopkins}}{{Grudi{\'c}} et~al.}{2022}]{starforge.fullphysics}
 {Grudi{\'c}} M.~Y.,  {Guszejnov} D.,  {Offner} S. S.~R.,  {Rosen} A.~L.,  {Raju} A.~N.,  {Faucher-Gigu{\`e}re} C.-A.,   {Hopkins} P.~F.,  2022, \mn@doi [\mnras] {10.1093/mnras/stac526}, \href {https://ui.adsabs.harvard.edu/abs/2022MNRAS.512..216G} {512, 216}
 
+\bibitem[\protect\citeauthoryear{{Grudic}, {Offner}, {Guszejnov}, {Faucher-Gigu{\`e}re}  \& {Hopkins}}{{Grudic} et~al.}{2023}]{grudic:2023.does.god.play.dice}
+{Grudic} M.~Y.,  {Offner} S. S.~R.,  {Guszejnov} D.,  {Faucher-Gigu{\`e}re} C.-A.,   {Hopkins} P.~F.,  2023, \mn@doi [The Open Journal of Astrophysics] {10.21105/astro.2307.00052}, \href {https://ui.adsabs.harvard.edu/abs/2023OJAp....6E..48G} {6, 48}
+
 \bibitem[\protect\citeauthoryear{{Guszejnov}, {Grudi{\'c}}, {Hopkins}, {Offner}  \& {Faucher-Gigu{\`e}re}}{{Guszejnov} et~al.}{2021}]{starforge_jets_imf}
 {Guszejnov} D.,  {Grudi{\'c}} M.~Y.,  {Hopkins} P.~F.,  {Offner} S. S.~R.,   {Faucher-Gigu{\`e}re} C.-A.,  2021, \mn@doi [\mnras] {10.1093/mnras/stab278}, \href {https://ui.adsabs.harvard.edu/abs/2021MNRAS.502.3646G} {502, 3646}
 
@@ -80,6 +89,9 @@
 
 \bibitem[\protect\citeauthoryear{{Higgins}, {Vink}, {Sabhahit}  \& {Sander}}{{Higgins} et~al.}{2022}]{higgins:2022.hydrogen.clock.vms}
 {Higgins} E.~R.,  {Vink} J.~S.,  {Sabhahit} G.~N.,   {Sander} A.~A.~C.,  2022, \mn@doi [\mnras] {10.1093/mnras/stac2485}, \href {https://ui.adsabs.harvard.edu/abs/2022MNRAS.516.4052H} {516, 4052}
+
+\bibitem[\protect\citeauthoryear{{Hollenbach} \& {McKee}}{{Hollenbach} \& {McKee}}{1979}]{hollenbach:1979.molecule.formation.shocks}
+{Hollenbach} D.,  {McKee} C.~F.,  1979, \mn@doi [\apjs] {10.1086/190631}, \href {https://ui.adsabs.harvard.edu/abs/1979ApJS...41..555H} {41, 555}
 
 \bibitem[\protect\citeauthoryear{{Hopkins}}{{Hopkins}}{2018}]{Hopkins_A_2018_IMF_obs_review}
 {Hopkins} A.~M.,  2018, \mn@doi [\pasa] {10.1017/pasa.2018.29}, \href {https://ui.adsabs.harvard.edu/abs/2018PASA...35...39H} {35, e039}
@@ -102,6 +114,9 @@
 \bibitem[\protect\citeauthoryear{{Kim}, {Ostriker}  \& {Filippova}}{{Kim} et~al.}{2021}]{kim:2020.gmc.raytrace}
 {Kim} J.-G.,  {Ostriker} E.~C.,   {Filippova} N.,  2021, \mn@doi [\apj] {10.3847/1538-4357/abe934}, \href {https://ui.adsabs.harvard.edu/abs/2021ApJ...911..128K} {911, 128}
 
+\bibitem[\protect\citeauthoryear{{Kim}, {Gong}, {Kim}  \& {Ostriker}}{{Kim} et~al.}{2023}]{kim:2022.athena.ism.physics}
+{Kim} J.-G.,  {Gong} M.,  {Kim} C.-G.,   {Ostriker} E.~C.,  2023, \mn@doi [\apjs] {10.3847/1538-4365/ac9b1d}, \href {https://ui.adsabs.harvard.edu/abs/2023ApJS..264...10K} {264, 10}
+
 \bibitem[\protect\citeauthoryear{{Kirkpatrick} et~al.,}{{Kirkpatrick} et~al.}{2024}]{kirkpatrick:2023.browndwarf.imf}
 {Kirkpatrick} J.~D.,  et~al., 2024, \mn@doi [\apjs] {10.3847/1538-4365/ad24e2}, \href {https://ui.adsabs.harvard.edu/abs/2024ApJS..271...55K} {271, 55}
 
@@ -116,6 +131,9 @@
 
 \bibitem[\protect\citeauthoryear{{Labb{\'e}} et~al.,}{{Labb{\'e}} et~al.}{2023}]{labbe:2023.hiz.candidates}
 {Labb{\'e}} I.,  et~al., 2023, \mn@doi [\nat] {10.1038/s41586-023-05786-2}, \href {https://ui.adsabs.harvard.edu/abs/2023Natur.616..266L} {616, 266}
+
+\bibitem[\protect\citeauthoryear{{Lamers}, {Snow}  \& {Lindholm}}{{Lamers} et~al.}{1995}]{lamers_1995_wind_vesc}
+{Lamers} H. J.~G.~L.~M.,  {Snow} T.~P.,   {Lindholm} D.~M.,  1995, \mn@doi [\apj] {10.1086/176575}, \href {https://ui.adsabs.harvard.edu/abs/1995ApJ...455..269L} {455, 269}
 
 \bibitem[\protect\citeauthoryear{{Larson} \& {Starrfield}}{{Larson} \& {Starrfield}}{1971}]{larson:1971.masslimit}
 {Larson} R.~B.,  {Starrfield} S.,  1971, \aap, \href {https://ui.adsabs.harvard.edu/abs/1971A&A....13..190L} {13, 190}
@@ -162,8 +180,14 @@
 \bibitem[\protect\citeauthoryear{{Rosen}, {Offner}, {Foley}  \& {Lopez}}{{Rosen} et~al.}{2021}]{rosen_2021_winds}
 {Rosen} A.~L.,  {Offner} S. S.~R.,  {Foley} M.~M.,   {Lopez} L.~A.,  2021, arXiv e-prints, \href {https://ui.adsabs.harvard.edu/abs/2021arXiv210712397R} {p. arXiv:2107.12397}
 
+\bibitem[\protect\citeauthoryear{{Sabhahit}, {Vink}, {Higgins}  \& {Sander}}{{Sabhahit} et~al.}{2022}]{sabhahit:2022.vms.mass.loss}
+{Sabhahit} G.~N.,  {Vink} J.~S.,  {Higgins} E.~R.,   {Sander} A. A.~C.,  2022, \mn@doi [MNRAS] {10.1093/mnras/stac1410}
+
 \bibitem[\protect\citeauthoryear{{Schneider}, {Sana}, {Evans}  \& et al.}{{Schneider} et~al.}{2018}]{schneider:2018.30dor.imf.excess}
 {Schneider} F.~R.~N.,  {Sana} H.,  {Evans} C.~J.,   et al. 2018, \mn@doi [Science] {10.1126/science.aan0106}, \href {https://ui.adsabs.harvard.edu/abs/2018Sci...359...69S} {359, 69}
+
+\bibitem[\protect\citeauthoryear{Smith}{Smith}{2014}]{smith_2014_stellarwinds}
+Smith N.,  2014, \mn@doi [Annual Review of Astronomy and Astrophysics] {10.1146/annurev-astro-081913-040025}, \href {https://ui.adsabs.harvard.edu/abs/2014ARA&A..52..487S} {52, 487}
 
 \bibitem[\protect\citeauthoryear{{Sun}, {Faucher-Gigu{\`e}re}, {Hayward}, {Shen}, {Wetzel}  \& {Cochrane}}{{Sun} et~al.}{2023}]{2023ApJ...955L..35S}
 {Sun} G.,  {Faucher-Gigu{\`e}re} C.-A.,  {Hayward} C.~C.,  {Shen} X.,  {Wetzel} A.,   {Cochrane} R.~K.,  2023, \mn@doi [\apjl] {10.3847/2041-8213/acf85a}, \href {https://ui.adsabs.harvard.edu/abs/2023ApJ...955L..35S} {955, L35}

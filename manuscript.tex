@@ -123,16 +123,32 @@ In this work we apply the {\small STARFORGE} model to the higher-density conditi
 
 %Sars in the most extreme observable systems cannot be resolved, so constraining them from integrated light will require some understanding of the stellar demographics that are expected to emerge in such conditions - in particular, the demographics of {\it massive} stars, which dominate the light. 
 
-\section{Theory}
+% \section{Theory}
 
-\subsection{Dust opacity effects}
-\subsection{Effect of the interstellar radiation field}
-\subsection{Stellar winds}
+% \subsection{Dust opacity effects}
+% \subsection{Effect of the interstellar radiation field}
+% \subsection{Stellar winds}
 
 \section{Methods and Simulations}
+\subsection{General updates to the STARFORGE model}
+The \texttt{STARFORGE} simulations have been in continuous development since the original model was developed in \citet{starforge.methods} and first deployed in \citet{starforge.fullphysics}. We take this opportunity to explicitly document various bugfixes and iterative improvements that have been made since \citet{starforge.methods}.
+\begin{itemize}
+\item Direct force summation is used for all star-star gravity interactions at distances $<1000 \rm AU$, improving general accuracy and conservation in small-$N$ body encounters.
+\item The dust temperature is found by root-finding the stationary dust heat equation including radiative emission, absorption, and gas-dust collisions \citep{hollenbach:1979.molecule.formation.shocks}. Before, the gas-dust term was treated as a term in the gas heat equation but ignored in the dust heat equation, generally resulting in slightly underestimated temperatures overall and a lack of self-consistency in the thermal evolution of dense, shielded gas.
+\item We account for the attenuation of cosmic rays following \citet{kim:2022.athena.ism.physics} when determining the cosmic-ray ionization rate and resulting gas heating rate: $\xi_{\rm CR} = \xi_{\rm CR,0}\min\left(1, \left(N_{\rm H}/10^{21}\rm cm^{-2}\right) \exp(-N_{\rm H}/10^{24} \rm cm^{-2})\right)$, where $N_{\rm H}=n_{\rm H} \left(\Delta x + \frac{\rho}{ || \nabla \rho|| }\right)$ is the local column density of H nuclei estimated with the usual local scale-length estimator used in \small{GIZMO}.
+\end{itemize}
+\subsection{Stellar winds}
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/wind_mdot.pdf}
+	\caption{Main-sequence stellar wind mass-loss rate as a function of stellar mass for 3 metallicities, as implemented in the simulations presented in this paper.}
+	\label{fig:wind_mdot}
+\end{figure}
+In our preliminary experiments it was immediately apparent that more-massive stars would form than we had previously seen, and clouds tended to be disrupted by stellar wind-driven bubbles, so the wind mass-loss rate for very massive stars must be considered more carefully. We emphasize that the actual rates are quite uncertain \citep{smith_2014_stellarwinds}, particularly for very massive stars. However, for very massive stars it is generally predicted that the mass-loss rate should eventually scale more steeply than the main-sequence O-star relation for metal-line driven winds. To model this, we incorporate the  ``$L/M$-dependent'' mass-loss prescription presented in \citet{sabhahit:2022.vms.mass.loss}, which they argue reproduces the observed narrow range of $T_{\rm eff}$ seen in 30 Doradus in the VLT-flames survey.
 
-\subsection{Initial conditions} 
+\input{equations/wind_mdot.tex}
 
+\subsection{Initial and boundary conditions} 
+When simulating high-$\Sigma$ clouds, we attempt to account for the likely scenario that the cloud is 
 
 
 \section{Results}
@@ -152,24 +168,28 @@ In this work we apply the {\small STARFORGE} model to the higher-density conditi
 \begin{figure}
 	\includegraphics[width=0.5\textwidth]{figures/sfe_vs_sigma.pdf}
 	\caption{Final star formation efficiency as a function of the initial cloud surface density (points are jittered along the $\Sigma$ axis for visibility.)}
+	\label{fig:sfe}
 \end{figure}
 
 
 \begin{figure}
 	\includegraphics[width=0.5\textwidth]{figures/imf_plots/comparison_chabrier_smooth_bounds_normalized.pdf}
+	\caption{Stellar initial mass functions from the different simulations. We plot the data as the fraction of stars in logarithmically-spaced bins, normalized to have equal weight at $>0.1M_\odot$, our adopted completeness limit due to numerical resolution. Shaded regions plot the $\pm \sigma$ interval of samples from the posterior distribution of IMF parameters.}
 \end{figure}
 
 
 \begin{figure}
-%	\includegraphics[width=0.5\textwidth]{figures/imf_plots/alphaplot_obs_chabrier_smooth_bounds.pdf}
 \input{figures/imf_plots/alphaplot_obs_chabrier_smooth_bounds}
-
+\caption{IMF slope $\Gamma = \mathrm{d}\log \phi/\mathrm{d}\log M$ as a function of stellar mass, plotting the $\pm \sigma$ range of samples from the posterior distributions of IMF parameters for the different simulations, and observations from }
 \end{figure}
 
 \begin{figure}
 	\includegraphics[width=0.5\textwidth]{figures/imf_plots/lognormal.pdf}
+	\caption{Isolated IMF from the \texttt{M2e4\_R10\_Z0.01} run that formed very massive stars. We compare the single-component Chabrier-like fit with a two-component fit that sums the Chabrier-like form with a high-mass lognormal component. The two-component model provides a significantly better fit}
 	\label{fig:lognormal}
 \end{figure}
+
+\input{tables/imf_params_table_chabrier_smooth_bounds}
 
 The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-component model: there is a mass gap between $116 M_\odot$ and $981M_\odot$. Assuming the maximum-likelihood Chabrier fit given in Table \ref{table:imf_params}, we would expect $\int_{116M_\odot}^{981M_\odot}\phi\left(m\right)\,\mathrm{d}m = 0.7\%$ of stars to lie in this gap, or 7.6 on average for this sample size, and the likelihood of drawing 0 is $5\times 10^{-4}$. Consistently, in Figure \ref{fig:lognormal} we compare the single-component Chabrier fit with a two-component mixture with a Gaussian to model the high-mass excess, finding that the 2-component model has $\Delta \ln \mathcal{L} \sim 10$. Per the Wilks likelihood-ratio test, this disfavors the single-component model with $p \sim 3 \times 10^{-4}$. The four $\sim 10^{3} M_\odot$ stars formed in this simulation may be considered a separate population. 
 
@@ -180,18 +200,23 @@ The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-com
 	\input{figures/Mcluster_vs_Mmax}
 	\caption{Relation between the total coeval stellar system mass $M_{\rm cluster}$ and the maximum initial mass of the cluster primary $M_{\rm max}$ in the simulations, compared with observations mainly compiled by \citet{yan:2023.mmax.mecl.relation}, plotting measurements of the probable most-massive known star R136a1 separately. Data points are clickable hyperlinks to the source works' ADS page. In observations, systematic uncertainties are significant for both quantities. Horizontal error bars for R136a1 indicate the factor of $\sim 4$ range between values quoted by \citet{crowther:2010.r136.300msun} and \citet{weidner:2013.mmax.mecl.relation}, largely from real ambiguity in the size of region counted as the ``cluster''. The systematic uncertainty in $M_{\rm max}$ is also illustrated by the range of quoted values for R136a1, with quoted values ranging from $\sim 150M_\odot-300M_\odot$ \citep{massey:1998.r136.cluster.imf, crowther:2010.r136.300msun,schneider:2018.30dor.imf.excess,keszthelyi:2025.r136.evolutionary.models}, with \citet{higgins:2022.hydrogen.clock.vms} arguing that initial masses from $250-1000M_\odot$ may be observationally indistinguishable due to convergent mass-loss evolution. Inversely, multiplicity \citet{kalari:2022.r136.multiplicity} and early-time stellar coalescences \citep{murray:1996.imf.coalescence} would revise the initial masses downward. R136a1 is the best-studied case, but these same issues would as easily affect all high-mass points in the \citet{yan:2023.mmax.mecl.relation} compilation, likely more so due to the higher metallicity of the stars in the Milky Way.}
 \end{figure}
-%\BG{At the same tff, do phase plots of n vs T weighted by either $|v|$ or $|v_{\rm out}|$. This would indicate if the fast-feedback is heating the gas, for instance.}
 
-\subsection{SMS formation}
+\subsection{Formation of very massive stars}
 
 \begin{figure}
 	\includegraphics[width=0.5\textwidth]{figures/VMS_Accretion_History.pdf}
+	\caption{Accretion histories of the 10 most massive stars in the \texttt{M2e4\_R10\_Z0.01} simulation, plotting stellar mass versus time (top) and accretion rate versus time for individual stars, the sum of the top-4 most massive stars, and all stars.}
+	\label{fig:vms_accretion_history}
 \end{figure}
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/VMS_M_vs_Mdot_M23.pdf}
+	\includegraphics[width=0.5\textwidth]{figures/VMS_Distance_from_COM.pdf}
+	\caption{Distance of the 10 most-massive stars from the center of mass of the quadruple system formed by the 4 most-massive stars.}
+	\label{fig:vms_distance_from_center}
 \end{figure}
 \begin{figure}
 	\includegraphics[width=0.5\textwidth]{figures/VMS_M_vs_Mdot.pdf}
+	\caption{Accretion rate of the 10 most-massive stars in \texttt{M2e4\_R1\_Z0.01} as a function of their instantaneous mass, highlighting the 4 very-massive stars that form the primary stellar system. A $\dot{M} \propto M^{2/3}$ line is plotted for reference.}
+	\label{fig:vms_accretion_rate}
 \end{figure}
 
 
@@ -205,11 +230,21 @@ The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-com
 \subsection{Integrated population properties}
 %L/M, UV/SFR, metal yields, black hole population
 \section{Discussion}
+\subsection{The maximum stellar mass}
+In \citet{grudic:2023.does.god.play.dice} we first demonstrated that \texttt{STARFORGE} generally predicts a maximum stellar mass that varies with the properties of the natal cloud, and that this is set by feedback. On more general grounds, we argued analytically that more-massive and denser clouds can tolerate the presence of more-massive stars before being disrupted, for a variety of feedback mechanisms. This expectation is borne out in our high-$\Sigma$ \texttt{M2e4\_R1} runs
 
-\subsection{vms formation}
+
+\subsection{VMS formation: key uncertainties}
+\label{sec:vms_formation_details}
 compared to gadget simulations forming VMS: we are showing that it can occur despite 1. being in much denser conditions where the jeans mass is much smaller, and 2. despite feedback, including notably jets
 
 gieles picture: \url{https://academic.oup.com/mnras/article/544/1/483/8230792?login=true#538539593}
+
+\subsection{VMS formation: implications}
+\label{sec:vms_implications}
+% high-z UV light-to-mass ratio
+% black hole seeds
+% abundances, e.g. N
 
 \subsection{massive SF scaling in up dense environments for feedback}
 does this make sense vis. observations? implications for feedback, chemical enrichment, remnants, etc
@@ -227,32 +262,45 @@ https://arxiv.org/abs/2510.25950
 
 
 \section{Conclusion}
-We have confirmed that the star formation efficiency on the scale of an individual GMC saturates to a value approaching unity at high surface density, {\it whilst accounting for all stellar feedback processes acting in concert from individual stars}.
 
+In this work we have presented the first parameter study of \small{STARFORGE} radiation-MHD star formation simulations to covers 2 orders of magnitude in both surface density and metallicity, exploring the resulting variations in star formation outcomes in extreme environments while accounting for most key physical processes. Our findings are as follows:
+\begin{itemize}
+	\item We have confirmed that the star formation efficiency on the scale of an individual GMC is expected to saturate to a value approaching unity at high surface density (Fig. \ref{fig:sfe}), {\it whilst accounting for nearly all stellar feedback processes acting in concert from individual stars}. At high $\Sigma$, the SFE is also sensitive to metallicity because stellar winds and radiation pressure on dust grains are both much less significant. SFE scales less steeply with $\Sigma$ than prior models without a self-consitent IMF, because more-massive stars populate the high-mass tail, increasing the specific rates of feedback energy and momentum injection.
+	\item We predict general variation in the IMF as a function of both surface density and metallicity. The behaviour of the \citet{chabrier_imf} peak is nonlinear: at Solar metallicity, it increases with surface density, but at 1\% Solar metallicity it decreases. We attribute this to the varying ISM cooling and heating microphysics responsible for setting thermal structure and fragmentation in different environments.
+	\item We have disentangled some of the processes responsible for regulating the maximum stellar mass in extreme conditions. At Solar metallicity, both winds and infrared radiation pressure on dust grains are both individually important. Without these forces, runaway accretion can proceed unabated to much higher masses.
+	\item The high-mass cutoff the IMF also varies with $Z$ in a manner that depends upon $\Sigma$. At low $\Sigma$, it is relatively insensitive to $Z$, but at high $\Sigma$ much more-massive stars can form if metallicity is low, due to much-weaker winds and radiation pressure.
+	\item In our highest-$\Sigma$, lowest-$Z$ run, we find an exotic formation mode for extremely massive ($10^3 M_\odot$+) stars. Four stars in the center of the cluster come to dominate the overall accretion rate, with $\dot{M} \propto M^{2/3}$ (Fig. \ref{fig:vms_accretion_rate}), quantitatively consistent with competitive accretion models. The 4 VMS pair up hierarchically into a quadruple system, which continues to accrete until stellar wind feedback finally disrupts the cloud violently. The resulting IMF is best described by 2 components consisting of the primary VMS system plus the rest of the star cluster. Many uncertainties about this process remain (\S\ref{sec:vms_formation_details}), but if realized in nature its implications may be profound (\S\ref{sec:vms_implications}).
+\end{itemize}
+Lyman-$\alpha$ radiation pressure is the major neglected force of feedback, so its effect on this prediction remains to be determined.
 \section*{Acknowledgements}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Data Availability}
 
-The complete dataset of simulation snapshots with time-dependendent stellar (sink particle) properties is available at \href{https://data.obs.carnegiescience.edu/starforge/M2e3_R3.tar.gz}{this link}. A public version of the {\small GIZMO} code is available at \url{http://www.tapir.caltech.edu/~phopkins/Site/GIZMO.html}.
+%The complete dataset of simulation snapshots with time-dependendent stellar (sink particle) properties is available at \href{https://data.obs.carnegiescience.edu/starforge/M2e3_R3.tar.gz}{this link}. A public version of the {\small GIZMO} code is available at \url{http://www.tapir.caltech.edu/~phopkins/Site/GIZMO.html}.
 
 
-%\newpage
-% The text '-' below is added so that we can see
-% the proper placement of the figures.
-% ***********************************
-% ***********************************
-% ***********************************
-% ------------------------------------------------
+% Flush all pending floats before the appendix.
+\clearpage
 % ------------------------------------------------
 % APPENDIX %
 % ------------------------------------------------
-% ------------------------------------------------
 \appendix
 
-\section{Numerical Tests}
+\section{IMF fitting with Hamiltonian Monte Carlo sampling}
 
+Throughout this study we describe the simulated IMFs in terms of the Bayesian posterior distribution of the parameters of the IMF distribution function the stellar masses were likely to be drawn from. Specifically, we compute the Bayesian log-likelihood
+
+\begin{equation}
+	\ln \mathcal{L} = \ln p\left(\mathbf{\Theta}\right)+\sum_i \ln \phi \left(\log m_i; \mathbf{\Theta}\right),
+\end{equation}
+
+where $p$ is the prior and $\phi \left(\log m_i; \mathbf{\Theta}\right)$ is the marginal likelihood of drawing (log-) mass $\log m_i$ given IMF parameters $\mathbf{\Theta}$.
+
+\input{equations/chabrier_smooth_bounds_eq}
+
+For the parameters we adopt the following broad, uniform priors: $\log m_c \in [-2, 2]$, $\ln\sigma \in [-2, 2]$, $\Gamma \in [-10, 2]$, $\log m_{\min} \in [-4, 4]$, $\log m_{\max} \in [-4, 4]$. For all IMF samples the posteriors end up are much narrower than these intervals, so the choice of prior does not affect any statistical conclusions made in this work. To generate the posterior samples and evaluate $\ln \mathcal{L}$, we use \texttt{salpyter} \footnote{\url{https://github.com/mikegrudic/salpyter}}, which implements Eq.~\ref{eq:imf_chabrier_smooth_bounds} as a differentiable \texttt{JAX} function and samples it using the no U-turn sampler implementation provided by the \texttt{blackjax} package.
 
 
 

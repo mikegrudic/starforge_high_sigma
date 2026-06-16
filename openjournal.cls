@@ -146,10 +146,10 @@
 \if@chicago
  \def\@eapj@cap@font{\scshape}
  \def\@eapj@figname{Fig.}
- \def\@eapj@tabname{TABLE}
+ \def\@eapj@tabname{Table}
  \def\@eapj@ApJLetters{ApJ}
 \else
- \def\@eapj@cap@font{\bfseries}
+ \def\@eapj@cap@font{\scshape}
  \def\@eapj@figname{Figure}
  \def\@eapj@tabname{Table}
  \def\@eapj@ApJLetters{ApJL}
@@ -948,8 +948,8 @@ This paper was built using the Open Journal of Astrophysics \LaTeX\ template. Th
    %% otherwise minipage + parindent does not fit into the line and spurious
    %% vertical skip appear after caption
    \if\csname ftype@\@captype\endcsname 2 
-   \vskip 2ex\noindent \centering\@table@type@size{\@eapj@cap@font  #1}\par
-    \if@chicago\@eapj@cap@font\fi #2\par\medskip
+   \vskip 2ex\noindent \centering\@table@type@size{#1}\par
+    #2\par\medskip
    \else
    \vspace*{\abovecaptionskip}\noindent\footnotesize #1 #2\par\vskip \belowcaptionskip
    \fi
@@ -1000,7 +1000,7 @@ This paper was built using the Open Journal of Astrophysics \LaTeX\ template. Th
 \def\tabcaption{\@ifnextchar[{\@xtabcaption}{\@tabcaption}}
 \def\@tabcaption#1{{\def\@captype{table}\caption{#1}}}
 \def\@xtabcaption[#1]#2{{\def\@captype{table}\caption{#2}}}
-\def\fnum@table{{\@eapj@cap@font \@eapj@tabname~\thetable}}
+\def\fnum@table{{\normalfont \@eapj@tabname~\thetable}}
 % \let\fnum@ptable=\fnum@table
 % \def\fnum@ptablecont{{\centering{\scshape Table~\thetable}---{\itshape
 % Continued}}}% 

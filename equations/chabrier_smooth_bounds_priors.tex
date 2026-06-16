@@ -1,0 +1,10 @@
+% Priors for the chabrier_smooth_bounds IMF fit.
+% All priors are uniform within the stated bounds (implemented as a smooth
+% quadratic barrier for NUTS gradient safety; see salpyter/sampling.py).
+% \sigma is the lognormal width in dex; the sampled coordinate is \ln\sigma.
+All priors are uniform:
+$\log m_c \in [-2, 2]$,
+$\ln\sigma \in [-2, 2]$,
+$\Gamma \in [-10, 2]$,
+$\log m_{\min} \in [-4, 4]$,
+$\log m_{\max} \in [-4, 4]$ (all masses in $M_\odot$).
