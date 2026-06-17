@@ -107,12 +107,12 @@
   {10.3847/1538-4357/ac1425}, \href
   {https://ui.adsabs.harvard.edu/abs/2021ApJ...920..126E} {920, 126}
 
-\bibitem[\protect\citeauthoryear{{Federrath} et~al.,}{{Federrath}
-  et~al.}{2017}]{Federrath_2017_turb_driving}
-{Federrath} C.,  et~al., 2017, in {Crocker} R.~M.,  {Longmore} S.~N.,
-  {Bicknell} G.~V.,  eds,  IAU Symposium Vol. 322, The Multi-Messenger
-  Astrophysics of the Galactic Centre. pp 123--128 (\mn@eprint {arXiv}
-  {1609.08726}), \mn@doi{10.1017/S1743921316012357}
+\bibitem[\protect\citeauthoryear{{Federrath}, {Klessen}  \&
+  {Schmidt}}{{Federrath}
+  et~al.}{2008}]{federrath:2008.density.pdf.vs.forcingtype}
+{Federrath} C.,  {Klessen} R.~S.,   {Schmidt} W.,  2008, \mn@doi [\apjl]
+  {10.1086/595280}, \href {http://adsabs.harvard.edu/abs/2008ApJ...688L..79F}
+  {688, L79}
 
 \bibitem[\protect\citeauthoryear{{F{\"o}rster Schreiber} \&
   {Wuyts}}{{F{\"o}rster Schreiber} \& {Wuyts}}{2020}]{2020ARA&A..58..661F}

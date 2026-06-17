@@ -83,6 +83,14 @@ for run in FIDUCIAL_RUNS:
 
     ax.plot(x, sfe, color=color, lw=lw, ls=ls, label=label)
 
+# Power-law reference lines anchored at a common point, fanning out.
+_x0, _y0 = 1.5, 1e-3
+_x_ref = np.array([_x0, _x0 * (0.7 / 0.15) ** 0.5])  # half log-span of original
+for _n, _lab in [(1, r"$\propto t$"), (2, r"$\propto t^2$"), (3, r"$\propto t^3$")]:
+    _y_ref = _y0 * (_x_ref / _x0) ** _n
+    ax.plot(_x_ref, _y_ref, color="black", lw=0.8, ls="--", zorder=0)
+    ax.text(_x_ref[-1] * 1.05, _y_ref[-1], _lab, fontsize=7, color="black", va="center")
+
 ax.set(
     xlabel=r"$t / t_{\rm ff}$",
     ylabel=r"$\mathrm{SFE} = M_\star / (M_\star + M_{\rm gas})$",

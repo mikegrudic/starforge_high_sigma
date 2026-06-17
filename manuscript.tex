@@ -48,7 +48,6 @@
 \setlength\tabcolsep{0.15cm}
 
 \usepackage{listings}
-\usepackage{color}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -137,14 +136,14 @@ We model the thermal evolution of the ISM accounting for the heating and cooling
 We account for stellar feedback from protostellar jets, radiation, winds, and supernovae. We solve the radiation-hydrodynamics equations in 5 photon energy bins: H-ionizing extreme-UV, far-UV, near-UV, optical and near-IR, and the far-IR. We adopt the \citet{levermore_1984_M1} $\rm M_1$ moments closure and the reduced speed of light approximation \citep[e.g.][]{rosdahl:2013.ramses.rt,skinner:2013.hyperion}.
 
 \subsection{Updates to the STARFORGE model}
-The \small{STARFORGE} simulations have been in continuous development since the original model was developed in \citet{starforge.methods} and first deployed in \citet{starforge.fullphysics}. Various incremental improvements that have been made since \citet{starforge.methods}, and have been incorporated into the present simulations.
+The \small{STARFORGE} simulations have been in continuous development since the original model was presented in \citet{starforge.methods} and first deployed in \citet{starforge.fullphysics}. Various incremental improvements that have been made since \citet{starforge.methods}, and have been incorporated into the present simulations.
 \begin{itemize}
 \item We have increased the reduced speed of light from $30\,\rm km\,s^{-1}$ to $90\,\rm km\,s^{-1}$ and ensure that photons colocated with accreted gas cells are promptly re-emitted by the accreting sink particle. These changes matter mainly for capturing the radiation field and temperature profiles in the optically-thick accreting envelopes of massive stars. This choice unfortunately makes the simulations $3 \times$ more expensive to run, and only partially mitigates the fundamental issue that the effective optically-thick transport speed of photons $\tilde{c}/\tau$ becomes smaller than the flow speed near massive stars, causing them to be advected inward in an unphysical dynamic-diffusion regime.
 \item Direct force summation is used for all star-star gravity interactions at distances $<1000 \rm AU$, improving general accuracy and conservation in small-$N$ body encounters.
-\item The dust temperature is found by root-finding the stationary dust heat equation including radiative emission, absorption, and gas-dust collisions \citep{hollenbach:1979.molecule.formation.shocks}. Before, the gas-dust term was treated as a term in the gas heat equation but ignored in the dust heat equation, generally resulting in slightly underestimated temperatures overall and a lack of self-consistency in the thermal evolution of dense, shielded gas.
+\item The dust temperature is computed by root-finding the stationary dust heat equation including radiative emission, absorption, and gas-dust collisions \citep{hollenbach:1979.molecule.formation.shocks}. Before, the gas-dust term was treated as a term in the gas heat equation but ignored in the dust heat equation, generally resulting in slightly underestimated temperatures overall and a lack of self-consistency in the thermal evolution of dense, shielded gas.
 \item Instead of assuming a constant cosmic-ray ionization rate throughout the cloud, we account for the attenuation of cosmic rays similarly to \citet{kim:2022.athena.ism.physics}:
 \begin{equation}
-\zeta_{\rm CR} = \zeta_{\rm CR,0}\min\left[1, \left(\frac{N_{\rm H}}{10^{21}\,\rm cm^{-2}}\right) \exp\left(-\frac{N_{\rm H}}{6 \times 10^{25}\,\rm cm^{-2}}\right)\right],
+\zeta_{\rm CR} = \zeta_{\rm CR,0}\min\left[1, \left(\frac{N_{\rm H}}{10^{21}\,\rm cm^{-2}}\right)^{-1} \exp\left(-\frac{N_{\rm H}}{6 \times 10^{25}\,\rm cm^{-2}}\right)\right],
 \end{equation}
 where $N_{\rm H}=n_{\rm H} \left(\left(\Delta m/\rho\right)^{1/3} + \frac{\rho}{|| \nabla \rho||} \right)$ is the local scale-length estimator of the column density of H nuclei. Note that we have added an exponential cutoff at extremely high ($\gtrsim 100\,\rm g\,\rm cm^{-2}$) column densities. We default to the Solar-neighborhood value $\zeta_{\rm CR,0}=1.6\times 10^{-17}\,\rm s^{-1}$ \citep{cummings:2016.cosmic.rays.voyager}, and scale it to different conditions as described in \ref{sec:isrf}.
 \end{itemize}
@@ -160,29 +159,40 @@ In our preliminary experiments it was immediately apparent that more-massive sta
 
 \subsubsection{Environmental scaling of background radiation and cosmic rays} 
 \label{sec:isrf}
-When surveying cloud conditions at different surface densities, we attempt to scale the ambient cosmic ray and interstellar radiation backgrounds to levels appropriate for the environments those clouds would be found in. For the low-$\Sigma$ clouds resembling those found in Milky Way conditions, we adopt standard Solar neighborhood values for the interstellar radiation field (ISRF) across our 5 photon energy bins \citep{draine_1978_isrf,kim:2022.athena.ism.physics}. Then we assume that the ISRF is powered primarily by young stars, and hence scales $\propto \Sigma_{\rm SFR}$ in the region of the galaxy in which the cloud is embedded. To relate $\Sigma_{\rm SFR}$ to the cloud-scale $\Sigma$, we assume a Kennicutt-Schimdt-type scaling $\Sigma_{\rm SFR} \propto \Sigma^2$\footnote{This is steeper than e.g. the \citet{kennicutt:1998.review} galaxy-scale relation $\Sigma_{\rm SFR}\propto \Sigma_{\rm gas}^{1.4}$; on the other hand, the spatial correlation of star formation may lead to a clumping enhancement for the effective local $\Sigma_{\rm SFR}$ and radiation field. Ultimately the scaling estimate should be considered uncertain.}, and thus we scale the ISRF by a factor of $10^4$ when we scale $\Sigma$ $\times 10^2$.
+When surveying cloud conditions at different surface densities, we attempt to scale the ambient cosmic ray and interstellar radiation backgrounds to levels appropriate for the environments those clouds would be found in. For the low-$\Sigma$ clouds resembling those found in Milky Way conditions, we adopt standard Solar neighborhood values for the interstellar radiation field (ISRF) across our 5 photon energy bins \citep{draine_1978_isrf,kim:2022.athena.ism.physics}. Then we assume that the ISRF is powered primarily by young stars, and hence scales $\propto \Sigma_{\rm SFR}$ in the region of the galaxy in which the cloud is embedded. To relate $\Sigma_{\rm SFR}$ to the cloud-scale $\Sigma$, we assume a Kennicutt-Schimdt-type scaling $\Sigma_{\rm SFR} \propto \Sigma^2$\footnote{This is steeper than e.g. the \citet{kennicutt:1998.review} galaxy-scale relation $\Sigma_{\rm SFR}\propto \Sigma_{\rm gas}^{1.4}$; on the other hand, the spatial correlation of star formation may lead to a clumping enhancement for the effective local $\Sigma_{\rm SFR}$ and radiation field. Ultimately the scaling estimate should be considered uncertain.}, and thus we scale the ISRF by a factor of $10^4$ when we scale $\Sigma$ $\times 10^2$. We realize the ISRF in the simulation by fixing the net radiative flux to 0 and radiation energy density to the fixed ISRF SED in near the boundary of the simulation domain.
 
 For the cosmic ray ionization rate, we assume that cosmic ray losses within the galaxy are calorimetric, and hence $\zeta_{\rm CR} \propto \tau_{\rm dep}^{-1} = \Sigma_{\rm SFR} / \Sigma_{\rm gas}$. For us this gives $\zeta_{\rm CR,0} \propto \Sigma$, i.e. we scale the cosmic ray ionization $\times 100$ when we scale $\Sigma \times 100$. 
 
 
 \subsection{Initial conditions}
+\input{tables/run_table.tex}
 
-We adopt the \small{TURBSPHERE} initial conditions generation procedure from \citet{lane:2021.turbsphere}: we apply a turbulent driving force realized as an Ornstein-\"{U}hlenbeck process \citep{Federrath_2017_turb_driving}
+To initialize the simulations from a self-consistent turbulent state, we use the \small{TURBSPHERE} initial conditions generation procedure from \citet{lane:2021.turbsphere}. First, we initialize a standard ``Sphere'' setup consisting of a uniform-density sphere surrounded by a $1000\times$-more-diffuse medium, with an initial Gaussian random velocity field scaled so that the initial virial parameter is 2 and the initial magnetic energy within the cloud is $10\%$ of the turbulent energy. 
+
+We then apply a turbulent driving force realized as an Ornstein-\"{U}hlenbeck process in Fourier space \citep{federrath:2008.density.pdf.vs.forcingtype} with purely-solenoidal forcing, and evolve the cloud with this forcing while confining it to the center of the box with a soft, logarithmic artificial potential. For all models this initial turbulent stirring phase lasts $5t_{\rm ff}$, where $t_{\rm ff}=\pi\sqrt{R^3/8GM}$ is the initial free-fall time of the cloud at its initial uniform density. As in \citet{lane:2021.turbsphere}, the parameters of the confining potential and the driving force's modes and amplitude have been tuned to roughly preserve the initial half-mass radius of the cloud and to fluctuate around a turbulent virial parameter $\alpha \sim 1$ in a steady state.
+
+For our low-$\Sigma$ clouds we have multiple statistical realizations: 3 at $0.01Z_\odot$ and 8 at $Z_\odot$. We summarize the physical properties of our grid of simulated clouds in Table \ref{table:ics}.
 
 \section{Results}
 
 \begin{figure*}
 	\includegraphics[width=\textwidth]{figures/multipanel.pdf}
 	\caption{Evolution of the star cluster and gas in the M2e4\_R1\_Z0.01 model. Time lapse progresses from left to right, and from top to bottom we plot projected gas surface density, mass-weighted line-of-sight gas velocity dispersion, mass-weighted temperature, and the ratio of magnetic to kinetic plus thermal energy along lines of sight. Markers indicate the positions of stars, scaled to encode the stellar mass.}
+	\label{fig:multipanel}
 \end{figure*}
 
+The simulations all follow the same general sequence of star formation as has been documented our prior simulations \citep{starforge.fullphysics,guszejnov:2022.starforge.imf}: from the initial gas-only state, core collapse and star formation are seeded through turbulent collapse and subsequently fed by ongoing accretion, until the force of stellar feedback inevitably becomes sufficient to disrupt the cloud entirely, halting the star formation and leaving behind a gas-free star cluster. Figure \ref{fig:multipanel} shows a time-lapse of various gas properties and the evolution of the star cluster in our most-extreme model \texttt{M2e4\_R1\_Z0.01}.
+
+
 \subsection{Star formation history and efficiency}
-{\bf SFE vs sigmagas for all simulations coded by metallicity}
 
 \begin{figure}
 	\includegraphics[width=0.5\textwidth]{figures/sfe_vs_time.pdf}
-	\caption{Star formation histories of the different simulations, plotting the instantaneous star formation efficiency (fraction of gas mass converted to stars) and scaling time to the clouds' respective freefall time $t_{\rm ff}=\pi/2 \sqrt{R^3/G M}$.}
+	\caption{Star formation histories of the different simulations, plotting the instantaneous star formation efficiency (fraction of gas mass converted to stars) and scaling time to the clouds' respective freefall time $t_{\rm ff}=\pi \sqrt{R^3/8G M}$.}
+	\label{fig:sfe_vs_time}
 \end{figure}
+In Figure~\ref{fig:sfe_vs_time} we plot the integrated star formation efficiency versus time, scaling time to the free-fall time. As in prior simulations, we see fairly steep ramp in the stellar mass at early times, predominantly close to $\propto t^3$ \citep{guszejnov:2022.starforge.imf}.
+
 \begin{figure}
 	\includegraphics[width=0.5\textwidth]{figures/sfe_vs_sigma.pdf}
 	\caption{Final star formation efficiency as a function of the initial cloud surface density (points are jittered along the $\Sigma$ axis for visibility.)}

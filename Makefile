@@ -11,13 +11,15 @@ BIBS := master.bib manuscriptNotes.bib
 # exists now; if you add a new figure PDF, re-run make once to pick it up.
 FIGURE_PDFS := $(wildcard figures/imf_plots/*.pdf) figures/multipanel.pdf figures/Mcluster_vs_Mmax.pdf figures/wind_mdot.pdf
 
+RUN_TABLE := tables/run_table.tex
+
 .PHONY: all bib clean rebuild view figures
 
 all: $(TEX).pdf
 
 # --pdf builds via pdflatex (not lualatex/xelatex); --halt-on-error stops
 # at the first compile error rather than dumping pages of garbage.
-$(TEX).pdf: $(TEX).tex $(BIBS) $(FIGURE_PDFS) | figures
+$(TEX).pdf: $(TEX).tex $(BIBS) $(FIGURE_PDFS) $(RUN_TABLE) | figures
 	latexmk -pdf -halt-on-error -interaction=nonstopmode $(TEX)
 
 # Force a bibtex pass — useful when only bibliography entries changed and
@@ -32,6 +34,9 @@ bib:
 # order-only dep of $(TEX).pdf above, so the manuscript build does not
 # re-run on figure mtimes — but if you've never built the figures, this
 # generates them first so \includegraphics doesn't fail.
+$(RUN_TABLE): tables/run_table.py
+	python tables/run_table.py
+
 figures:
 	$(MAKE) -C figures all
 
