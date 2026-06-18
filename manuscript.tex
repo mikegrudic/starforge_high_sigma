@@ -80,21 +80,19 @@
 \title{Extreme clouds make extreme stars}
 
 \author{Michael Y. Grudi\'{c}$^{1}$\orcidlink{0000-0002-1655-5604}}
-% \author{Stella S. R. Offner$^{2}$\orcidlink{0000-0003-1252-9916}}
-% \author{D\'avid Guszejnov$^{3,\dagger}$\orcidlink{0000-0001-5541-3150}}
-% \author{Claude-Andr{\'e} Faucher-Gigu{\`e}re$^{4}$\orcidlink{0000-0002-4900-6628}}
-% \author{Philip F. Hopkins$^{5}$\orcidlink{0000-0003-3729-1684}}
+\author{Stella S. R. Offner$^{2}$\orcidlink{0000-0003-1252-9916}}
+\author{Claude-Andr{\'e} Faucher-Gigu{\`e}re$^{3}$\orcidlink{0000-0002-4900-6628}}
+\author{Philip F. Hopkins$^{4}$\orcidlink{0000-0003-3729-1684}}
 
 \affiliation{$^1$Flatiron Institute, Center for Computational Astrophysics, Flatiron Institute, 162 5th Ave, New York, NY 10010, USA}
-% \affiliation{$^{2}$Department of Astronomy, The University of Texas at Austin, TX 78712, USA}
-% \affiliation{$^3$Center for Astrophysics $|$ Harvard \& Smithsonian, 60 Garden Street, Cambridge, MA 02138, USA}
-% \affiliation{$^{4}$CIERA and Department of Physics and Astronomy, Northwestern University, 1800 Sherman Ave, Evanston, IL 60201, USA}
-% \affiliation{$^{5}$TAPIR, Mailcode 350-17, California Institute of Technology, Pasadena, CA 91125, USA}
+\affiliation{$^{2}$Department of Astronomy, The University of Texas at Austin, TX 78712, USA}
+\affiliation{$^{3}$CIERA and Department of Physics and Astronomy, Northwestern University, 1800 Sherman Ave, Evanston, IL 60201, USA}
+\affiliation{$^{4}$TAPIR, Mailcode 350-17, California Institute of Technology, Pasadena, CA 91125, USA}
 
 \email{Corresponding author: mgrudic@flatironinstitute.org}
 
 \begin{abstract}
-We report the results of the first numerical simulations of star cluster formation in dense ($\gtrsim 1 \rm g\,cm^{-2}$) molecular clumps that account for all stellar feedback mechanisms in concert from individual stars, using the  {\small STARFORGE} framework. We survey a range of clump masses ($2\times 10^4$-$2\times 10^5 M_\odot$) and metallicities ($0.01-1 Z_\odot$), and assume an interstellar radiation field $10,000$ times more intense than the Solar neighborhood to model starburst and/or high-$z$ conditions. Star formation efficiency is relatively high ($\gtrsim 20\%$), but not as high as previous models assuming a constant IMF, because the rate of feedback per stellar mass is greater.  We disentangle the regulators of massive star formation, finding that both infrared radiation pressure on dust grains and stellar winds help regulate the maximum stellar mass to $\sim 150 M_\odot$ at Solar metallicity. But at low ($0.01-0.1Z_\odot$) metallicity, both winds and radiation pressure are weaker, and more-massive stars can form: one of our $0.01 Z_\odot$ models forms a supermassive star (SMS) with a maximum mass of $1700 M_\odot$ through accretion, and several other SMS exceeding $10^3 M_\odot$. Our results suggest that stellar populations formed in intense, metal-poor starbursts have a high ratio of rest-frame UV light to star formation, a significant mass fraction of high stellar- and intermediate-mass black holes, and a high mass budget for stellar wind enrichment. In general, the high-mass tail of the IMF must vary with cloud-scale density and metallicity due to the varying effectiveness of feedback in regulating accretion.
+We report the results of the first numerical simulations of star cluster formation in dense ($\gtrsim 1 \rm g\,cm^{-2}$) molecular clumps that account for all stellar feedback mechanisms in concert from individual stars, using the  {\small STARFORGE} framework. We survey a range of clump masses ($2\times 10^4$-$2\times 10^5 M_\odot$) and metallicities ($0.01-1 Z_\odot$), and assume an interstellar radiation field $10,000$ times more intense than the Solar neighborhood to model starburst and/or high-$z$ conditions. Star formation efficiency is relatively high ($\gtrsim 20\%$), but not as high as previous models assuming a constant IMF, because the rate of feedback per stellar mass is greater.  We disentangle the regulators of massive star formation, finding that both infrared radiation pressure on dust grains and stellar winds help regulate the maximum stellar mass to the observed $\sim 150 M_\odot$ at Solar metallicity. But at low ($0.01-0.1Z_\odot$) metallicity, both winds and radiation pressure are weaker, and more-massive stars can form: one of our $0.01 Z_\odot$ models forms several extremely-massive stars (EMS; $10^3+ M_\odot$) as massive as $1700 M_\odot$ through accretion. Our results suggest that stellar populations formed in intense, metal-poor starbursts have a high ratio of rest-frame UV light to star formation, a significant mass fraction of high stellar- and intermediate-mass black holes, and a high mass budget for stellar wind enrichment. In general, the high-mass tail of the IMF must vary with cloud-scale density and metallicity due to the varying effectiveness of feedback in regulating accretion.
 
 \keywords{stars: mass function -- galaxies: star clusters: general -- stars: formation }
 \end{abstract}
@@ -108,9 +106,9 @@ Most of what is known about star formation (SF) comes from studying nearby syste
 
 Not all stars form in such readily-observed conditions. Dense, massive globular clusters linger as the relics of an ancient mode of star formation that must have taken place at high density and low metallicity. The Galactic center hosts gas densities and pressures orders of magntiude higher than the Solar neighborhood, and the Milky Way's most massive young stars and star clusters are found there \citep{2016A&A...595A..27G,2019ApJ...870...44H}. Just beyond, in the LMC, high-pressure, low-metallicity gas conditions have produced the Local Group's most massive young star cluster R136, which also hosts the massive known stars \citep{Crowther_most_massive_stars_R136_2016}. And further still are the luminous infrared galaxies (LIRG), where stars form rapidly at even higher intensities \citep{kennicutt:1998.review}.
 
-In a cosmic sense, such ``extreme" star formation is not exceptional: most of the stars that will ever form have already formed around ``cosmic noon" at $z\sim 2$ \citep{2014ARA&A..52..415M}, when galaxies typically were more gas-rich and hosted high gas surface densities and pressures \citep{Swinbank_2011_dense_galaxy_ISM, 2019NatAs...3.1115D,tacconi:2020.cosmic.ism,2020ARA&A..58..661F}. At the even earlier epoch of ``cosmic dawn", the James Webb Space Telescope has detected extremely rest-UV-bright, compact sources suggesting that star formation proceeded very rapidly and at high densities \citep{robertson:2023.hiz.galaxies,labbe:2023.hiz.candidates,2024ApJ...964..150D}. Galaxy luminosities and/or SFRs at cosmic dawn were not generally anticipated by models, and possible sources of discrepancy may include unaccounted-for star formation or feedback dynamics \citep{2023ApJ...955L..35S,dekel:2023.ffb}, errors in the cosmological model \citep{boylankolchin:2023.does.webb.break.lcdm}, or an unusual IMF with greater abundance or mass limit of massive stars \citep{cameron:2023.jwst.topheavy.imf,vink:2023.jwst.nitrogen.vms}.
+In a cosmic sense, such ``extreme" star formation is not exceptional: most of the stars that will ever form have already formed around ``cosmic noon" at $z\sim 2$ \citep{2014ARA&A..52..415M}, when galaxies typically were more gas-rich and hosted high gas surface densities and pressures \citep{Swinbank_2011_dense_galaxy_ISM, 2019NatAs...3.1115D,tacconi:2020.cosmic.ism,2020ARA&A..58..661F}. At the even earlier epoch of ``cosmic dawn", the James Webb Space Telescope has detected extremely rest-UV-bright, compact sources suggesting that star formation proceeded very rapidly and at high densities \citep{robertson:2023.hiz.galaxies,labbe:2023.hiz.candidates,2024ApJ...964..150D}. Galaxy luminosities and/or SFRs at cosmic dawn were not generally anticipated by models, and possible sources of discrepancy may include unaccounted-for star formation or feedback dynamics \citep{2023ApJ...955L..35S,dekel:2023.ffb}, errors in the cosmological model \citep{boylankolchin:2023.does.webb.break.lcdm}, or an unusual IMF with greater abundance or mass limit of massive stars \citep{cameron:2023.jwst.topheavy.imf,vink:2023.jwst.nitrogen.ems}.
 
-Recently it has become possible to model the emergence of stellar populations from physical processes in different environments. The {\small STARFORGE}\footnote{\url{https://starforge.space}} model simulates star formation from initial gas collapse to cloud disruption, combining a wide range star formation physics into a single numerical model, notably accounting for all forms of stellar feedback: protostellar outflows, radiation, winds, and supernovae \citep{starforge.methods}. This has proven essential to obtaining realistic results, because the various feedback processes must act in concert to simultaneously regulate both low-mass \citep{wang_2010_jets,Cunningham_2011_outflow_sim,hansen12a,mathew:2021.imf.jets,starforge_jets_imf,lebreuilly:2024.jets.sf} and high-mass star formation \citep{larson:1971.masslimit,wolfire:1987.massive.sf,kuiper_2010_massive_sf,krumholz:2009.massive.sf,rosen:2016.massive.sf,rosen_2020_jets_radiation,rosen_2021_winds,guszejnov:2022.starforge.imf}, while also regulating the {\it overall} star formation rate to the low cloud-scale efficiencies seen in the Milky Way (\citealt{geen:2017, grudic:2018.gmc.sfe, kim:2020.gmc.raytrace,evans:2021.virial.sfe,starforge.fullphysics}, see \citealt{chevance:2020.gmc.review} for review).
+Recently it has become possible to model the emergence of stellar populations from physical processes in different environments. The {\small STARFORGE}\footnote{\url{https://starforge.space}} model simulates star formation from initial gas collapse to cloud disruption, combining a wide range star formation physics into a single numerical model, notably accounting for all forms of stellar feedback: protostellar outflows, radiation, winds, and supernovae \citep{starforge.methods}. This has proven essential to obtaining realistic results, because the various feedback processes must act in concert to simultaneously regulate both low-mass \citep{wang_2010_jets,Cunningham_2011_outflow_sim,hansen12a,mathew:2021.imf.jets,starforge_jets_imf,lebreuilly:2024.jets.sf} and high-mass star formation \citep{larson:1971.masslimit,wolfire:1987.massive.sf,kuiper_2010_massive_sf,krumholz:2009.massive.sf,rosen:2016.massive.sf,rosen_2020_jets_radiation,rosen_2021_winds,guszejnov:2022.starforge.imf}, while also regulating the {\it overall} star formation rate to the low cloud-scale efficiencies seen in the Milky Way (\citealt{geen:2017, grudic:2018.gmc.sfe, kim:2018.uv.feedback,evans:2021.virial.sfe,starforge.fullphysics}, see \citealt{chevance:2020.gmc.review} for review).
 
 In this work we apply the {\small STARFORGE} model to the higher-density conditions than previous work, targeting a mean cloud-scale surface density of $\Sigma = M/\uppi R^2 \approx 1 \rm g\,cm^{-2}$ across a range of cloud masses and metallicities. We focus on global cloud and star cluster evolution and the final stellar population properties, in particular highlighting how these can differ from the more Milky Way-like conditions we modeled in previous works. %We show that these denser clouds tend to produce more-massive stars, because massive star formation is feedback-regulated and the effectiveness of feedback depends upon cloud properties. We 
 
@@ -149,7 +147,7 @@ where $N_{\rm H}=n_{\rm H} \left(\left(\Delta m/\rho\right)^{1/3} + \frac{\rho}{
 \end{itemize}
 \subsubsection{Stellar winds}
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/wind_mdot.pdf}
+	\includegraphics[width=\columnwidth]{figures/wind_mdot.pdf}
 	\caption{Main-sequence stellar wind mass-loss rate as a function of stellar mass for 3 metallicities, as implemented in the simulations presented in this paper.}
 	\label{fig:wind_mdot}
 \end{figure}
@@ -171,7 +169,7 @@ To initialize the simulations from a self-consistent turbulent state, we use the
 
 We then apply a turbulent driving force realized as an Ornstein-\"{U}hlenbeck process in Fourier space \citep{federrath:2008.density.pdf.vs.forcingtype} with purely-solenoidal forcing, and evolve the cloud with this forcing while confining it to the center of the box with a soft, logarithmic artificial potential. For all models this initial turbulent stirring phase lasts $5t_{\rm ff}$, where $t_{\rm ff}=\pi\sqrt{R^3/8GM}$ is the initial free-fall time of the cloud at its initial uniform density. As in \citet{lane:2021.turbsphere}, the parameters of the confining potential and the driving force's modes and amplitude have been tuned to roughly preserve the initial half-mass radius of the cloud and to fluctuate around a turbulent virial parameter $\alpha \sim 1$ in a steady state.
 
-For our low-$\Sigma$ clouds we have multiple statistical realizations: 3 at $0.01Z_\odot$ and 8 at $Z_\odot$. We summarize the physical properties of our grid of simulated clouds in Table \ref{table:ics}.
+For our low-$\Sigma$ clouds we have multiple statistical realizations: 3 at $0.01Z_\odot$ and 8 at $Z_\odot$. We summarize the physical properties of our grid of simulated clouds in Table \ref{table:runs}.
 
 \section{Results}
 
@@ -181,39 +179,47 @@ For our low-$\Sigma$ clouds we have multiple statistical realizations: 3 at $0.0
 	\label{fig:multipanel}
 \end{figure*}
 
-The simulations all follow the same general sequence of star formation as has been documented our prior simulations \citep{starforge.fullphysics,guszejnov:2022.starforge.imf}: from the initial gas-only state, core collapse and star formation are seeded through turbulent collapse and subsequently fed by ongoing accretion, until the force of stellar feedback inevitably becomes sufficient to disrupt the cloud entirely, halting the star formation and leaving behind a gas-free star cluster. Figure \ref{fig:multipanel} shows a time-lapse of various gas properties and the evolution of the star cluster in our most-extreme model \texttt{M2e4\_R1\_Z0.01}.
+The simulations all follow a similar sequence of star formation as has been documented our prior simulations \citep{starforge.fullphysics,guszejnov:2022.starforge.imf}: from the initial gas-only state, core collapse and star formation are seeded through turbulent collapse and subsequently fed by ongoing accretion, until the force of stellar feedback inevitably becomes sufficient to disrupt the cloud entirely, halting the star formation and leaving behind a gas-free star cluster. Figure \ref{fig:multipanel} shows a time-lapse of various gas properties and the evolution of the star cluster in our most-extreme model \texttt{M2e4\_R1\_Z0.01}.
 
 
 \subsection{Star formation history and efficiency}
 
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/sfe_vs_time.pdf}
+	\includegraphics[width=\columnwidth]{figures/sfe_vs_time.pdf}
 	\caption{Star formation histories of the different simulations, plotting the instantaneous star formation efficiency (fraction of gas mass converted to stars) and scaling time to the clouds' respective freefall time $t_{\rm ff}=\pi \sqrt{R^3/8G M}$.}
 	\label{fig:sfe_vs_time}
 \end{figure}
-In Figure~\ref{fig:sfe_vs_time} we plot the integrated star formation efficiency versus time, scaling time to the free-fall time. As in prior simulations, we see fairly steep ramp in the stellar mass at early times, predominantly close to $\propto t^3$ \citep{guszejnov:2022.starforge.imf}.
+
 
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/sfe_vs_sigma.pdf}
+	\includegraphics[width=\columnwidth]{figures/sfe_vs_sigma.pdf}
 	\caption{Final star formation efficiency as a function of the initial cloud surface density (points are jittered along the $\Sigma$ axis for visibility.)}
 	\label{fig:sfe}
 \end{figure}
 
+In Figure~\ref{fig:sfe_vs_time} we plot the integrated star formation efficiency versus time, scaling time to the free-fall time. As in prior simulations, we see fairly steep ramp in the stellar mass at early times, predominantly close to $\propto t^3$ \citep{guszejnov:2022.starforge.imf}. As shown by \citet{lane:2021.turbsphere}, the \small{TURBSPHERE} initial configuration does not behave substantially differently from the prior \small{SPHERE} models in this regard.
+
+Once a sufficient number of massive stars has formed, stellar feedback becomes sufficient to disrupt the cloud with an HII region or stellar wind bubble, and shut down star formation.
+
+
+\subsection{Initial mass function}
 
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/imf_plots/comparison_chabrier_smooth_bounds_normalized.pdf}
+	\includegraphics[width=\columnwidth]{figures/imf_plots/comparison_chabrier_smooth_bounds_normalized.pdf}
 	\caption{Stellar initial mass functions from the different simulations. We plot the data as the fraction of stars in logarithmically-spaced bins, normalized to have equal weight at $>0.1M_\odot$, our adopted completeness limit due to numerical resolution. Shaded regions plot the $\pm \sigma$ interval of samples from the posterior distribution of IMF parameters.}
+	\label{fig:imf}
 \end{figure}
 
 
 \begin{figure}
 \input{figures/imf_plots/alphaplot_obs_chabrier_smooth_bounds}
 \caption{IMF slope $\Gamma = \mathrm{d}\log \phi/\mathrm{d}\log M$ as a function of stellar mass, plotting the $\pm \sigma$ range of samples from the posterior distributions of IMF parameters for the different simulations, and observations from }
+\label{fig:alphaplot}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/imf_plots/lognormal.pdf}
-	\caption{Isolated IMF from the \texttt{M2e4\_R10\_Z0.01} run that formed very massive stars. We compare the single-component Chabrier-like fit with a two-component fit that sums the Chabrier-like form with a high-mass lognormal component. The two-component model provides a significantly better fit}
+	\includegraphics[width=\columnwidth]{figures/imf_plots/lognormal.pdf}
+	\caption{Isolated IMF from the \texttt{M2e4\_R10\_Z0.01} run that formed very massive stars. We compare the single-component Chabrier-like fit with a two-component fit that sums the Chabrier-like form with a high-mass lognormal component. The two-component model provides a significantly better fit.}
 	\label{fig:lognormal}
 \end{figure}
 
@@ -223,28 +229,31 @@ The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-com
 
 
 \subsection{Maximum stellar mass and feedback}
-
+\label{sec:mmax_experiments}
 \begin{figure}
 	\input{figures/Mcluster_vs_Mmax}
-	\caption{Relation between the total coeval stellar system mass $M_{\rm cluster}$ and the maximum initial mass of the cluster primary $M_{\rm max}$ in the simulations, compared with observations mainly compiled by \citet{yan:2023.mmax.mecl.relation}, plotting measurements of the probable most-massive known star R136a1 separately. Data points are clickable hyperlinks to the source works' ADS page. In observations, systematic uncertainties are significant for both quantities. Horizontal error bars for R136a1 indicate the factor of $\sim 4$ range between values quoted by \citet{crowther:2010.r136.300msun} and \citet{weidner:2013.mmax.mecl.relation}, largely from real ambiguity in the size of region counted as the ``cluster''. The systematic uncertainty in $M_{\rm max}$ is also illustrated by the range of quoted values for R136a1, with quoted values ranging from $\sim 150M_\odot-300M_\odot$ \citep{massey:1998.r136.cluster.imf, crowther:2010.r136.300msun,schneider:2018.30dor.imf.excess,keszthelyi:2025.r136.evolutionary.models}, with \citet{higgins:2022.hydrogen.clock.vms} arguing that initial masses from $250-1000M_\odot$ may be observationally indistinguishable due to convergent mass-loss evolution. Inversely, multiplicity \citet{kalari:2022.r136.multiplicity} and early-time stellar coalescences \citep{murray:1996.imf.coalescence} would revise the initial masses downward. R136a1 is the best-studied case, but these same issues would as easily affect all high-mass points in the \citet{yan:2023.mmax.mecl.relation} compilation, likely more so due to the higher metallicity of the stars in the Milky Way.}
+	\caption{Relation between the total coeval stellar system mass $M_{\rm cluster}$ and the maximum initial mass of the cluster primary $M_{\rm max}$ in the simulations, compared with observations mainly compiled by \citet{yan:2023.mmax.mecl.relation}, plotting measurements of the probable most-massive known star R136a1 separately. Data points are clickable hyperlinks to the source works' ADS page. In observations, systematic uncertainties are significant for both quantities. Horizontal error bars for R136a1 indicate the factor of $\sim 4$ range between values quoted by \citet{crowther:2010.r136.300msun} and \citet{weidner:2013.mmax.mecl.relation}, largely from real ambiguity in the size of region counted as the ``cluster''. The systematic uncertainty in $M_{\rm max}$ is also illustrated by the range of quoted values for R136a1, with quoted values ranging from $\sim 150M_\odot-300M_\odot$ \citep{massey:1998.r136.cluster.imf, crowther:2010.r136.300msun,schneider:2018.30dor.imf.excess,keszthelyi:2025.r136.evolutionary.models}, with \citet{higgins:2022.hydrogen.clock.ems} arguing that initial masses from $250-1000M_\odot$ may be observationally indistinguishable due to convergent mass-loss evolution. Inversely, multiplicity \citet{kalari:2022.r136.multiplicity} and early-time stellar coalescences \citep{murray:1996.imf.coalescence} would revise the initial masses downward. R136a1 is the best-studied case, but these same issues would as easily affect all high-mass points in the \citet{yan:2023.mmax.mecl.relation} compilation, likely more so due to the higher metallicity of the stars in the Milky Way.}
 \end{figure}
+% chabrier 2003 sigma: 0.69 ln
+% chabrier 2005: 0.55
+An important takeaway to emphasize about our overall IMF results is that {\bf the IMF does not scale self-similarly according to a single mass parameter}. We see variation in both the shape of the IMF and the ratio of $M_{\rm max}/m_{\rm c}$. $m_c$ and $M_{\rm max}$ are set by different physics: the former by fragmentation, and the latter by accretion and stellar feedback, and in general these may vary independently. The picture presented by the simulations is not consistent with e.g. gravoturbulent theories of the IMF that predict a straightforward scaling the overall distribution according to the sonic mass \citep{hopkins:2013.imf.variation,chabrier_hennebelle_2014} or more generally a temperature-dependent self-similar scaling \citep{jermyn:2018.temp.dept.imf}.
 
 \subsection{Formation of very massive stars}
 
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/VMS_Accretion_History.pdf}
+	\includegraphics[width=\columnwidth]{figures/VMS_Accretion_History.pdf}
 	\caption{Accretion histories of the 10 most massive stars in the \texttt{M2e4\_R10\_Z0.01} simulation, plotting stellar mass versus time (top) and accretion rate versus time for individual stars, the sum of the top-4 most massive stars, and all stars.}
-	\label{fig:vms_accretion_history}
+	\label{fig:ems_accretion_history}
 \end{figure}
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/VMS_Distance_from_COM.pdf}
+	\includegraphics[width=\columnwidth]{figures/VMS_Distance_from_COM.pdf}
 	\caption{Distance of the 10 most-massive stars from the center of mass of the quadruple system formed by the 4 most-massive stars.}
-	\label{fig:vms_distance_from_center}
+	\label{fig:ems_distance_from_center}
 \end{figure}
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/VMS_M_vs_Mdot.pdf}
+	\includegraphics[width=\columnwidth]{figures/VMS_M_vs_Mdot.pdf}
 	\caption{Accretion rate of the 10 most-massive stars in \texttt{M2e4\_R1\_Z0.01} as a function of their instantaneous mass, highlighting the 4 very-massive stars that form the primary stellar system. A $\dot{M} \propto M^{2/3}$ line is plotted for reference.}
-	\label{fig:vms_accretion_rate}
+	\label{fig:ems_accretion_rate}
 \end{figure}
 
 
@@ -252,62 +261,117 @@ The IMF of \texttt{M2e4\_R1\_Z0.01} exhibits a clear departure from a single-com
 
 \subsection{Integrated population properties}
 %L/M, UV/SFR, metal yields, black hole population
+
+
 \section{Discussion}
+\subsection{Star formation efficiency}
+Our simulations predict a scaling of the cloud-scale star formation efficiency across 2 dex in surface density and metallicity, for the first time in a model with self-consistent individually-forming and accreting stars and all stellar feedback processes. Our results largely confirm the prior analytic arguments \citep{fall:2010.sf.eff.vs.surfacedensity,murray:2010.sfe.mw.gmc} and numerical simulations coupling feedback without self-consistent star formation \citep{geen:2017, kim:2018.uv.feedback,grudic:2016.sfe}. Quite generally and inevitably, a higher SFE is required for feedback to be effective in a denser ISM, regardless of the particular mechanism or configuration. 
+
+The key area where we diverge from prior works is that the specific rates of feedback from our stellar populations are not universal, due to the variation in the IMF that emerges from the simulations (Fig \ref{fig:imf}). Our higher-density and lower-metallicity clouds will generally produce more-massive stars. Because the overall feedback budget is dominated by these high-mass stars, the specific feedback rate of the stellar population as a whole can be much greater.
+
+We caution that direct, statistically-robust observational evidence for such a scaling within a homogeneous dataset has not been observed. 
+
+\subsection{The simulated and observed IMF across different conditions}
+Figure \ref{fig:alphaplot} is the most comprehensive comparison to date made between observations and simulations of the IMF, in terms of the breath of the dataset considered, range of stellar masses, and parameter space covered. We take this opportunity to comment on the general level of agreement between current models and observations.
+
+First, we note that the \small{STARFORGE} high-mass IMF slopes range from $\sim -0.7$ to $-0.8$ (whereas the \citet{salpeter_slope} slope here would be $-1.35$), with the sole exception of the low-density, low-metallicity \texttt{M2e4\_R10\_Z0.01}, whose asymptotic high-mass slope is not well-constrained. These values are consistent with some with observations: similar high-mass slopes have been inferred in observed star clusters, predominantly in star clusters located near the Galactic center \citep{brandner:2008.westerlund.imf,hussmann:2012.quintuplet.imf, hosek:2019.arches.imf} and 30 Doradus \citep{schneider:2018.30dor.imf.excess}. Our \texttt{M2e4\_R1\_Z1} simulation would be the best model for the conditions those clusters would have formed in, and the level of agreement in both the maximum stellar mass and the high-mass slope is excellent. \citet{hosek:2019.arches.imf} reported a degeneracy between an IMF with a break at $\sim 5M_\odot$ and an IMF with a more-conventional low-to-intermediate mass shape: if we take \texttt{M2e4\_R1\_Z1} as a physically-informed prior, it would lend weight to the latter, more conventionally-shaped IMF.
+
+On the other hand, it should not be dismissed that the present simulation suite does not have any examples of star clusters with high-mass slopes close to or steeper the \citet{salpeter_slope}, where most of the observations do lie, predominantly in Milky Way disk conditions that would be most closely approximated by \small{M2e4\_R10\_Z1}. Individual OB associations formed in such conditions with slopes consistent with this have been reported \citep{massey:1995.mw.ob.assoc.imf}, but are the exception and not the rule. Meanwhile, measurements of the high-mass slope in young clusters in M31 and M33 are arguably the cleanest homogeneous dataset to date, and they are generally statistically consistent with a single slope of $-1.5$ \citep{weisz:2015.m31.imf, wainer:2024.m33.imf}.
+
+The \small{STARFORGE} IMF has in fact become shallower since \citet{starforge.fullphysics}, which predicted $\Gamma \sim -1$, despite many bugfixes and improvements to the realism of the physics. Our introduction of \small{TURBSPHERE} initial conditions did not cause this, as we have noted that \small{SPHERE} runs exhibit the same trend. This trend towards a shallower slope despite more-realistic physics has continued in the latest version of \small{STARFORGE} (Grudi\'{c} et al., in prep.), and may point towards important missing ingredient in star formation simulations that may no longer be neglected.
+
+No direct observations are available for the IMF in high-density, low-metallicity conditions similar to \small{M2e4\_R1\_Z0.01}: galaxies with such low metallicities and high ISM pressures simply do not exist in the local Universe where it is possible to count stars, and would have existed predominantly in the early Universe when galactic gas fractions were generally greater and metallicities were lower. The closest available comparisons would to present-day ultra-faint dwarfs (UFD) or globular clusters (GC), whose stellar populations are very old and metal-poor. In the case of globular clusters, \citet{sollima:2017.gc.massfunc} noted a strong correlation between the present-day mass-function slope and the number of relaxation times the cluster has existed for, indicating that dynamical evolution must be accounted for to infer the {\it initial} mass function. Forward-modeling GC evolution, \citet{baumgardt:2023.gc.imf} inferred $\Gamma_{\rm low}=0.7$ for $M<0.4M_\odot$ and $\Gamma_{\rm Med}=-0.65$ for $0.4<M<M_\odot$, or alternatively for a log-normal model $m_{\rm c}=0.43M_\odot$ and $\sigma =0.28 \,\rm dex$, both reasonable close to our lower-$Z$, high-$\Sigma$ models. On the other hand, they favor $\Gamma_{\rm high}=-1.3$, significantly steeper than the high-mass slope of those models.
+
+% Comparing with the surviving $\lesssim 0.8 M_\odot$ stars in globular clusters, \small{M2e4\_R1\_Z0.1} and \small{M2e4\_R1\_Z0.01} both have IMF slopes in good agreement with the globular clusters M10, M22, and M55 \citep{piotto:1999.globular.cluster.imf}.  the general finding $\Gamma \gtrsim 0$ in 35 globular clusters analyzed in \citep{sollima:2017.gc.massfunc}. On the other hand, they are significantly shallower than the IMFs in UFDs \citep{filion:2022.ufd,filion:2024.ufd.imf}.
+
+Overall, our model that agrees best with available observations is the high-density, Solar-metallicity \texttt{M2e4\_R1\_Z1}, whose shallow high-mass slope agrees with observations of the most extreme star clusters in the Local Group. When the \small{STARFORGE} results disagree with observations, they tend to err in the direction of an IMF slope that is too shallow, potentially hinting at neglected physics processes that are required to encourage fragmentation or regulate stellar accretion.
+
 \subsection{The maximum stellar mass}
-In \citet{grudic:2023.does.god.play.dice} we first demonstrated that \small{STARFORGE} simulations generally predict a maximum stellar mass that varies with the properties of the natal cloud, and that this is set by feedback. On more general grounds, we argued analytically that more-massive and denser clouds can tolerate the presence of more-massive stars before being disrupted, for a variety of feedback mechanisms. 
+In \citet{grudic:2023.does.god.play.dice} we first demonstrated that \small{STARFORGE} simulations generally predict a maximum stellar mass that varies with the properties of the natal cloud, and that this is set by feedback. On more general grounds, we argued analytically that more-massive and denser clouds can tolerate the presence of more-massive stars before being disrupted, for a variety of feedback mechanisms. As long as accretion can proceed unhindered, extreme clouds should form extreme stars.
 
 This expectation is borne out in our high-$\Sigma$ \texttt{M2e4\_R1} runs, and through direct experiments we have demonstrated that $M_{\rm max}$ is sensitive to the strength of radiation pressure and stellar winds in particular. Our fiducial physics model predics $M_{\rm max}$ consistent with the most massive known stars in the Local Group at $Z_\odot$. And at low $Z$, where these forces are much weaker, accretion can continue unabated up to much greater stellar masses.
 
-These pre-supernova feedback processes are neglected in the \citet{padoan_2019_massive_sf} inertial-inflow (II) model, which predicts $M_{\rm max}$ as a function of the local turbulence conditions within a galaxy and the timescale for supernova feedback. Because of this, we expect that the II $M_{\rm max}$ may represent an upper bound on the mass that can be fed to a single star by turbulent eddies. We anticipate that $M_{\rm max}$ could decrease significantly if feedback were accounted for fully and this accretion flow were eventually cut off by it. Quantitative predictions of the II model such as the very-massive star formation model in \citet{gieles:2025.inertial.inflow.vms} may need to be revised.
+These pre-supernova feedback processes are neglected in the \citet{padoan_2019_massive_sf} inertial-inflow (II) model, which predicts $M_{\rm max}$ as a function of the local turbulence conditions within a galaxy and the timescale for supernova feedback. Because of this, we expect that the II $M_{\rm max}$ may represent an upper bound on the mass that can be fed to a single star by turbulent eddies. We anticipate that $M_{\rm max}$ could decrease significantly if feedback were accounted for fully and this accretion flow were eventually cut off by it. Despite this, we fully acknowledge that unlike \citet{padoan_2019_massive_sf} our isolated GMC models do not encompass the $100 \rm pc+$ galactic turbulent injection scale, so we have effectively ignored the effects of the turbulent eddies driven from larger scales. $M_{\rm max}$ should be ultimately be revisited with a model that accounts for both the relevant scales and the key physics.
 
-Despite this, we fully acknowledge that unlike \citet{padoan_2019_massive_sf} our isolated GMC models do not encompass the $100 \rm pc+$ galactic turbulent injection scale, so we have effectively ignored the effects of the turbulent eddies driven from larger scales. $M_{\rm max}$ should be ultimately be revisited with a model that accounts for both the relevant scales and the key physics.
+We also note that the scenario for EMS formation presented by \citet{gieles:2025.inertial.inflow.ems} based upon the II model is in {\it qualitative} agreement with our model. They argue that higher-$\Sigma$ conditions give rise to high accretion rates, so the stellar mass must can be reached for stellar wind feedback to compete with collapse and accretion increases with increasing $\Sigma$ and decreasing $Z$. 
 
-\subsection{VMS formation: key uncertainties}
-The 
+There are some key differences however: in the II scenario, a large cluster mass is required for a large $M_{\rm max}$, whereas our model produces several EMS in a cluster that is not even $10^4 M_\odot$. Also, the criterion used by \citet{gieles:2025.inertial.inflow.ems} for the end of EMS accretion was $\dot{M}_{\rm wind}+\dot{M}_{\rm accretion} = 0$, but in our simulations the mechanical effect of the wind feedback disrupts the accretion flow long before $\dot{M}_{\rm wind}$ becomes comparable to $\dot{M}_{\rm acc}$ (Figure \ref{fig:ems_accretion_history}).
 
-\label{sec:vms_formation_details}
-compared to gadget simulations forming VMS: we are showing that it can occur despite 1. being in much denser conditions where the jeans mass is much smaller, and 2. despite feedback, including notably jets
+\subsection{EMS formation through accretion: key uncertainties}
+\label{sec:ems_formation_details}
+The formation of extremely massive stars in \texttt{M2e4\_R1\_Z0.01} is striking. The physical picture is clear: runaway accretion can proceed unabated until stellar feedback intervenes, and its ability to do so is inherently limited at high $\Sigma$ and low $Z$ (\citealt{grudic:2023.does.god.play.dice}, \S\ref{sec:mmax_experiments}).
 
-gieles picture: \url{https://academic.oup.com/mnras/article/544/1/483/8230792?login=true#538539593}
+We believe this is plausible, but caution that there are many details in this process that we have neglected, and our result should be considered provisional. First, we remind the reader of the emerging, unresolved tensions between the IMF predictions of \texttt{STARFORGE} and observations (\S\ref{sec:imf.comparison}), and pending their resolution any predictions for stellar populations should be taken cautiously. But we note here several outstanding details in this physical picture that certainly require further investigation before a reliable prediction can be made.
 
-\subsection{VMS formation: implications}
-\label{sec:vms_implications}
-% high-z UV light-to-mass ratio
-% black hole seeds
-% abundances, e.g. N
+\subsubsection{Stellar coalescence}
+In sufficiently-dense star clusters with no gas whatsoever, EMS have been shown to form readily due to purely stellar dynamical processes: massive stars mass-segregate, collide, and coalesce if the timescale is shorter than the few-Myr lifetime of VMS \citep{portegies_zwart_1999_runaway_mergers,portegies-zwart:2002,reinoso:2018.primordial.cluster.collisions,reinoso:2020.star.cluster.runaway.collisions,alister-seguel:2020.smbh.seeds.pop3.collisions,vergara:2021.pop3.stellar.collisions,vergara:2023.runaway.collisions.nuclear.clusters,gonzalez.prieto:2024.stellar.collisions,vergara:2024.bh.formation.collisions,vergara:2025.vms.runaway.collisions}
 
-\subsection{massive SF scaling in up dense environments for feedback}
-does this make sense vis. observations? implications for feedback, chemical enrichment, remnants, etc
+We emphasize that the EMS formation in our simulation occurs through {\it accretion alone}, because \texttt{STARFORGE} model does not model the coalescence channel at all. Although our sink-particle model permits mergers of low-mass sinks that are likely to be numerically spurious \citep{starforge.methods}, the model does not permit high-mass stars to coalesce. Even if it did, our choice of $18\,\rm AU$ gravitational softening prevents us from following stellar dynamics down to the $\mathcal{O}\left(10\rm R_\odot\right)$ pericenters at which massive stars can collide. 
 
-\subsection{Feedback modeling caveats}
+Given the efficiency with which the EMS capture each other and harden in the gas-rich environment, it is plausible that coalescences {\it would} occur in our model if implemented. As the stars approach each other while accreting rapidly, determining the actual cross-section for coalescence would require knowledge of the protostars' radii, our next issue.
 
-Many properties of very massive stars are uncertain
+\subsubsection{Protostellar evolution}
+\label{sec:protostellar.evol}
+To determine the feedback properties of the EMS in our simulations such as protostellar radius, luminosity, and effective temperature, we use a sub-grid protostellar evolution model adapted from \citep{Offner_2009_radiative_sim}, using the calibration that reproduces the grid of detailed calculations by \citet{hosokawa:2009.protostellar.evol}. This grid goes up to $100M_\odot$ and $10^{-3}M_\odot\,\rm yr^{-1}$, which we exceed here by orders of magnitude (Fig. \ref{fig:ems_accretion_history}).
 
-https://arxiv.org/abs/2510.12465 - optically thick wind model 
+Our model generally predicts that the stars gain most of their mass while on the main sequence. However, studies have found that very-massive, rapidly-accreting stars may not contract to the main sequence at all, instead developing a bloated envelope thousands of $\rm AU$ in size \citep{hosokawa:2012.protostellar.evol}. If this were to occur, it would likely favour the formation of even more-massive stars: the bloated stars would have dramatically-reduced nuclear- and accretion-powered feedback, and would be orders-of-magnitude more likely to coalesce.
 
-Lyman alpha if important will be important at low Z:
-https://arxiv.org/abs/2510.25950
+\subsubsection{Stellar winds}
+\label{sec:stellarwinds}
+In \texttt{M2e4\_R1\_Z0.01}, stellar winds are ultimately responsible for determining the end-point of the runaway accretion that produces the EMS. If the winds were more powerful, accretion would cease sooner, and conversely weaker winds would permit more accretion. The actual parameters of the winds from such exotic stars are highly uncertain, as we must extrapolate an order of magnitude in mass and metallicity from the regimes where existing prescriptions have been tested observationally \citep{sabhahit:2022.vms.mass.loss}. Another concern is the validity of using a single-star evolutionary track, given that a significant fraction of massive stars are known to be in a binary configuration close enough to affect stellar evolution \citep{sana:2012.binary.evol}.
+
+Even if we knew the exact mass-loss rate that a given EMS should have, to na\"{i}vely couple that mass and energy in the present STARFORGE feedback framework is not self-consistent: the model operator-splits gas accretion and feedback injection, but each of those operations invokes a contradictory sub-grid description of the circumstellar flow. If EMS really do accrete rapidly while also injecting winds, it would not occur as a simple, spherically-symmetric, steady flow: mass would have to come in through a disk or filaments, while simultaneously being launched in a wind through diffuse cavities by radiative or magnetocentrifugal acceleration. Such a complex flow would not be captured by current sub-grid models.
+
+Such uncertainties, combined with those of protostellar evolution (\S\ref{sec:protostellar.evol}), highlight the need for more-detailed, self-consistent models of the flow around a massive protostar, resolving down to the protostellar radius while capturing the geometry and intermittency of the accretion flow that would occur in a realistic environment.
+
+% compared to gadget simulations forming VMS: we are showing that it can occur despite 1. being in much denser conditions where the jeans mass is much smaller, and 2. despite feedback, including notably jets
+
+% gieles picture: \url{https://academic.oup.com/mnras/article/544/1/483/8230792?login=true#538539593}
+
+\subsection{EMS formation: implications}
+\label{sec:ems_implications}
+Assuming EMS {\it do} form in nature in a manner consistent with our simulations, there are several important implications for stellar and black hole populations.
+
+\subsubsection{Formation of massive black holes}
+The EMS are well above the $50-130M_\odot$ initial mass range for stars expected to end their lives in a pair-instability supernova \citep{fowler:1964.pair.instability,rakavy:1967.pair.instability.stellar,barkat:1967.pair.instability.supernova,fraley:1968.pair.instability.supernova,heger:2002.pop3.nucleosynthesis,woosley:2007.pulsational.pair.instability,farmer:2019.pair.instability.bh.gap}. Instead, they would collapse directly to a massive black hole, with the precise mass subject to uncertainties about mass-loss discussed about \ref{sec:stellarwinds}.
+
+The conditions simulated in \texttt{M2e4\_R1\_Z0.01} are representative of the predominant high-pressure, low-metallicity conditions of the early Universe, so it would be fairly generic for star clusters to form and host massive black holes. Increasing the initial black hole mass by an order-of-magnitude compared to a standard IMF would accelerate the timescale for the light-seed channel for supermassive black holes, potentially resolving some of its difficulties accounting for the early emergence of supermassive black holes at high redshift.
+
+\subsubsection{Stellar wind pollution}
+The efficiency of stellar wind pollution scales extremely steeply with stellar mass, e.g. the yield of a $200 M_\odot$ star is thought to be 100 times greater than that of a $50 M_\odot$ star \citep{higgins:2023.stellar.wind.yields,higgins:2025.stellar.wind.yields}. Thus, winds from VMS or EMS may contribute to the abundance patterns of globular clusters and high-redshift starburst galaxies \citep{prantzos:2006.gc.enrichment, bastian:2018.gc.abundances,pascale:2023.godzilla,senchyna:2024.gnz11, gieles:2025.inertial.inflow.ems, shi:2026.vms.pollution}.
+
+On the other hand, for wind pollution to work, the wind material {\it has to get into the stars}, which it most certainly does not in our simulation: once the wind bubble breaks out, it violently disrupts the cloud and halts star formation altogether. For an in-situ polluter to work, the energy of the polluting wind must be small enough that it is contained within the protocluster while star formation is ongoing. Alternatively, the energy of the wind would have to be {\it dissipated} efficiently: the transport of energy in a stellar wind bubble is governed by the turbulent mixing of hot and cold gas \citep{lancaster:2021.wind.sims}, and numerical convergence on this problem has not been achieved because the cooling length-scale on which the turbulent mixing occurs is not resolvable in current global simulations \citep{lancaster:2024.wind.bubbles}, including our own. Thus, the actual the dynamical effect of stellar wind feedback as a whole remains admittedly uncertain.
+
+\subsubsection{Photometry and SEDs of stellar populations}
+While they live, the EMS dominate the bolometric luminosity of the star cluster, and the bolometric light-to-mass ratio is an order-of-magnitude greater than the typical $\sim 10^3 L_\odot M_\odot^{-1}$ from a young stellar population with a standard IMF (\citealt{starburst99}, c.f. Table \ref{table:imf_params}). This would have clear observational implications for the inference of stellar population properties from integrated light, which typically does assume a standard IMF (an assumption often required to break degeneracy; \citealt{ashworth:2017.cluster.photometry.degeneracy}). Effective temperature scales only weakly with stellar mass, so the {\it color} of a young star cluster with EMS would not be substantially different from a cluster with a standard IMF. Thus, the photometry of the young cluster would be likely be well-fit by a star cluster with an order-of-magnitude greater mass, and other derived properties such as mass density would be overestimated in turn.
+
+Assuming the EMS have reached the main sequence, most of their excess light would be in the UV. The stellar lifetime decreases only weakly with stellar mass at these very high masses, so the {\it integrated} UV over the lifetime of the stellar population would also be greatly enhanced compared to a standard IMF. Consequently, the $L_{\rm UV}/\rm SFR$ conversion factor would be significantly elevated, and the star formation {\it rate} of a galaxy producing EMS would be overestimated. This is one of many plausible explanations for the tension between models and observations of the rest-frame UV luminosity function at high redshift \citep{harikane:2023.uvlf}.
+
+Lastly, the formation of EMS or more generally a top-heavy IMF at low-metallicity, high-redshift conditions is consistent with the model of \citet{cameron:2023.jwst.topheavy.imf}, who found that an excess of massive stars (or equivalently, the presence of excessively-massive stars) could account for the spectral energy distribution of a low-metallicity Ly$\alpha$-emitting galaxy at $z\sim 6$.
 
 
+\subsubsection{Stellar feedback energetics}
+EMS would dominate the overall feedback budget from their star cluster in terms of radiation and winds. They would {\it not} contribute additional supernovae, because we expect them to collapse directly to black hole. However, if these stars shed their mass as winds at a terminal velocity comparable to their escape speed ($\sim 3000 \rm \,km\,s^{-1}$), so the overall energetics are essentially the same as if they {\it did} explode. For an order-of-magnitude comparison: a typical IMF produces roughly 1 supernova per $100M_\odot$, so a specific feedback energy of $\sim 10^49\,\mathrm{erg}\,M_\odot^{-1}$. The \texttt{M2e4\_R1\_Z0.01} cluster has roughly half its mass in EMS, and if half that mass were to be shed in $3000\rm km\, s^{-1}$ winds then the specific wind energy of the cluster would be $2\times 10^{49} \,\mathrm{erg}\,M_\odot^{-1}$: wind feedback from this cluster would be comparable to, if not dominant over, its supernova feedback.
+
+The effect of an exotic and top-heavy IMF on {\it radiative} feedback was studied in detail in numerical experiments by \citet{menon:2024.imf.feedback}, who found that the dynamical effect of the additional feedback was not large at high $\Sigma$,because it remained in a regime where gravity still dominated over feedback. But to our knowledge, the effect of the massive amount of prompt wind feedback seen in our simulation has {\it not} been explored, and may contribute to the regulation of galactic-scale star formation and wind launching at high redshift.
 
 
 \section{Conclusion}
 
 In this work we have presented the first parameter study of \small{STARFORGE} radiation-MHD star formation simulations to covers 2 orders of magnitude in both surface density and metallicity, exploring the resulting variations in star formation outcomes in extreme environments while accounting for most key physical processes. Our findings are as follows:
 \begin{itemize}
-	\item We have confirmed that the star formation efficiency on the scale of an individual GMC is expected to saturate to a value approaching unity at high surface density (Fig. \ref{fig:sfe}), {\it whilst accounting for nearly all stellar feedback processes acting in concert from individual stars}. At high $\Sigma$, the SFE is also sensitive to metallicity because stellar winds and radiation pressure on dust grains are both much less significant. SFE scales less steeply with $\Sigma$ than prior models without a self-consitent IMF, because more-massive stars populate the high-mass tail, increasing the specific rates of feedback energy and momentum injection.
-	\item We predict general variation in the IMF as a function of both surface density and metallicity. The behaviour of the \citet{chabrier_imf} peak is nonlinear: at Solar metallicity, it increases with surface density, but at 1\% Solar metallicity it decreases. We attribute this to the varying ISM cooling and heating microphysics responsible for setting thermal structure and fragmentation in different environments.
+	\item We have confirmed that the star formation efficiency on the scale of an individual GMC is expected to scale to high $\gtrsim 20\%$ values at high surface density (Fig. \ref{fig:sfe}), {\it whilst accounting for nearly all stellar feedback processes acting in concert from individual stars}. At high $\Sigma$, the SFE is also sensitive to metallicity because it determines the strength of stellar winds and the abundance of dust coupled to radiation pressure. SFE scales less steeply with $\Sigma$ than prior models without a self-consistent IMF, because more-massive stars populate the high-mass tail, increasing the specific rates of feedback energy and momentum injection.
+	\item We predict general variation in the IMF as a function of both surface density and metallicity. The behaviour of the \citet{chabrier_imf} peak is nonlinear: at Solar metallicity, it increases with surface density, but at 1\% Solar metallicity it decreases. This variation arises from the ISM cooling and heating microphysics responsible for setting thermal structure and effective fragment Jeans mass in different environments.
+	\item The high-mass cutoff the IMF also varies with $Z$ in a manner that depends upon $\Sigma$. At low $\Sigma$, it is relatively insensitive to $Z$, but at high $\Sigma$ much more-massive stars can form if metallicity is low, due to much-weaker winds and radiation pressure. Overall, we anticipate variation in $M_{\rm max}$ due to the varying ability of stellar feedback to regulate runaway accretion depending on environement \citep[e.g.][]{grudic:2023.does.god.play.dice}.
 	\item We have disentangled some of the processes responsible for regulating the maximum stellar mass in extreme conditions. At Solar metallicity, both winds and infrared radiation pressure on dust grains are both individually important. Without these forces, runaway accretion can proceed unabated to much higher masses.
-	\item The high-mass cutoff the IMF also varies with $Z$ in a manner that depends upon $\Sigma$. At low $\Sigma$, it is relatively insensitive to $Z$, but at high $\Sigma$ much more-massive stars can form if metallicity is low, due to much-weaker winds and radiation pressure.
-	\item In our highest-$\Sigma$, lowest-$Z$ run, we find an exotic formation mode for extremely massive ($10^3 M_\odot$+) stars. Four stars in the center of the cluster come to dominate the overall accretion rate, with $\dot{M} \propto M^{2/3}$ (Fig. \ref{fig:vms_accretion_rate}), quantitatively consistent with competitive accretion models. The 4 VMS pair up hierarchically into a quadruple system, which continues to accrete until stellar wind feedback finally disrupts the cloud violently. The resulting IMF is best described by 2 components consisting of the primary VMS system plus the rest of the star cluster. Many uncertainties about this process remain (\S\ref{sec:vms_formation_details}), but if realized in nature its implications may be profound (\S\ref{sec:vms_implications}).
+	\item In our highest-$\Sigma$, lowest-$Z$ run, we find an exotic formation mode for extremely massive ($10^3 M_\odot$+) stars. Four stars in the center of the cluster come to dominate the overall accretion rate, with $\dot{M} \propto M^{2/3}$ (Fig. \ref{fig:ems_accretion_rate}), quantitatively consistent with competitive accretion models \citep{bonnell:2001.competitive.accretion}. The 4 VMS pair up hierarchically into a quadruple system, which continues to accrete until stellar wind feedback finally disrupts the cloud violently. The resulting IMF is best described by 2 components consisting of the primary VMS system plus the rest of the star cluster. Many uncertainties about this process remain (\S\ref{sec:ems_formation_details}), but if realized in nature its implications may be profound (\S\ref{sec:ems_implications}).
 \end{itemize}
-Lyman-$\alpha$ radiation pressure is the major neglected force of feedback, so its effect on this prediction remains to be determined.
 \section*{Acknowledgements}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Data Availability}
-
+The complete simulation dataset is publically available, hosted on disk on the Flatiron Institute Rusty cluster. See \url{https://starforge-tools.readthedocs.io/en/latest/getdata.html} for instructions on obtaining and analyzing the data.
 %The complete dataset of simulation snapshots with time-dependendent stellar (sink particle) properties is available at \href{https://data.obs.carnegiescience.edu/starforge/M2e3_R3.tar.gz}{this link}. A public version of the {\small GIZMO} code is available at \url{http://www.tapir.caltech.edu/~phopkins/Site/GIZMO.html}.
 
 

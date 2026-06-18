@@ -58,7 +58,8 @@ header = (
     r" & $n_0\,(\mathrm{cm}^{-3})$"
     r" & $t_{\rm ff}\,(\mathrm{Myr})$"
     r" & $B_0\,(\mu\mathrm{G})$"
-    r" & ISRF & Cosmic Rays \\"
+    r" & ISRF & Cosmic Rays"
+    r" & $\Delta m\,(M_\odot)$ \\"
 )
 
 def radiation_str(val):
@@ -98,12 +99,12 @@ for label, n_real, M, R, Z, isrf, cr in runs:
     rows.append(
         f"    {label} & {n_real} & {M_str} & {R_str} & {Z_str}"
         f" & {fmt(sigma, 2)} & {fmt(n, 2)} & {fmt(t_ff, 2)} & {fmt(B, 2)}"
-        f" & {radiation_str(isrf)} & {radiation_str(cr)} \\\\"
+        f" & {radiation_str(isrf)} & {radiation_str(cr)} & $10^{{-3}}$ \\\\"
     )
 
 table = r"""\begin{table*}[t!]
 \centering
-\begin{tabular}{lcccccccccc}
+\begin{tabular}{lccccccccccc}
 \toprule
 """ + header + r"""
 \midrule

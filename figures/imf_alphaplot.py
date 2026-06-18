@@ -22,6 +22,7 @@ import jax.numpy as jnp
 import numpy as np
 import pandas as pd
 import salpyter
+from palettable.colorbrewer.qualitative import Set1_9
 
 from sim_paths import IMF_RUNS, LOGZ_COLORMAP, logz_to_color
 
@@ -82,16 +83,21 @@ _obs_markerdict = {
     "UFD": "<",
 }
 _obs_markers = np.array([_obs_markerdict.get(t, "o") for t in _obs_types])
+_obs_point_sizes = np.array([5.0 if t == "Young Cluster" else 10.0 for t in _obs_types])
+_SET1_NO_YELLOW = [c for i, c in enumerate(Set1_9.colors) if i != 5]  # drop #FFFF33
+_TYPE_COLORS = {
+    cls: tuple(c / 255 for c in _SET1_NO_YELLOW[i])
+    for i, cls in enumerate(_obs_markerdict.keys())
+}
 
 
-def _draw_observations(ax, color_by_z=False):
+def _draw_observations(ax, color_by_z=False, color_by_type=False):
     """Overlay the alphaplot literature compilation (markers + error bars +
     clickable ADS hyperlinks).
 
-    When ``color_by_z`` is True, each marker is colored by its ``[Z/H]``
-    metallicity using the simulation's ``logz_to_color`` (a ListedColormap of
-    three Dark2 bins anchored at logZ ∈ {-2, -1, 0}; values outside [-2, 0]
-    are clamped). Rows with no metallicity measurement render in grey.
+    ``color_by_z``: color each marker by its ``[Z/H]`` metallicity.
+    ``color_by_type``: color each marker by observation class using Dark2.
+    The two modes are mutually exclusive; ``color_by_z`` takes precedence.
     """
     ebar_lw = 0.3
 
@@ -101,14 +107,16 @@ def _draw_observations(ax, color_by_z=False):
             (0.6, 0.6, 0.6, 1.0) if missing else logz_to_color(z)
             for z, missing in zip(_obs_logz, _missing)
         ])
+    elif color_by_type:
+        _pt_colors = np.array([_TYPE_COLORS.get(t, (0.5, 0.5, 0.5)) for t in _obs_types])
     else:
         _pt_colors = None
 
     def _scatter(sel, mk, zorder):
         if not sel.any():
             return
-        kwargs = dict(s=10, marker=mk, lw=0, zorder=zorder)
-        if color_by_z:
+        kwargs = dict(s=_obs_point_sizes[sel], marker=mk, lw=0, zorder=zorder)
+        if _pt_colors is not None:
             ax.scatter(_obs_mmed[sel], _obs_slope[sel],
                        c=_pt_colors[sel], **kwargs)
         else:
@@ -163,10 +171,11 @@ def _draw_observations(ax, color_by_z=False):
 
     # Empty-data proxy markers so the system-class entries appear in the
     # legend without adding off-axis artists that would inflate the figure's
-    # tight-bbox calculation. Proxy color stays black so the markers stay
-    # readable on the legend regardless of color_by_z.
+    # tight-bbox calculation.
     for cls, mk in _obs_markerdict.items():
-        ax.scatter([], [], marker=mk, lw=0, color="black", s=10, label=cls)
+        color = _TYPE_COLORS[cls] if color_by_type else "black"
+        sz = 5.0 if cls == "Young Cluster" else 10.0
+        ax.scatter([], [], marker=mk, lw=0, color=color, s=sz, label=cls)
 
     # Clickable ADS hyperlinks per measurement. PDF viewers like Preview only
     # honor link annotations attached to text artists (not PathCollection
@@ -185,12 +194,12 @@ def _draw_observations(ax, color_by_z=False):
 # ---------------- main loop ---------------- #
 
 _VARIANTS = (
-    ("none",      False, False),
-    ("obs",       True,  False),
-    ("obs_zcolor", True, True),
+    ("none",       False, False, False),
+    ("obs",        True,  False, True),
+    ("obs_zcolor", True,  True,  False),
 )
 
-for _variant_name, WITH_OBS, COLOR_OBS_BY_Z in _VARIANTS:
+for _variant_name, WITH_OBS, COLOR_OBS_BY_Z, COLOR_OBS_BY_TYPE in _VARIANTS:
     fig, ax = plt.subplots(1, 1, figsize=(4, 4) if WITH_OBS else (4.5, 4.5))
 
     # ---- dataset envelopes ----
@@ -256,7 +265,7 @@ for _variant_name, WITH_OBS, COLOR_OBS_BY_Z in _VARIANTS:
 
     # ---- observational overlay (only on the _obs variants) ----
     if WITH_OBS:
-        _draw_observations(ax, color_by_z=COLOR_OBS_BY_Z)
+        _draw_observations(ax, color_by_z=COLOR_OBS_BY_Z, color_by_type=COLOR_OBS_BY_TYPE)
 
     # ---- finalize ----
     ax.set(
@@ -306,9 +315,7 @@ for _variant_name, WITH_OBS, COLOR_OBS_BY_Z in _VARIANTS:
         _cb.minorticks_off()
 
     fig.tight_layout()
-    _suffix = ""
-    if WITH_OBS:
-        _suffix = "_obs" + ("_zcolor" if COLOR_OBS_BY_Z else "")
+    _suffix = "" if _variant_name == "none" else f"_{_variant_name}"
     out_path = os.path.join(OUTDIR, f"alphaplot{_suffix}_{model}.pdf")
 
     # For the obs variant, compute each clickable point's normalized
