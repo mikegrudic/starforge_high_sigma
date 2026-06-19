@@ -64,6 +64,19 @@ for run in PHYSICS_EXPERIMENTS:
                color=logz_to_color(run.logZ), s=30, marker=run.marker,
                edgecolor="black", lw=0.3, zorder=10)
 
+# Unweighted log-space power-law fit to Z=Zsun fiducial (standard physics) points.
+_z1_runs = [r for r in FIDUCIAL_RUNS if r.logZ == 0]
+_z1_sigma = np.array([r.sigma for r in _z1_runs])
+_z1_sfe = np.array([final_sfe(r) for r in _z1_runs])
+_alpha, _logb = np.polyfit(np.log10(_z1_sigma), np.log10(_z1_sfe), 1)
+_fit_sigma = np.array([_z1_sigma.min(), _z1_sigma.max()])
+ax.plot(_fit_sigma, 10.0 ** (_alpha * np.log10(_fit_sigma) + _logb),
+        color="black", lw=1.2, ls="dotted", zorder=5)
+ax.annotate(
+    rf"$\propto \Sigma^{{{_alpha:.2f}}}$",
+    xy=(1.6e3, 0.1), fontsize=8,
+)
+
 # Grudic+2021 fit curve + 1-sigma scatter band (0.13 dex about the median).
 sigma_grid = np.logspace(0, 5, 200)
 fit_median = grudic21_sfe(sigma_grid)
