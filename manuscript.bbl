@@ -147,6 +147,9 @@
 \bibitem[\protect\citeauthoryear{{Guszejnov}, {Grudi{\'c}}, {Offner}, {Faucher-Gigu{\`e}re}, {Hopkins}  \& {Rosen}}{{Guszejnov} et~al.}{2022}]{guszejnov:2022.starforge.imf}
 {Guszejnov} D.,  {Grudi{\'c}} M.~Y.,  {Offner} S. S.~R.,  {Faucher-Gigu{\`e}re} C.-A.,  {Hopkins} P.~F.,   {Rosen} A.~L.,  2022, \mn@doi [\mnras] {10.1093/mnras/stac2060}, \href {https://ui.adsabs.harvard.edu/abs/2022MNRAS.515.4929G} {515, 4929}
 
+\bibitem[\protect\citeauthoryear{{Guszejnov}, {Raju}, {Offner}, {Grudi{\'c}}, {Faucher-Gigu{\`e}re}, {Hopkins}  \& {Rosen}}{{Guszejnov} et~al.}{2023}]{guszejnov:2023.starforge.multiplicity}
+{Guszejnov} D.,  {Raju} A.~N.,  {Offner} S. S.~R.,  {Grudi{\'c}} M.~Y.,  {Faucher-Gigu{\`e}re} C.-A.,  {Hopkins} P.~F.,   {Rosen} A.~L.,  2023, \mn@doi [\mnras] {10.1093/mnras/stac3268}, \href {https://ui.adsabs.harvard.edu/abs/2023MNRAS.518.4693G} {518, 4693}
+
 \bibitem[\protect\citeauthoryear{{Gutermuth}, {Megeath}, {Myers}, {Allen}, {Pipher}  \& {Fazio}}{{Gutermuth} et~al.}{2009}]{gutermuth:2009.dust.extinction}
 {Gutermuth} R.~A.,  {Megeath} S.~T.,  {Myers} P.~C.,  {Allen} L.~E.,  {Pipher} J.~L.,   {Fazio} G.~G.,  2009, \mn@doi [\apjs] {10.1088/0067-0049/184/1/18}, \href {https://ui.adsabs.harvard.edu/abs/2009ApJS..184...18G} {184, 18}
 
@@ -443,6 +446,9 @@ Smith N.,  2014, \mn@doi [Annual Review of Astronomy and Astrophysics] {10.1146/
 
 \bibitem[\protect\citeauthoryear{{Vink}}{{Vink}}{2023}]{vink:2023.jwst.nitrogen.vms}
 {Vink} J.~S.,  2023, \mn@doi [\aap] {10.1051/0004-6361/202347827}, \href {https://ui.adsabs.harvard.edu/abs/2023A&A...679L...9V} {679, L9}
+
+\bibitem[\protect\citeauthoryear{{Vink}, {de Koter}  \& {Lamers}}{{Vink} et~al.}{2001}]{vink:2001.ob.mass.loss}
+{Vink} J.~S.,  {de Koter} A.,   {Lamers} H.~J.~G.~L.~M.,  2001, \mn@doi [\aap] {10.1051/0004-6361:20010127}, \href {https://ui.adsabs.harvard.edu/abs/2001A&A...369..574V} {369, 574}
 
 \bibitem[\protect\citeauthoryear{{Wainer} et~al.,}{{Wainer} et~al.}{2024}]{wainer:2024.m33.imf}
 {Wainer} T.~M.,  et~al., 2024, \mn@doi [\aj] {10.3847/1538-3881/ad5a6e}, \href {https://ui.adsabs.harvard.edu/abs/2024AJ....168...86W} {168, 86}

@@ -55,8 +55,8 @@ runs = [
 ]
 
 header = (
-    r"Simulation & Physics & $N_{\rm real}$ & $M_{\rm cloud}\,(M_\odot)$"
-    r" & $R_{\rm cloud}\,(\mathrm{pc})$ & $Z/Z_\odot$"
+    r"Simulation & Physics & $N_{\rm real}$ & $M\,(M_\odot)$"
+    r" & $R\,(\mathrm{pc})$ & $Z/Z_\odot$"
     r" & $\Sigma\,(M_\odot\,\mathrm{pc}^{-2})$"
     r" & $t_{\rm ff}\,(\mathrm{Myr})$"
     r" & $B_0\,(\mu\mathrm{G})$"
@@ -113,9 +113,8 @@ table = r"""\begin{table*}[t!]
 """ + "\n".join(rows) + r"""
 \bottomrule
 \end{tabular}
-\caption{Initial conditions for all simulations. $N_{\rm real}$ is the number
-of independent turbulent realizations. $n_0$ is the initial
-mean number density of hydrogen nuclei; $B_0$ is the initial uniform magnetic field strength.}
+\caption{Parameters for all simulations. $N_{\rm seed}$: number
+of independent turbulent realizations. $M$: initial GMC mass. $R$: initial GMC radius. $\Sigma$: initial mean GMC surface density. $t_{\rm ff}$: cloud free-fall time based upon its initial mean density. $B_0$: strength of the initial uniform magnetic field. ISRF: scaling factor for the background interstellar radiation field, relative to the Solar neighborhood. Cosmic Rays: scaling factor for the background cosmic ray ionization rate relative to the Solar neighborhood. $\Delta m$: simulation mass resultion.}
 \label{table:runs}
 \end{table*}
 """

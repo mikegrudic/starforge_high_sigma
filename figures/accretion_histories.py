@@ -155,13 +155,21 @@ for i, (color, lw, (_, (snaps, mass, coord))) in enumerate(zip(colors, lws, top)
     else:
         label = None
     ax.plot((times_kyr[snaps] - tmin)[finite], dist[finite], lw=lw, color=color, label=label)
+PC_TO_AU = float(u.pc.to(u.au))
+SOFTENING_AU = 18.0
+ax.axhline(SOFTENING_AU / PC_TO_AU, color="black", lw=0.8, ls="dashed",
+           label="Softening Radius")
 ax.set(
     yscale="log",
     xlabel="Time (kyr)",
     ylabel=r"Distance from COM (pc)",
     xlim=[0, 175],
-    ylim=[1e-4, 1],
+    ylim=[10 / PC_TO_AU, 1],
 )
+ax2 = ax.twinx()
+ax2.set_yscale("log")
+ax2.set_ylim(10.0, 1.0 * PC_TO_AU)
+ax2.set_ylabel(r"Distance from COM (AU)")
 ax.ticklabel_format(axis="x", style="plain", useOffset=False)
 ax.legend(
     loc="lower left", fontsize=6, ncol=2,
