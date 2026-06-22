@@ -2,7 +2,7 @@
 # null bytes it generates from mkii/ paths in the pdflatex log).
 TEX := manuscript
 
-BIBS := master.bib manuscriptNotes.bib
+BIBS := master.bib
 
 FIGURE_PDFS := $(wildcard figures/imf_plots/*.pdf) figures/multipanel.pdf figures/Mcluster_vs_Mmax.pdf figures/wind_mdot.pdf
 
