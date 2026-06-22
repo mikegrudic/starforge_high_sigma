@@ -400,7 +400,7 @@
  \let\@AF@join\@title@join
 }%
 \def\frontmatter@title@format{\normalsize\centering}
-\def\frontmatter@title@below{\vspace*{-2.63\baselineskip\vspace*{0.25in}}}%
+\def\frontmatter@title@below{\vspace*{-2.63\baselineskip}\vspace*{0.25in}}%
 
 \def\frontmatter@above@affilgroup{\vspace*{0.25in}}%
 \def\frontmatter@authorformat{\small\scshape\centering}%
