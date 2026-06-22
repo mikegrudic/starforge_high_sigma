@@ -112,7 +112,7 @@ Recently it has become possible to model the emergence of stellar populations fr
 In this work we apply the {\small STARFORGE} model to higher-density conditions than in previous work, targeting a mean cloud-scale surface density of $\Sigma = M/\uppi R^2 \approx 1 \rm g\,cm^{-2}$ across a range of cloud masses and metallicities. We focus on global cloud and star cluster evolution and the final stellar population properties, in particular highlighting how these can differ from the more Milky Way-like conditions we modeled in previous works. 
 
 \section{Methods}
-We perform a suite of numerical radiation-magnetohydrodynamics simulations of giant molecular clouds using the \small{STARFORGE} numerical framework implemented in the \small{GIZMO} code \citep{hopkins:gizmo}. Here we only briefly summarize the elements of this framework, and refer to the \small{STARFORGE} methods paper \citet{starforge.methods} for details.
+We perform a suite of numerical radiation-magnetohydrodynamics simulations of giant molecular clouds using the \small{STARFORGE} numerical framework implemented in the \small{GIZMO} code \citep{hopkins:gizmo}. Here we only briefly summarize the elements of this framework, and refer to the \small{STARFORGE} methods paper, \citet{starforge.methods}, for details.
 
 We solve the equations of ideal magnetohydrodynamics using \small{GIZMO}'s quasi-Lagrangian, meshless-finite-mass (MFM) Godunov-type solver \citep{hopkins:gizmo.mhd}, with \citep{powell1999} and \citep{dedner2002} divergence-cleaning source terms, and using the \citet{hopkins:gizmo.mhd.cg} constrained-gradient scheme to minimize $\mathbf{\nabla} \cdot \mathbf{B}$. In all simulations presented here, the fluid is discretized into finite-mass elements initially of mass $10^{-3}M_\odot$, resolving a $2\times 10^4 M_\odot$ cloud into $2\times 10^7$ elements. We have shown this resolution to be sufficient to model the IMF down to a completeness limit of $\sim 0.1 M_\odot$ \citep{starforge.methods}.
 
@@ -201,7 +201,7 @@ This is probably due to the variation in the specific feedback rate per stellar 
 \begin{equation}
 	\langle \dot{P}/M_\star\rangle = \langle \dot{P}/M_\star\rangle_0 \left(\frac{\Sigma}{\Sigma_0}\right)^k,
 \end{equation}
-the balance of momentum injection and gravity in the cloud for $\epsilon << 1$ reads
+the balance of momentum injection and gravity in the cloud for $\epsilon \ll 1$ reads
 
 \begin{equation}
 	\frac{GM^2}{R^2} \propto \langle \dot{P}/M_\star\rangle_0 \left(\frac{\Sigma}{\Sigma_0}\right)^k \epsilon M,
@@ -271,7 +271,7 @@ The low-$\Sigma$ clouds have similar $M_{\rm max} \sim 33-37 M_\odot$, regardles
 \end{figure}
 \begin{figure}
 	\includegraphics[width=\columnwidth]{figures/VMS_M_vs_Mdot.pdf}
-	\caption{Accretion rate of the 10 most-massive stars in \texttt{M2e4\_R1\_Z0.01} as a function of their instantaneous mass, highlighting the 4 very-massive stars that form the primary stellar system. A $\dot{M} \propto M^{2/3}$ line is plotted for reference.}
+	\caption{Accretion rate of the 10 most-massive stars in \texttt{M2e4\_R1\_Z0.01} as a function of their instantaneous mass, highlighting the 4 extremely-massive stars that form the primary stellar system. A $\dot{M} \propto M^{2/3}$ line is plotted for reference.}
 	\label{fig:ems_accretion_rate}
 \end{figure}
 To conclude our analysis, we document the formation of 4 extremely-massive\footnote{We adopt the terminology used in \citet{gieles:2025.inertial.inflow.ems}: $10^2-10^3M_\odot$: Very Massive Stars (VMS). $10^3-10^4M_\odot$: Extremely Massive Stars (EMS). $10^4+ M_\odot$: Supermassive Stars (SMS).} stars in \texttt{M2e4\_R1\_Z0.01}. Figure \ref{fig:ems_accretion_history} plots the accretion history of the 10 most-massive stars in this simulation. Stars 1-3 all initially form quite early, within $10\,\rm kyr$ of the first star; star 4 forms roughly $30 \rm\, kyr$ later. The proto-EMS grow as they accrete more and more rapidly, with their accretion rates ramping up in conjunction with that of the cluster as a whole. 
@@ -287,7 +287,7 @@ To distinguish between the different scalings predicted by different scenarios f
 \subsection{Star formation efficiency}
 Our simulations predict a scaling of the cloud-scale star formation efficiency across 2 dex in surface density and metallicity, for the first time in a model with self-consistent individually-forming and accreting stars and all stellar feedback processes. Our results largely confirm the prior analytic arguments \citep{fall:2010.sf.eff.vs.surfacedensity,murray:2010.sfe.mw.gmc} and numerical simulations coupling feedback without self-consistent star formation \citep{geen:2017, kim:2018.uv.feedback,grudic:2016.sfe}. Quite generally and inevitably, a higher SFE is required for feedback to be effective in a denser ISM, regardless of the particular mechanism or configuration. 
 
-The key area where we diverge from prior works is that the specific rates of feedback from our stellar populations are not universal, due to the variation in the IMF that emerges from the simulations (Fig \ref{fig:imf}). Our higher-density and lower-metallicity clouds will generally produce more-massive stars. Because the overall feedback budget is dominated by these high-mass stars, the specific feedback rate of the stellar population as a whole can be much greater.
+The key area where we diverge from prior works is that the specific rates of feedback from our stellar populations are not universal, due to the variation in the IMF that emerges from the simulations (Fig. \ref{fig:imf}). Our higher-density and lower-metallicity clouds will generally produce more-massive stars. Because the overall feedback budget is dominated by these high-mass stars, the specific feedback rate of the stellar population as a whole can be much greater.
 
 We caution that direct, statistically-robust observational evidence for such a scaling within a homogeneous dataset has yet to be observed \footnote{\citet{mok:2020} note general agreement between observed star cluster masses and those predicted from observed GMC masses by the \citet{fall:2010.sf.eff.vs.surfacedensity} SFE model, and likewise \citet{grudic_2020_cluster_formation} for simulation predictions, but neither demonstrates direct evidence for a {\it scaling} in SFE within a given dataset.}, and in fact the cloud-scale {\it per-freefall} SFE has been shown to {\it anticorrelate} with $\Sigma$ in nearby galaxies in the PHANGS sample \citep{leroy:2025.phangs.sfe}. It is unclear whether this represents a true tension between models and observations, or whether the observations may be probing a different notion of SFE than we are measuring from the simulations.
 
@@ -410,7 +410,7 @@ The complete simulation dataset presented in this paper is publicly available, h
 \section{IMF fitting with Hamiltonian Monte Carlo sampling}
 \label{appendix:mcmc}
 
-Throughout this study we describe the simulated IMFs in terms of the Bayesian posterior distribution of the parameters of the IMF distribution function the stellar masses were likely to be drawn from. Specifically, we compute the Bayesian log-likelihood
+Throughout this study we describe the simulated IMFs in terms of the Bayesian posterior distribution of the parameters of the IMF distribution function from which the stellar masses were likely to be drawn. Specifically, we compute the Bayesian log-likelihood
 
 \begin{equation}
 	\ln \mathcal{L} = \ln p\left(\mathbf{\Theta}\right)+\sum_i \ln \phi \left(\log m_i; \mathbf{\Theta}\right),
