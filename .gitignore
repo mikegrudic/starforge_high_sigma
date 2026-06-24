@@ -8,6 +8,9 @@ __pycache__/
 *.pyc
 .DS_Store
 
+# On-disk snapshot histogram cache for figures/nH_vs_T.py.
+figures/.nH_vs_T_cache/
+
 # LaTeX build artifacts.
 manuscript.aux
 manuscript.blg
