@@ -5,18 +5,18 @@
 \toprule
 Simulation & Physics & $m_c\,(M_\odot)$ & $\sigma\,(\mathrm{dex})$ & $\Gamma$ & $M_{\max}\,(M_\odot)$ \\
 \midrule
-    \texttt{M2e4\_R10\_Z1} & Standard & $0.2322^{+0.0054}_{-0.0042}$ & $0.4231^{+0.0022}_{-0.0016}$ & $-0.7439^{+0.0049}_{-0.0035}$ & $37.83^{+0.52}_{-0.30}$ \\
-    \texttt{M2e4\_R10\_Z0.01} & Standard & $1.251^{+0.085}_{-0.098}$ & $0.695^{+0.037}_{-0.031}$ & $-1.74^{+0.41}_{-0.27}$ & $33.9^{+2.6}_{-1.1}$ \\
-    \texttt{M2e4\_R1\_Z0.01} & Standard & $0.486^{+0.029}_{-0.020}$ & $0.536^{+0.021}_{-0.010}$ & $-0.804^{+0.037}_{-0.048}$ & $1938^{+248}_{-105}$ \\
-    \texttt{M2e4\_R1\_Z0.1} & Standard & $0.347^{+0.012}_{-0.023}$ & $0.557^{+0.042}_{-0.027}$ & $-0.680^{+0.031}_{-0.030}$ & $877^{+73}_{-58}$ \\
-    \texttt{M2e4\_R1\_Z1} & Standard & $0.2966^{+0.0023}_{-0.0013}$ & $0.5664^{+0.0044}_{-0.0028}$ & $-0.6889^{+0.0039}_{-0.0046}$ & $219.7^{+5.5}_{-3.4}$ \\
-    \texttt{M2e4\_R1\_Z1} & No Winds & $0.2813^{+0.0018}_{-0.0016}$ & $0.5982^{+0.0053}_{-0.0043}$ & $-0.7450^{+0.0032}_{-0.0043}$ & $372^{+11}_{-5}$ \\
-    \texttt{M2e4\_R1\_Z1} & No IR Rad. Pressure & $0.2111^{+0.0074}_{-0.0037}$ & $0.695^{+0.023}_{-0.009}$ & $-0.664^{+0.014}_{-0.016}$ & $360.3^{+8.8}_{-6.2}$ \\
-    \texttt{M2e4\_R1\_Z1} & $3\times$ Stronger Winds & $0.2905^{+0.0038}_{-0.0022}$ & $0.5508^{+0.0058}_{-0.0054}$ & $-0.6704^{+0.0034}_{-0.0052}$ & $170.1^{+5.3}_{-2.6}$ \\
+    \texttt{M2e4\_R10\_Z1} & Standard & $0.126^{+0.018}_{-0.016}$ & $0.825^{+0.028}_{-0.029}$ & --- & $38.7^{+2.7}_{-1.0}$ \\
+    \texttt{M2e4\_R10\_Z0.01} & Standard & $1.25^{+0.11}_{-0.10}$ & $0.688^{+0.042}_{-0.037}$ & --- & $34.0^{+3.3}_{-1.2}$ \\
+    \texttt{M2e4\_R1\_Z0.01} & Standard & $0.482^{+0.030}_{-0.029}$ & $0.485^{+0.045}_{-0.042}$ & $-0.791^{+0.042}_{-0.047}$ & $>1829$ \\
+    \texttt{M2e4\_R1\_Z0.1} & Standard & $0.324^{+0.027}_{-0.030}$ & $0.55^{+0.11}_{-0.11}$ & $-0.677^{+0.046}_{-0.052}$ & $>796$ \\
+    \texttt{M2e4\_R1\_Z1} & Standard & $0.309^{+0.023}_{-0.025}$ & $0.566^{+0.070}_{-0.061}$ & $-0.691^{+0.035}_{-0.040}$ & $218^{+40}_{-14}$ \\
+    \texttt{M2e4\_R1\_Z1} & No Winds & $0.292^{+0.026}_{-0.030}$ & $0.596^{+0.068}_{-0.062}$ & $-0.750^{+0.040}_{-0.044}$ & $>344$ \\
+    \texttt{M2e4\_R1\_Z1} & No IR Rad. Pressure & $0.216^{+0.038}_{-0.049}$ & $0.69^{+0.10}_{-0.09}$ & $-0.674^{+0.038}_{-0.043}$ & $>351$ \\
+    \texttt{M2e4\_R1\_Z1} & $3\times$ Stronger Winds & $0.305^{+0.024}_{-0.026}$ & $0.564^{+0.068}_{-0.057}$ & $-0.667^{+0.034}_{-0.037}$ & $169^{+24}_{-9}$ \\
     \midrule
     \citet{chabrier_imf}         & --- & $0.25$ & $0.55$ & $-1.35$ & --- \\
 \bottomrule
 \end{tabular}
-\caption{Posterior-median IMF parameters of different simulations, for the modified Chabrier model given in Appendix \ref{appendix:mcmc}: peak mass $m_c$, log-normal variance in dex $\sigma$, high-mass slope $\Gamma$, and hard upper cutoff mass $M_{\rm max}$.}
+\caption{Posterior-median IMF parameters of different simulations, for the modified Chabrier model given in Appendix \ref{appendix:mcmc}: peak mass $m_c$, log-normal variance in dex $\sigma$, high-mass slope $\Gamma$, and hard upper cutoff mass $M_{\rm max}$. Errors are 16th--84th posterior percentiles. Where the posterior of $\Gamma$ fills its prior down to $-10$ (Appendix \ref{appendix:mcmc}) the log-normal alone describes the IMF up to $M_{\rm max}$ and no power-law tail is detected; these entries are marked ---. Where the posterior of $M_{\rm max}$ extends to the top of its prior we give a 95\% lower limit.}
 \label{table:imf_params}
 \end{table*}

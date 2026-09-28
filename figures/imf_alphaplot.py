@@ -205,7 +205,7 @@ for _variant_name, WITH_OBS, COLOR_OBS_BY_Z, COLOR_OBS_BY_TYPE in _VARIANTS:
     # ---- dataset envelopes ----
     for run in IMF_RUNS:
         imf_data_path = run.path + "/IMF.dat"
-        samples_path = run.path + f"/imf_samples_jax/samples_{model}.npy"
+        samples_path = run.path + f"/imf_samples_nested/samples_{model}.npy"
         if not (os.path.isfile(imf_data_path) and os.path.isfile(samples_path)):
             print(f"skip (missing inputs): {run.path}")
             continue

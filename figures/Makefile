@@ -19,11 +19,13 @@ WIND_MDOT_PDF      := wind_mdot.pdf
 # Per-star data extracted by extract_star_masses.py; backs the VMS plots.
 VMS_STAR_DATA := imf_data/STARFORGE_RT/STARFORGE_v1.2/M2e4_R1/M2e4_R1_Z0.01_S0_A2_B0.1_I10000_Res271_n2_sol0.5_42/output_turbsphere_driving1/star_masses.npz
 
-# Stamp file tracking the last run of IMF_analysis_jax.py. Depends on every
+# Stamp file tracking the last run of IMF_analysis_nested.py. Depends on every
 # IMF.dat in the data tree so Make re-runs the sampler whenever new simulation
 # data arrives. OVERWRITE=False inside the script means only missing samples
-# are computed; existing ones are left untouched.
-IMF_SAMPLES_STAMP := .imf_samples_jax.stamp
+# are computed; existing ones are left untouched. The script needs the log-space
+# salpyter (branch logspace-chabrier): export SALPYTER_SRC=<checkout>/src if the
+# installed salpyter predates it.
+IMF_SAMPLES_STAMP := .imf_samples_nested.stamp
 IMF_DAT_FILES := $(shell find imf_data -name "IMF.dat" 2>/dev/null)
 
 ALL_PLOTS := $(COMPARE_PDF) $(COMPARE_NORM_PDF) $(ALPHA_PDF) $(ALPHA_OBS_PDF) $(ALPHA_OBS_Z_PDF) $(LOGNORMAL_PDF) $(MULTIPANEL_PDF) $(MCLUSTER_PDF) $(VMS_ACCRETION_PDF) $(VMS_MDOT_PDF) $(VMS_DIST_PDF) $(VMS_MDOT_M23_PDF) $(SFE_PDF) $(SFE_SIGMA_PDF) $(WIND_MDOT_PDF)
@@ -34,8 +36,8 @@ all: $(ALL_PLOTS)
 
 imf_samples: $(IMF_SAMPLES_STAMP)
 
-$(IMF_SAMPLES_STAMP): IMF_analysis_jax.py $(IMF_DAT_FILES)
-	python IMF_analysis_jax.py
+$(IMF_SAMPLES_STAMP): IMF_analysis_nested.py $(IMF_DAT_FILES)
+	python IMF_analysis_nested.py
 	touch $@
 
 compare_imfs: $(COMPARE_PDF) $(COMPARE_NORM_PDF)

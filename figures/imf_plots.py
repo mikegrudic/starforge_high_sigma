@@ -1,7 +1,7 @@
 """IMF comparison plot: all 4 datasets on one panel, color-coded.
 
 For each STARFORGE directory in ``imfs_to_plot`` that has both ``IMF.dat`` and
-the JAX driver's ``imf_samples_jax/samples_<model>.npy``, evaluate the IMF at
+the nested-sampling driver's ``imf_samples_nested/samples_<model>.npy``, evaluate the IMF at
 every posterior sample on a shared log-mass grid, then plot:
   * the input-mass histogram in the dataset's color
   * the 16-84 percentile envelope of the IMF posterior (fill_between)
@@ -71,7 +71,7 @@ for NORMALIZED in True, False:
     labeled_kroupa = False
     for run in IMF_RUNS:
         imf_data_path = run.path + "/IMF.dat"
-        samples_path = run.path + f"/imf_samples_jax/samples_{model}.npy"
+        samples_path = run.path + f"/imf_samples_nested/samples_{model}.npy"
         if not (os.path.isfile(imf_data_path) and os.path.isfile(samples_path)):
             print(f"skip (missing inputs): {run}")
             continue
@@ -147,7 +147,7 @@ for NORMALIZED in True, False:
         # scaling that doesn't line up with a "literature reference" overlay.
         if NORMALIZED:
             # Chabrier (2005) reference, scaled to this dataset's bins. Same form
-            # as IMF_analysis_jax.py: chabrier_smooth at the published defaults.
+            # as IMF_analysis_nested.py: chabrier_smooth at the published defaults.
             ref_imf = np.asarray(
                 salpyter.get_imf_function("chabrier_smooth")(
                     logm,
@@ -219,6 +219,37 @@ def _fmt_uncertain(values):
     return rf"${mid:.{n}f}^{{+{up:.{n}f}}}_{{-{dn:.{n}f}}}$"
 
 
+def _prior_edge(x, lo, hi, frac=0.05, tol=0.01):
+    """'lo' or 'hi' if more than `tol` of the posterior sits within `frac` of that end of the
+    prior range [lo, hi] (x in the sampled coordinate), else None. Such a parameter is bounded on
+    one side only, and a median with errors would just describe the prior."""
+    span = hi - lo
+    if np.mean(x < lo + frac * span) > tol:
+        return "lo"
+    if np.mean(x > hi - frac * span) > tol:
+        return "hi"
+    return None
+
+
+def _limit_value(values, edge):
+    """One-sided 95% limit for a parameter whose posterior reaches the prior edge `edge`."""
+    v = np.percentile(values, 97.5 if edge == "lo" else 2.5)
+    return f"{v:.0f}" if abs(v) >= 100 else f"{v:.2g}"
+
+
+def _fmt_param(param):
+    """TeX cell for a (values, prior_edge) pair: median and 16-84% errors; a 95% lower limit when the
+    posterior runs to the top of the prior (M_max, bounded below by the most massive star); '---'
+    when it fills the prior from below (Gamma with no detected power-law tail), where any quoted
+    bound would only reflect the prior's width."""
+    values, edge = param
+    if edge is None:
+        return _fmt_uncertain(values)
+    if edge == "lo":
+        return "---"
+    return rf"$>{_limit_value(values, edge)}$"
+
+
 def _table_label(run):
     """`M2e4_RX_ZY`-style identifier extracted from the run directory name."""
     name = os.path.basename(os.path.dirname(run.path)).split("_S")[0]
@@ -274,22 +305,26 @@ def write_imf_params_table():
         lbl = _table_label(run)
         sfe = _sfe_values(run)
 
-        samples_path = run.path + f"/imf_samples_jax/samples_{model}.npy"
+        samples_path = run.path + f"/imf_samples_nested/samples_{model}.npy"
         imf_data_path = run.path + "/IMF.dat"
         has_all = os.path.isfile(samples_path) and os.path.isfile(imf_data_path)
 
         if has_all:
             samples = np.load(samples_path)
             if len(samples) > 0:
-                # chabrier_smooth_bounds params: [logm0, logsigma, alpha, logmmin, logmmax]
-                m_peak    = 10 ** samples[:, 0]
-                sigma_imf = np.exp(samples[:, 1])
-                gamma     = samples[:, 2]
-                m_max     = 10 ** samples[:, 4]
+                # chabrier_smooth_bounds params: [logm0, logsigma, alpha, logmmin, logmmax];
+                # each reported parameter is paired with the prior edge its posterior reaches, if any
+                box = np.asarray(salpyter.imf_default_bounds(model))
+                edge = lambda i: _prior_edge(samples[:, i], *box[i])
+                m_peak    = (10 ** samples[:, 0], edge(0))
+                sigma_imf = (np.exp(samples[:, 1]), edge(1))
+                gamma     = (samples[:, 2], edge(2))
+                m_max     = (10 ** samples[:, 4], edge(4))
                 masses    = np.loadtxt(imf_data_path)[:, 1]
                 Mtot      = masses.sum()
-                QH_spec   = np.sum(Q_ionizing(masses)) / Mtot
-                L_spec    = np.sum(lum_MS(masses)) / Mtot
+                # some starforge_tools versions return astropy Quantities (s^-1, Lsun); take the values
+                QH_spec   = float(getattr(np.sum(Q_ionizing(masses)), "value", np.sum(Q_ionizing(masses)))) / Mtot
+                L_spec    = float(getattr(np.sum(lum_MS(masses)), "value", np.sum(lum_MS(masses)))) / Mtot
                 table_rows.append(
                     (lbl, phys_label, sfe, L_spec, QH_spec, m_peak, sigma_imf, gamma, m_max)
                 )
@@ -347,8 +382,8 @@ def write_imf_params_table():
         if mp is not None:
             imf_rows.append(
                 f"    {lbl} & {phys} & "
-                f"{_fmt_uncertain(mp)} & {_fmt_uncertain(sig_imf)} & "
-                f"{_fmt_uncertain(g)} & {_fmt_uncertain(mm)} \\\\"
+                f"{_fmt_param(mp)} & {_fmt_param(sig_imf)} & "
+                f"{_fmt_param(g)} & {_fmt_param(mm)} \\\\"
             )
         else:
             imf_rows.append(
@@ -373,7 +408,7 @@ def write_imf_params_table():
         + "\n".join(chabrier_rows) + "\n"
         "\\bottomrule\n"
         "\\end{tabular}\n"
-        "\\caption{Posterior-median IMF parameters of different simulations, for the modified Chabrier model given in Appendix \\ref{appendix:mcmc}: peak mass $m_c$, log-normal variance in dex $\\sigma$, high-mass slope $\\Gamma$, and hard upper cutoff mass $M_{\\rm max}$.}\n"
+        "\\caption{Posterior-median IMF parameters of different simulations, for the modified Chabrier model given in Appendix \\ref{appendix:mcmc}: peak mass $m_c$, log-normal variance in dex $\\sigma$, high-mass slope $\\Gamma$, and hard upper cutoff mass $M_{\\rm max}$. Errors are 16th--84th posterior percentiles. Where the posterior of $\\Gamma$ fills its prior down to $-10$ (Appendix \\ref{appendix:mcmc}) the log-normal alone describes the IMF up to $M_{\\rm max}$ and no power-law tail is detected; these entries are marked ---. Where the posterior of $M_{\\rm max}$ extends to the top of its prior we give a 95\\% lower limit.}\n"
         "\\label{table:imf_params}\n"
         "\\end{table*}\n"
     )
@@ -392,7 +427,12 @@ def write_imf_params_table():
     col1w = max(len("Simulation"), max(len(_name(lbl)) for lbl, *_ in table_rows))
     phys_w = max(len("Physics"), max(len(_phys_str(p)) for _, p, *_ in table_rows))
 
-    def _ascii_val(values):
+    def _ascii_val(param):
+        values, edge = param
+        if edge == "lo":
+            return "---"
+        if edge == "hi":
+            return f">{_limit_value(values, edge):>9} (95%)"
         lo, mid, hi = np.percentile(values, [16, 50, 84])
         return f"{mid:10.3g} +{hi-mid:.3g} -{mid-lo:.3g}"
 
